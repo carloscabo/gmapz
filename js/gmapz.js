@@ -1,11 +1,20 @@
 GMapz = {
 
-  gmap: null,
+  // Related to GoogleMaps objects
+  g_map: null,
+  g_pins: {},
+  g_markers: [],
+  g_infowindows: [],
+
+  // Custom objects / properties
   markers: [],
   prev_infowindow: false,
-  default_pin: null,
+  pin_base: null,
+  pins: {},
 
   init: function(map_id) {
+
+    var t = this;
 
     // Properties we want to pass to the map
     var g_map_options = {
@@ -16,9 +25,21 @@ GMapz = {
     };
 
     // Calling the constructor, initializing the map
-    this.gmap = new google.maps.Map(document.getElementById(map_id), g_map_options);
+    t.g_map = new google.maps.Map(document.getElementById(map_id), g_map_options);
 
-    //this.map.scrollWheelZoom.disable();
+    // this.map.scrollWheelZoom.disable();
+
+    // Create pins
+    for (var i in t.pins) {
+      t.g_pins[i] = new google.maps.MarkerImage(t.pins[i]['pin']['img'],
+         //width / height
+        new google.maps.Size(t.pins[i]['pin']['size'][0], t.pins[i]['pin']['size'][1]),
+        // origin
+        new google.maps.Point(0,0),
+        // anchor point
+        new google.maps.Point(t.pins[i]['pin']['anchor'][0], t.pins[i]['pin']['anchor'][1])
+      );
+    }
   },
 
   initButtons: function(button_class) {
@@ -50,7 +71,7 @@ GMapz = {
     this.markers = markers;
 
     // Coordinates of map at start
-    var latlng = new google.maps.LatLng(this.markers[0][0],this.markers[0][1]);
+    var latlng = new google.maps.LatLng(this.markers['lat'],this.markers['lon']);
 
     // Custom pin/marker properties
     var g_map_image = new google.maps.MarkerImage('/js/gmapz/pin.png',

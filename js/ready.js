@@ -3,7 +3,7 @@ $(document).ready(function() {
 
   // Pins
   // Mus be defined BEFORE map init
-  GMapz.pinBase = '/js/gmapz/';
+  GMapz.pin_base = '/js/gmapz/';
   GMapz.pins = {
     default: {
       pin: {
@@ -48,12 +48,14 @@ $(document).ready(function() {
       iw: 'Universidad Europea de Madrid.<br>Campus de Villaviciosa de Odón<br>C/ Tajo s/n. Villaciosa de Odón<br>28670 Madrid.<br><a href="http://www.uem.es/">Visita la web</a>'
     },{
       idx: 289,
+      pin: 'orange',
       lat: 39.479,
       lon: -0.366,
       z:   9,
       iw: 'Universidad Europea de Valencia<br>C/ General Elio, 2-8-10 46010 Valencia (Frente a los Jardines de Viveros)<br><a href=">http://valencia.uem.es" >Visita la web</a>'
     },{
       idx: 38,
+      pin: 'blue',
       lat: 28.39,
       lon: -16.524,
       z:   9,
