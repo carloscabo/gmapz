@@ -39,7 +39,7 @@ $(document).ready(function() {
   // Data
   var locations = [
     {
-      idx: 1, // MUST BE UNIQUE
+      idx: 1, // MUST BE UNIQUE AND NUMERIC
       lat: 40.372,
       lon: -3.915,
       z:   9,
@@ -60,6 +60,8 @@ $(document).ready(function() {
       iw: 'Universidad Europea de Canarias<br>Calle de Inocencio garcía 1. La Orotava. Tenerife.<br><a href="http://universidadeuropeadecanarias.es">visita la web</a>'
     }
   ];
+
+  var group_1 = [1, 289];
 
   GMapz.init('map-container');
   //console.log(GMapz.pins);

@@ -6,6 +6,7 @@ GMapz = {
   g_shadows: {},
   g_markers: [],
   g_infowindows: [],
+  g_bounds: null,
 
   // Custom objects / properties
   locations: [],
@@ -66,31 +67,23 @@ GMapz = {
         t.g_pins[key].shadow = null;
       }
     }
-
-    console.log(t.g_pins);
-
   },
 
   draw: function(locations) {
 
     var
-      t = this,
-      bounds = new google.maps.LatLngBounds();
+      t = this;
 
     // Array de coordenadas
     t.locations = locations;
-
-    // Custom pin/marker properties
-    /*var g_map_image = new google.maps.MarkerImage('/js/gmapz/pin.png',
-      new google.maps.Size(62, 100), //width / height
-      new google.maps.Point(0,0), // origin
-      new google.maps.Point(31, 100) // anchor point
-    );*/
+    t.g_bounds = new google.maps.LatLngBounds();
 
     for (var i = t.locations.length - 1; i >= 0; i--) {
 
-      var t_pin = null;
-      var t_sha = null;
+      var
+        t_pin = null,
+        t_sha = null,
+        idx = t.locations[i]['idx'];
 
       // Setting pin & shadow
       // Default
@@ -100,7 +93,7 @@ GMapz = {
       }
 
       // Customized for this point
-      if (t.locations[i]['pin']) {
+      if (t.locations[i]['pin'] && t.g_pins[t.locations[i]['pin']]) {
         t_pin = t.g_pins[t.locations[i]['pin']].pin;
         if (t.g_pins[t.locations[i]['pin']].shadow) {
           t_sha = t.g_pins[t.locations[i]['pin']].shadow;
@@ -108,7 +101,7 @@ GMapz = {
       }
 
       // Markers array
-      t.g_markers[i] = new google.maps.Marker({
+      t.g_markers[idx] = new google.maps.Marker({
         idx: t.locations[i]['idx'],
         position: new google.maps.LatLng(t.locations[i]['lat'],t.locations[i]['lon']),
         map: t.g_map,
@@ -116,38 +109,45 @@ GMapz = {
         shadow: t_sha
       });
 
-      bounds.extend(t.g_markers[i].getPosition());
+      t.g_bounds.extend(t.g_markers[idx].getPosition());
 
       // Infowindows array
-      //var t_iwc = t.iw_template
-      t.g_infowindows[t.locations[i]['idx']] = new google.maps.InfoWindow({
+      t.g_infowindows[idx] = new google.maps.InfoWindow({
         content: t.iw_template.replace('{REPLACE}',t.locations[i]['iw'])
       });
 
       // Click on marker event
-      google.maps.event.addListener(t.g_markers[i], 'click', function() {
-        console.log(this.idx);
-        if(t.iw_visible) {
-          t.iw_visible.close();
-        }
+      var that = this;
+      google.maps.event.addListener(t.g_markers[idx], 'click', function() {
+        t.hideAllInfoWindows();
         t.iw_visible = t.g_infowindows[this.idx];
         t.g_infowindows[this.idx].open(t.g_map, t.g_markers[this.idx]);
       });
-
-
     } //for
 
-    console.log(t.g_infowindows);
-
     // Bounds with several markers
-    t.g_map.fitBounds(bounds);
+    t.g_map.fitBounds(t.g_bounds);
 
     // Single mark zoom adjust
-    var tgm = t.g_map;
-    var listener = google.maps.event.addListener(t.g_map, "idle", function() {
-      if (tgm.getZoom() > 16) tgm.setZoom(14);
+    var listener = google.maps.event.addListener(t.g_map, 'idle', function() {
+      if (t.g_map.getZoom() > 16) t.g_map.setZoom(14);
       google.maps.event.removeListener(listener);
     });
+  },
+
+  hideAllInfoWindows: function () {
+    var t = this;
+    if(t.iw_visible) {
+      t.iw_visible.close();
+    }
+  },
+
+  hideAllPins: function () {
+    var t = this;
+    t.hideAllInfoWindows();
+    for (var key in t.g_markers) {
+      t.g_markers[key].setVisible(false);
+    }
   },
 
   initButtons: function(button_class) {
