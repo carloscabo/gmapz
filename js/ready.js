@@ -61,10 +61,9 @@ $(document).ready(function() {
     }
   ];
 
-  var group_1 = [1, 289];
-
   GMapz.init('map-container');
   //console.log(GMapz.pins);
   GMapz.draw(locations);
+  GMapz.initButtons(locations);
 
 });

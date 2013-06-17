@@ -119,7 +119,7 @@ GMapz = {
       // Click on marker event
       var that = this;
       google.maps.event.addListener(t.g_markers[idx], 'click', function() {
-        t.hideAllInfoWindows();
+        t.closeAllInfoWindows();
         t.iw_visible = t.g_infowindows[this.idx];
         t.g_infowindows[this.idx].open(t.g_map, t.g_markers[this.idx]);
       });
@@ -129,43 +129,116 @@ GMapz = {
     t.g_map.fitBounds(t.g_bounds);
 
     // Single mark zoom adjust
+    t.singleMarkerZoomAdjust();
+  },
+
+  singleMarkerZoomAdjust: function (max, target) {
+    // Single mark zoom adjust
+    var
+      t = this;
+
+    if (!max) max = 16;
+    if (!target) target = 14;
+
     var listener = google.maps.event.addListener(t.g_map, 'idle', function() {
-      if (t.g_map.getZoom() > 16) t.g_map.setZoom(14);
+      if (t.g_map.getZoom() > max) t.g_map.setZoom(target);
       google.maps.event.removeListener(listener);
     });
   },
 
-  hideAllInfoWindows: function () {
+  closeAllInfoWindows: function () {
     var t = this;
     if(t.iw_visible) {
       t.iw_visible.close();
     }
   },
 
-  hideAllPins: function () {
+  allMarkersVisible: function (visible) {
     var t = this;
-    t.hideAllInfoWindows();
+    t.closeAllInfoWindows();
+    t.g_bounds = new google.maps.LatLngBounds();
     for (var key in t.g_markers) {
-      t.g_markers[key].setVisible(false);
+      t.g_markers[key].setVisible(visible);
+      t.g_bounds.extend(t.g_markers[key].getPosition());
     }
+    if (visible) {
+      t.g_map.fitBounds(t.g_bounds);
+    }
+  },
+
+  // Expects array
+  showMarkerGroup: function (group) {
+    var t = this;
+    t.closeAllInfoWindows();
+    t.allMarkersVisible(false);
+
+    t.g_bounds = new google.maps.LatLngBounds();
+    for (var i in group) {
+      t.g_markers[group[i]].setVisible(true);
+      t.g_bounds.extend(t.g_markers[group[i]].getPosition());
+    }
+    t.g_map.fitBounds(t.g_bounds);
+
+    if (group.length == 1) {
+      t.singleMarkerZoomAdjust();
+    }
+  },
+
+  zoomTo: function (lat, lon, zoom) {
+    var t = this;
+    t.g_map.setCenter(new google.maps.LatLng(lat, lon));
+    t.g_map.setZoom(zoom);
   },
 
   initButtons: function(button_class) {
 
-    var that = this;
-    $(button_class).click(function(e) {
-      e.preventDefault();
-      var lat = $(this).data('lat');
-      var lon = $(this).data('lon');
-      var zoo = $(this).data('zoom');
+    var
+      t = this;
 
-      $(this).parents('ul').find('li').removeClass('active');
-      $(this).parent('li').addClass('active');
-      that.gmap.setCenter(new google.maps.LatLng($(this).data('lat'), $(this).data('lon')));
-      that.gmap.setZoom(parseInt(zoo, 10));
+    // Show group of markers by idx
+    $('*[data-gmapz-showgroup]').click(function (e) {
+      e.preventDefault();
+      var d = $(this).data('gmapz-showgroup') + '';
+      if(d.indexOf(',') === -1) {
+        t.showMarkerGroup([d]);
+      } else {
+        // Trim and split
+        t.showMarkerGroup($.map(d.split(","),$.trim));
+      }
     });
 
-    // Click the first one
-    //$(button_class).first().click();
-  },
+    // zoom
+    $('*[data-gmapz-zoom]').click(function (e) {
+      e.preventDefault();
+      var d = $(this).data('gmapz-showgroup') + '';
+      if(d.indexOf(',') === -1) {
+        t.showMarkerGroup([d]);
+      } else {
+        // Trim and split
+        t.showMarkerGroup($.map(d.split(","),$.trim));
+      }
+    });
+
+    // Functions
+    $('*[data-gmapz-function]').click(function (e) {
+      e.preventDefault();
+      var
+        f = $(this).data('gmapz-function') + '',
+        $t = $(this);
+
+      switch (f) {
+      case 'show-all':
+        t.allMarkersVisible(true);
+        break;
+      case 'zoom':
+        t.zoomTo($t.data('lat'), $t.data('lon'), $t.data('zoom'));
+        break;
+      default:
+        return false;
+      }
+    });
+
+
+
+  }
 };
