@@ -1,6 +1,6 @@
 GMapz = {
 
-  // Geolocation
+  // Geolocation (not used yet)
   g_loc: {
     lat: null,
     lon: null
@@ -49,7 +49,7 @@ GMapz = {
         t.g_pins[key] = {};
 
         t.g_pins[key].pin = new google.maps.MarkerImage(t.pins[key]['pin']['img'],
-           //width / height
+           // width / height
           new google.maps.Size(t.pins[key]['pin']['size'][0], t.pins[key]['pin']['size'][1]),
           // origin
           new google.maps.Point(0,0),
@@ -59,7 +59,7 @@ GMapz = {
         // Shadows
         if (t.pins[key]['shadow']) {
           t.g_pins[key].shadow = new google.maps.MarkerImage(t.pins[key]['shadow']['img'],
-             //width / height
+             // width / height
             new google.maps.Size(t.pins[key]['shadow']['size'][0], t.pins[key]['shadow']['size'][1]),
             // origin
             new google.maps.Point(0,0),
@@ -202,27 +202,27 @@ GMapz = {
   },
 
   findClosestMarkerTo: function (lat, lon) {
-      var
-        t = this,
-        R = 6371, // radius of earth in km
-        distances = [],
-        closest = -1;
+    var
+      t = this,
+      R = 6371, // radius of earth in km
+      distances = [],
+      closest = -1;
 
-      for (var key in t.g_markers) {
-        var mlat = t.g_markers[key].position.lat();
-        var mlng = t.g_markers[key].position.lng();
-        var dLat  = t.rad(mlat - lat);
-        var dLong = t.rad(mlng - lon);
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(t.rad(lat)) * Math.cos(t.rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        var d = R * c;
+    for (var key in t.g_markers) {
+      var mlat = t.g_markers[key].position.lat();
+      var mlng = t.g_markers[key].position.lng();
+      var dLat  = t.rad(mlat - lat);
+      var dLong = t.rad(mlng - lon);
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(t.rad(lat)) * Math.cos(t.rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var d = R * c;
 
-        distances[key] = d;
-          if ( closest == -1 || d < distances[closest] ) {
-            closest = key;
-        }
+      distances[key] = d;
+      if ( closest == -1 || d < distances[closest] ) {
+        closest = key;
       }
-      return(closest);
+    }
+    return(closest);
   },
 
   geoShowPosition: function (pos){
@@ -261,6 +261,7 @@ GMapz = {
     }
   },
 
+  // Button to control the map from outside
   initButtons: function(button_class) {
 
     var
@@ -278,7 +279,7 @@ GMapz = {
       }
     });
 
-    // Functions
+    // Generic Functions
     $('*[data-gmapz-function]').click(function (e) {
       e.preventDefault();
       var
@@ -313,7 +314,11 @@ GMapz = {
       }
     });
 
-
+    // Selectors
+    $('select[data-gmapz-select]').change(function (e) {
+      e.preventDefault();
+      console.log('eo');
+    });
 
   }
 };

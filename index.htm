@@ -11,6 +11,14 @@
       background: cyan; /* DEBUG */
     }
 
+    table {
+      padding-top: 20px;
+    }
+
+    table td {
+      vertical-align: top;
+    }
+
   </style>
 </head>
 <body>
@@ -32,6 +40,17 @@
         <a href="#" data-gmapz-function="zoom" data-lat="43.361736" data-lon="-5.85029" data-zoom="16">Zoom to coordinates</a><br>
         <a href="#" data-gmapz-function="zoom" data-idx="38" data-zoom="16">Zoom to location idx</a><br>
         <a href="#" data-gmapz-function="find-closets">Find closets to your position</a>
+      </td>
+      <td>
+        <select name="" id="" data-gmapz-select>
+          <option value="0">Selecciona un grupo</option>
+          <option value="1,289" data-gmapz-showgroup="1,289">Show group A</option>
+          <option value="289,38" data-gmapz-showgroup="289,38">Show group B</option>
+          <option value="289,38" data-gmapz-showgroup="1">Show group C</option>
+        </select>
+      </td>
+      <td>
+        <input type="text" placeholder="Introduce tu dirección"><input type="button" value="Buscar más cercano">
       </td>
     </tr>
   </table>
