@@ -235,10 +235,12 @@ GMapz = {
     //console.log(lat + '-' + lon);
     //console.log(this);
     idx = t.findClosestMarkerTo(lat, lon);
-
     var mlat = t.g_markers[idx].position.lat();
     var mlon = t.g_markers[idx].position.lng();
+
+    t.closeAllInfoWindows();
     t.g_markers[idx].setVisible(true);
+    t.iw_visible = t.g_infowindows[idx];
     t.g_infowindows[idx].open(t.g_map, t.g_markers[idx]);
     t.zoomTo(mlat, mlon, 16);
 
@@ -284,6 +286,7 @@ GMapz = {
         var
           lat = t.g_markers[idx].position.lat(),
           lon = t.g_markers[idx].position.lng();
+
         t.g_markers[idx].setVisible(true);
         t.zoomTo(lat, lon, $t.data('zoom'));
       } else {
