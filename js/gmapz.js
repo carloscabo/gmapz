@@ -261,63 +261,69 @@ GMapz = {
     }
   },
 
-  // Button to control the map from outside
-  initButtons: function(button_class) {
-
+  buttonsFunctionality: function (f, $t) {
     var
       t = this;
 
-    // Show group of markers by idx
-    $('*[data-gmapz-showgroup]').click(function (e) {
-      e.preventDefault();
-      var d = $(this).data('gmapz-showgroup') + '';
+    switch (f) {
+    case 'show-group':
+      var d = $t.data('group') + '';
       if(d.indexOf(',') === -1) {
         t.showMarkerGroup([d]);
       } else {
         // Trim and split
         t.showMarkerGroup($.map(d.split(","),$.trim));
       }
-    });
+      break;
+    case 'show-all':
+      t.allMarkersVisible(true);
+      break;
+    case 'zoom':
+      var idx = $t.data('idx');
+      if (idx) {
+        var
+          lat = t.g_markers[idx].position.lat(),
+          lon = t.g_markers[idx].position.lng();
+        t.g_markers[idx].setVisible(true);
+        t.zoomTo(lat, lon, $t.data('zoom'));
+      } else {
+        t.zoomTo($t.data('lat'), $t.data('lon'), $t.data('zoom'));
+      }
+      break;
+    case 'find-closets':
+      var n = navigator.geolocation;
+      if( n ) {
+        n.getCurrentPosition(t.geoShowPosition.bind(t), t.geoShowError.bind(t));
+      } else {
+        alert('Su navegador no soporta Geolocalización.');
+      }
+      break;
+    default:
+      return false;
+    }
+  },
 
-    // Generic Functions
+  // Button to control the map from outside
+  buttonInit: function(button_class) {
+    var
+      t = this;
+
+    // Generic buttons / <A>
     $('*[data-gmapz-function]').click(function (e) {
       e.preventDefault();
       var
-        $t  = $(this),
-        f   = $t.data('gmapz-function') + '',
-        idx = $t.data('idx');
-
-      switch (f) {
-      case 'show-all':
-        t.allMarkersVisible(true);
-        break;
-      case 'zoom':
-        if (idx) {
-          var lat = t.g_markers[idx].position.lat();
-          var lon = t.g_markers[idx].position.lng();
-          t.g_markers[idx].setVisible(true);
-          t.zoomTo(lat, lon, $t.data('zoom'));
-        } else {
-          t.zoomTo($t.data('lat'), $t.data('lon'), $t.data('zoom'));
-        }
-        break;
-      case 'find-closets':
-        var n = navigator.geolocation;
-        if( n ) {
-          n.getCurrentPosition(t.geoShowPosition.bind(t), t.geoShowError.bind(t));
-        } else {
-          alert('Su navegador no soporta Geolocalización.');
-        }
-        break;
-      default:
-        return false;
-      }
+        $t = $(this),
+        f  = $t.data('gmapz-function') + '';
+      t.buttonsFunctionality(f, $t);
     });
 
-    // Selectors
+    // Selects
     $('select[data-gmapz-select]').change(function (e) {
       e.preventDefault();
-      console.log('eo');
+      var
+        $t = $(this).find(':selected'),
+        f = $t.data('gmapz-function') + '';
+      t.buttonsFunctionality(f, $t);
     });
 
   }

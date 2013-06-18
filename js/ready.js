@@ -64,6 +64,6 @@ $(document).ready(function() {
   GMapz.init('map-container');
   //console.log(GMapz.pins);
   GMapz.draw(locations);
-  GMapz.initButtons(locations);
+  GMapz.buttonInit();
 
 });
