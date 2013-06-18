@@ -1,5 +1,11 @@
 GMapz = {
 
+  // Geolocation
+  g_loc: {
+    lat: null,
+    lon: null
+  },
+
   // Related to GoogleMaps objects
   g_map: null,
   g_pins: {},
@@ -14,6 +20,7 @@ GMapz = {
   iw_template: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
   pin_base: null,
   pins: {},
+  user_pos: null,
 
   init: function(map_id) {
 
@@ -190,6 +197,70 @@ GMapz = {
     t.g_map.setZoom(zoom);
   },
 
+  rad: function (x) {
+    return x*Math.PI/180;
+  },
+
+  findClosestMarkerTo: function (lat, lon) {
+      var
+        t = this,
+        R = 6371, // radius of earth in km
+        distances = [],
+        closest = -1;
+
+      for (var key in t.g_markers) {
+        var mlat = t.g_markers[key].position.lat();
+        var mlng = t.g_markers[key].position.lng();
+        var dLat  = t.rad(mlat - lat);
+        var dLong = t.rad(mlng - lon);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(t.rad(lat)) * Math.cos(t.rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c;
+
+        distances[key] = d;
+          if ( closest == -1 || d < distances[closest] ) {
+            closest = key;
+        }
+      }
+      return(closest);
+  },
+
+  geoShowPosition: function (pos){
+    var
+      t   = this,
+      lat = pos.coords.latitude,
+      lon = pos.coords.longitude;
+      idx = null;
+
+    //console.log(lat + '-' + lon);
+    //console.log(this);
+    idx = t.findClosestMarkerTo(lat, lon);
+
+    var mlat = t.g_markers[idx].position.lat();
+    var mlon = t.g_markers[idx].position.lng();
+    t.g_markers[idx].setVisible(true);
+    t.g_infowindows[idx].open(t.g_map, t.g_markers[idx]);
+    t.zoomTo(mlat, mlon, 16);
+
+  },
+
+  geoShowError: function (error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        console.log('User denied the request for Geolocation.');
+        break;
+      case error.POSITION_UNAVAILABLE:
+        console.log('Location information is unavailable.');
+        break;
+      case error.TIMEOUT:
+        console.log('The request to get user location timed out.');
+        break;
+      case error.UNKNOWN_ERROR:
+        console.log('An unknown error occurred.');
+        break;
+    }
+  },
+
   initButtons: function(button_class) {
 
     var
@@ -207,31 +278,35 @@ GMapz = {
       }
     });
 
-    // zoom
-    $('*[data-gmapz-zoom]').click(function (e) {
-      e.preventDefault();
-      var d = $(this).data('gmapz-showgroup') + '';
-      if(d.indexOf(',') === -1) {
-        t.showMarkerGroup([d]);
-      } else {
-        // Trim and split
-        t.showMarkerGroup($.map(d.split(","),$.trim));
-      }
-    });
-
     // Functions
     $('*[data-gmapz-function]').click(function (e) {
       e.preventDefault();
       var
-        f = $(this).data('gmapz-function') + '',
-        $t = $(this);
+        $t  = $(this),
+        f   = $t.data('gmapz-function') + '',
+        idx = $t.data('idx');
 
       switch (f) {
       case 'show-all':
         t.allMarkersVisible(true);
         break;
       case 'zoom':
-        t.zoomTo($t.data('lat'), $t.data('lon'), $t.data('zoom'));
+        if (idx) {
+          var lat = t.g_markers[idx].position.lat();
+          var lon = t.g_markers[idx].position.lng();
+          t.g_markers[idx].setVisible(true);
+          t.zoomTo(lat, lon, $t.data('zoom'));
+        } else {
+          t.zoomTo($t.data('lat'), $t.data('lon'), $t.data('zoom'));
+        }
+        break;
+      case 'find-closets':
+        var n = navigator.geolocation;
+        if( n ) {
+          n.getCurrentPosition(t.geoShowPosition.bind(t), t.geoShowError.bind(t));
+        } else {
+          alert('Su navegador no soporta Geolocalización.');
+        }
         break;
       default:
         return false;
@@ -242,3 +317,7 @@ GMapz = {
 
   }
 };
+
+
+
+
