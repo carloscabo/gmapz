@@ -103,7 +103,7 @@ GMapz = {
       // Markers array
       t.g_markers[idx] = new google.maps.Marker({
         idx: t.locations[i]['idx'],
-        position: new google.maps.LatLng(t.locations[i]['lat'],t.locations[i]['lon']),
+        position: new google.maps.LatLng(t.locations[i]['lat'],t.locations[i]['lng']),
         map: t.g_map,
         icon: t_pin,
         shadow: t_sha
@@ -184,9 +184,9 @@ GMapz = {
     }
   },
 
-  zoomTo: function (lat, lon, zoom) {
+  zoomTo: function (lat, lng, zoom) {
     var t = this;
-    t.g_map.setCenter(new google.maps.LatLng(lat, lon));
+    t.g_map.setCenter(new google.maps.LatLng(lat, lng));
     t.g_map.setZoom(zoom);
   },
 
@@ -194,7 +194,7 @@ GMapz = {
     return x*Math.PI/180;
   },
 
-  findNearestMarkerTo: function (lat, lon) {
+  findNearestMarkerTo: function (lat, lng) {
     var
       t = this,
       R = 6371, // radius of earth in km
@@ -205,7 +205,7 @@ GMapz = {
       var mlat = t.g_markers[key].position.lat();
       var mlng = t.g_markers[key].position.lng();
       var dLat  = t.rad(mlat - lat);
-      var dLong = t.rad(mlng - lon);
+      var dLong = t.rad(mlng - lng);
       var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(t.rad(lat)) * Math.cos(t.rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
       var d = R * c;
@@ -243,27 +243,27 @@ GMapz = {
     var
       t   = this,
       lat = null,
-      lon = null,
+      lng = null,
       idx = null;
 
     // Navigator.geolocation
     if (pos.coords) {
       lat = pos.coords.latitude;
-      lon = pos.coords.longitude;
+      lng = pos.coords.longitude;
     } else {
       lat = pos.jb;
-      lon = pos.kb;
+      lng = pos.kb;
     }
 
-    idx = t.findNearestMarkerTo(lat, lon);
+    idx = t.findNearestMarkerTo(lat, lng);
     var mlat = t.g_markers[idx].position.lat();
-    var mlon = t.g_markers[idx].position.lng();
+    var mlng = t.g_markers[idx].position.lng();
 
     t.closeAllInfoWindows();
     t.g_markers[idx].setVisible(true);
     t.iw_visible = t.g_infowindows[idx];
     t.g_infowindows[idx].open(t.g_map, t.g_markers[idx]);
-    t.zoomTo(mlat, mlon, 16);
+    t.zoomTo(mlat, mlng, 16);
   },
 
   geoShowError: function (error) {
@@ -305,12 +305,12 @@ GMapz = {
       if (idx) {
         var
           lat = t.g_markers[idx].position.lat(),
-          lon = t.g_markers[idx].position.lng();
+          lng = t.g_markers[idx].position.lng();
 
         t.g_markers[idx].setVisible(true);
-        t.zoomTo(lat, lon, $t.data('zoom'));
+        t.zoomTo(lat, lng, $t.data('zoom'));
       } else {
-        t.zoomTo($t.data('lat'), $t.data('lon'), $t.data('zoom'));
+        t.zoomTo($t.data('lat'), $t.data('lng'), $t.data('zoom'));
       }
       break;
     case 'find-near':
