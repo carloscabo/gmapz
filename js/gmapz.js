@@ -1,5 +1,8 @@
 GMapz = {
 
+  // Abbreviatures
+  GM: google.maps,
+
   // Related to GoogleMaps objects
   g_map: null,
   g_pins: {},
@@ -12,8 +15,9 @@ GMapz = {
   locations: [],
   iw_visible: false,
   iw_template: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
-  pin_base: null,
+  pin_base: 'img/gmapz/',
   pins: {},
+  pegman_visible: false,
 
   init: function(map_id) {
 
@@ -67,6 +71,8 @@ GMapz = {
         t.g_pins[key].shadow = null;
       }
     }
+
+
   },
 
   draw: function(locations) {
@@ -132,6 +138,35 @@ GMapz = {
     t.singleMarkerZoomAdjust();
   },
 
+  addPegmanMarker: function (lat, lng) {
+    var t = this;
+
+    if (t.g_pegman) {
+      // Allready have pegman
+      t.g_pegman.setPosition(new google.maps.LatLng(lat,lng));
+    } else {
+      // Create pegman marker
+      t.pegman_pin = new google.maps.MarkerImage(
+        t.pin_base + 'pegman_48.png',
+        new google.maps.Size(48, 48),
+        new google.maps.Point(0,0),
+        new google.maps.Point(24, 48)
+      );
+      t.pegman_shadow = new google.maps.MarkerImage(
+        t.pin_base + 'pegman_48-shadow.png',
+        new google.maps.Size(73, 48),
+        new google.maps.Point(0,0),
+        new google.maps.Point(24, 48)
+      );
+      t.g_pegman = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
+        map: t.g_map,
+        icon: t.pegman_pin,
+        shadow: t.pegman_shadow
+      });
+    }
+  },
+
   singleMarkerZoomAdjust: function (max, target) {
     // Single mark zoom adjust
     var
@@ -190,6 +225,13 @@ GMapz = {
     t.g_map.setZoom(zoom);
   },
 
+  stopAllAnimations: function (idx) {
+    var t = this;
+    for (var key in t.g_markers) {
+      t.g_markers[key].setAnimation(null);
+    }
+  },
+
   rad: function (x) {
     return x*Math.PI/180;
   },
@@ -228,13 +270,14 @@ GMapz = {
       address: addr
     }, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        /*t.g_map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
+        /*var marker = new google.maps.Marker({
           map: t.g_map,
           position: results[0].geometry.location
         });*/
         //console.log(results[0].geometry.location);
         t.geoShowPosition(results[0].geometry.location);
+      } else {
+        alert('No se ha encontrado la dirección.');
       }
     });
   },
@@ -244,7 +287,9 @@ GMapz = {
       t   = this,
       lat = null,
       lng = null,
-      idx = null;
+      idx = null,
+      near_lat = null,
+      near_lng = null;
 
     // Navigator.geolocation
     if (pos.coords) {
@@ -255,15 +300,21 @@ GMapz = {
       lng = pos.kb;
     }
 
+    // Find nearest marker
     idx = t.findNearestMarkerTo(lat, lng);
-    var mlat = t.g_markers[idx].position.lat();
-    var mlng = t.g_markers[idx].position.lng();
+    near_lat = t.g_markers[idx].position.lat();
+    near_lng = t.g_markers[idx].position.lng();
+
+    // Add pegman / you are here
+    t.g_map.setCenter(new google.maps.LatLng(lat, lng));
+    t.addPegmanMarker(lat, lng);
 
     t.closeAllInfoWindows();
     t.g_markers[idx].setVisible(true);
+    t.g_markers[idx].setAnimation(google.maps.Animation.BOUNCE);
     t.iw_visible = t.g_infowindows[idx];
     t.g_infowindows[idx].open(t.g_map, t.g_markers[idx]);
-    t.zoomTo(mlat, mlng, 16);
+    t.zoomTo(near_lat, near_lng, 16);
   },
 
   geoShowError: function (error) {
