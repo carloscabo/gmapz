@@ -39,7 +39,7 @@
       <td>
         <a href="#" data-gmapz-function="zoom" data-lat="43.361736" data-lon="-5.85029" data-zoom="16">Zoom to coordinates</a><br>
         <a href="#" data-gmapz-function="zoom" data-idx="38" data-zoom="16">Zoom to location idx</a><br>
-        <a href="#" data-gmapz-function="find-closets">Find closets to your position</a>
+        <a href="#" data-gmapz-function="find-near">Find nearest to your position</a>
       </td>
       <td>
         <select name="" id="" data-gmapz-select>
@@ -51,7 +51,8 @@
         </select>
       </td>
       <td>
-        <input type="text" placeholder="Introduce tu dirección"><input type="button" value="Buscar más cercano">
+        <input type="text" placeholder="Introduce tu dirección">
+        <input data-gmapz-function="find-near-address" type="submit" value="Buscar más cercano">
       </td>
     </tr>
   </table>

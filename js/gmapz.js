@@ -1,11 +1,5 @@
 GMapz = {
 
-  // Geolocation (not used yet)
-  g_loc: {
-    lat: null,
-    lon: null
-  },
-
   // Related to GoogleMaps objects
   g_map: null,
   g_pins: {},
@@ -20,7 +14,6 @@ GMapz = {
   iw_template: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
   pin_base: null,
   pins: {},
-  user_pos: null,
 
   init: function(map_id) {
 
@@ -201,12 +194,12 @@ GMapz = {
     return x*Math.PI/180;
   },
 
-  findClosestMarkerTo: function (lat, lon) {
+  findNearestMarkerTo: function (lat, lon) {
     var
       t = this,
       R = 6371, // radius of earth in km
       distances = [],
-      closest = -1;
+      nearidx = -1;
 
     for (var key in t.g_markers) {
       var mlat = t.g_markers[key].position.lat();
@@ -218,23 +211,51 @@ GMapz = {
       var d = R * c;
 
       distances[key] = d;
-      if ( closest == -1 || d < distances[closest] ) {
-        closest = key;
+      if ( nearidx == -1 || d < distances[nearidx] ) {
+        nearidx = key;
       }
     }
-    return(closest);
+    return(nearidx);
+  },
+
+  findNearestMarkerToAddress: function (addr) {
+    var
+      t = this,
+      geocoder = new google.maps.Geocoder();
+
+    //convert location into longitude and latitude
+    geocoder.geocode({
+      address: addr
+    }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        /*t.g_map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: t.g_map,
+          position: results[0].geometry.location
+        });*/
+        //console.log(results[0].geometry.location);
+        t.geoShowPosition(results[0].geometry.location);
+      }
+    });
   },
 
   geoShowPosition: function (pos){
     var
       t   = this,
-      lat = pos.coords.latitude,
-      lon = pos.coords.longitude;
+      lat = null,
+      lon = null,
       idx = null;
 
-    //console.log(lat + '-' + lon);
-    //console.log(this);
-    idx = t.findClosestMarkerTo(lat, lon);
+    // Navigator.geolocation
+    if (pos.coords) {
+      lat = pos.coords.latitude;
+      lon = pos.coords.longitude;
+    } else {
+      lat = pos.jb;
+      lon = pos.kb;
+    }
+
+    idx = t.findNearestMarkerTo(lat, lon);
     var mlat = t.g_markers[idx].position.lat();
     var mlon = t.g_markers[idx].position.lng();
 
@@ -243,7 +264,6 @@ GMapz = {
     t.iw_visible = t.g_infowindows[idx];
     t.g_infowindows[idx].open(t.g_map, t.g_markers[idx]);
     t.zoomTo(mlat, mlon, 16);
-
   },
 
   geoShowError: function (error) {
@@ -293,13 +313,21 @@ GMapz = {
         t.zoomTo($t.data('lat'), $t.data('lon'), $t.data('zoom'));
       }
       break;
-    case 'find-closets':
-      var n = navigator.geolocation;
-      if( n ) {
+    case 'find-near':
+      var
+        n = navigator.geolocation;
+      if(n) {
         n.getCurrentPosition(t.geoShowPosition.bind(t), t.geoShowError.bind(t));
       } else {
         alert('Su navegador no soporta Geolocalización.');
       }
+      break;
+    case 'find-near-address':
+      var
+        a = $t.siblings('input[type=text]').val();
+        if (a) {
+          t.findNearestMarkerToAddress(a);
+        }
       break;
     default:
       return false;
