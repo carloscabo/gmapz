@@ -3,33 +3,33 @@ $(document).ready(function() {
 
   // Pins
   // Mus be defined BEFORE map init
-  GMapz.pin_base = 'img/gmapz/';
+  GMapz.path = 'img/gmapz/';
   GMapz.pins = {
     default: {
       pin: {
-        img: GMapz.pin_base + 'pin.png',
+        img: GMapz.path + 'pin.png',
         size: [48.0, 48.0],
         anchor: [24.0, 48.0]
       },
       shadow: {
-        img: GMapz.pin_base + 'pin-shadow.png',
+        img: GMapz.path + 'pin-shadow.png',
         size: [73.0, 48.0]
       }
     },
     orange: {
       pin: {
-        img: GMapz.pin_base + 'pin-orange.png',
+        img: GMapz.path + 'pin-orange.png',
         size: [48.0, 48.0],
         anchor: [24.0, 48.0]
       },
       shadow: {
-        img: GMapz.pin_base + 'pin-shadow.png',
+        img: GMapz.path + 'pin-shadow.png',
         size: [73.0, 48.0]
       }
     },
     blue: {
       pin: {
-        img: GMapz.pin_base + 'pin-blue.png',
+        img: GMapz.path + 'pin-blue.png',
         size: [48.0, 48.0],
         anchor: [24.0, 48.0]
       }
