@@ -1,17 +1,21 @@
 GMapz = {
 
   // Abbreviatures
-  gm: google.maps,
+  GM: google.maps,
 
   // Related to GoogleMaps objects
-  g_map: null,
-  g_pins: {},   // Pins
-  g_shds: {},   // Shadows
-  g_mrks: [],   // Markers
-  g_nfws: [],   // Info-windows
-  g_bnds: null, // Bounds
+  // All properties begin with "g"
+  g: {
+    map: null,
+    pins: {},  // Pins
+    shds: {},  // Shadows
+    mrks: [],  // Markers
+    nfws: [],  // Info-windows
+    bnds: null // Bounds
+  },
 
   // Custom objects / properties
+  // are inside "z" object
   locs: [], // Locations
   iw_visible: false,
   iw_template: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
@@ -22,16 +26,16 @@ GMapz = {
     var
       t = this;
 
-    // Properties we want to pass to the map
-    var g_map_options = {
+    // Map options
+    var options = {
       scrollwheel: false,
       zoom: 20, // zoom level of the map
-      center: new t.gm.LatLng(0,0),
-      mapTypeId: t.gm.MapTypeId.ROADMAP // map type ROADMAP/SATELLITE/HYBRID/TERRAIN
+      center: new t.GM.LatLng(0,0),
+      mapTypeId: t.GM.MapTypeId.ROADMAP // map type ROADMAP/SATELLITE/HYBRID/TERRAIN
     };
 
     // Calling the constructor, initializing the map
-    t.g_map = new t.gm.Map(document.getElementById(map_id), g_map_options);
+    t.g.map = new t.GM.Map(document.getElementById(map_id), options);
 
     // this.map.scrollWheelZoom.disable();
 
@@ -42,32 +46,32 @@ GMapz = {
       if (t.pins[key]['pin']['img']) {
 
         // First define
-        t.g_pins[key] = {};
+        t.g.pins[key] = {};
 
-        t.g_pins[key].pin = new t.gm.MarkerImage(t.pins[key]['pin']['img'],
+        t.g.pins[key].pin = new t.GM.MarkerImage(t.pins[key]['pin']['img'],
            // width / height
-          new t.gm.Size(t.pins[key]['pin']['size'][0], t.pins[key]['pin']['size'][1]),
+          new t.GM.Size(t.pins[key]['pin']['size'][0], t.pins[key]['pin']['size'][1]),
           // origin
-          new t.gm.Point(0,0),
+          new t.GM.Point(0,0),
           // anchor point
-          new t.gm.Point(t.pins[key]['pin']['anchor'][0], t.pins[key]['pin']['anchor'][1])
+          new t.GM.Point(t.pins[key]['pin']['anchor'][0], t.pins[key]['pin']['anchor'][1])
         );
         // Shadows
         if (t.pins[key]['shadow']) {
-          t.g_pins[key].shadow = new t.gm.MarkerImage(t.pins[key]['shadow']['img'],
+          t.g.pins[key].shadow = new t.GM.MarkerImage(t.pins[key]['shadow']['img'],
              // width / height
-            new t.gm.Size(t.pins[key]['shadow']['size'][0], t.pins[key]['shadow']['size'][1]),
+            new t.GM.Size(t.pins[key]['shadow']['size'][0], t.pins[key]['shadow']['size'][1]),
             // origin
-            new t.gm.Point(0,0),
+            new t.GM.Point(0,0),
             // anchor point same as pin
-            new t.gm.Point(t.pins[key]['pin']['anchor'][0], t.pins[key]['pin']['anchor'][1])
+            new t.GM.Point(t.pins[key]['pin']['anchor'][0], t.pins[key]['pin']['anchor'][1])
           );
         } else {
-          t.g_pins[key].shadow = null;
+          t.g.pins[key].shadow = null;
         }
       } else {
-        t.g_pins[key].pin = null;
-        t.g_pins[key].shadow = null;
+        t.g.pins[key].pin = null;
+        t.g.pins[key].shadow = null;
       }
     }
   },
@@ -79,7 +83,7 @@ GMapz = {
 
     // Array de coordenadas
     t.locs = locs;
-    t.g_bnds = new t.gm.LatLngBounds();
+    t.g.bnds = new t.GM.LatLngBounds();
 
     for (var i = t.locs.length - 1; i >= 0; i--) {
 
@@ -90,45 +94,45 @@ GMapz = {
 
       // Setting pin & shadow
       // Default
-      if (t.g_pins['default']) {
-        t_pin = t.g_pins['default'].pin;
-        t_sha = t.g_pins['default'].shadow;
+      if (t.g.pins['default']) {
+        t_pin = t.g.pins['default'].pin;
+        t_sha = t.g.pins['default'].shadow;
       }
 
       // Customized for this point
-      if (t.locs[i]['pin'] && t.g_pins[t.locs[i]['pin']]) {
-        t_pin = t.g_pins[t.locs[i]['pin']].pin;
-        if (t.g_pins[t.locs[i]['pin']].shadow) {
-          t_sha = t.g_pins[t.locs[i]['pin']].shadow;
+      if (t.locs[i]['pin'] && t.g.pins[t.locs[i]['pin']]) {
+        t_pin = t.g.pins[t.locs[i]['pin']].pin;
+        if (t.g.pins[t.locs[i]['pin']].shadow) {
+          t_sha = t.g.pins[t.locs[i]['pin']].shadow;
         }
       }
 
       // Markers array
-      t.g_mrks[idx] = new t.gm.Marker({
+      t.g.mrks[idx] = new t.GM.Marker({
         idx: t.locs[i]['idx'],
-        position: new t.gm.LatLng(t.locs[i]['lat'],t.locs[i]['lng']),
-        map: t.g_map,
+        position: new t.GM.LatLng(t.locs[i]['lat'],t.locs[i]['lng']),
+        map: t.g.map,
         icon: t_pin,
         shadow: t_sha
       });
 
-      t.g_bnds.extend(t.g_mrks[idx].getPosition());
+      t.g.bnds.extend(t.g.mrks[idx].getPosition());
 
       // Infowindows array
-      t.g_nfws[idx] = new t.gm.InfoWindow({
+      t.g.nfws[idx] = new t.GM.InfoWindow({
         content: t.iw_template.replace('{REPLACE}',t.locs[i]['iw'])
       });
 
       // Click on marker event
-      t.gm.event.addListener(t.g_mrks[idx], 'click', function() {
+      t.GM.event.addListener(t.g.mrks[idx], 'click', function() {
         t.closeAllInfoWindows();
-        t.iw_visible = t.g_nfws[this.idx];
-        t.g_nfws[this.idx].open(t.g_map, t.g_mrks[this.idx]);
+        t.iw_visible = t.g.nfws[this.idx];
+        t.g.nfws[this.idx].open(t.g.map, t.g.mrks[this.idx]);
       });
     } //for
 
     // Bounds with several markers
-    t.g_map.fitBounds(t.g_bnds);
+    t.g.map.fitBounds(t.g.bnds);
 
     // Single mark zoom adjust
     t.singleMarkerZoomAdjust();
@@ -140,25 +144,25 @@ GMapz = {
 
     if (t.g_pegman) {
       // Allready have pegman move it!
-      t.g_pegman.setPosition(new t.gm.LatLng(lat,lng));
+      t.g_pegman.setPosition(new t.GM.LatLng(lat,lng));
       t.g_pegman.setVisible(true);
     } else {
       // Create pegman marker
-      t.pegman_pin = new t.gm.MarkerImage(
+      t.pegman_pin = new t.GM.MarkerImage(
         t.path + 'pegman_48.png',
-        new t.gm.Size(48, 48),
-        new t.gm.Point(0,0),
-        new t.gm.Point(24, 48)
+        new t.GM.Size(48, 48),
+        new t.GM.Point(0,0),
+        new t.GM.Point(24, 48)
       );
-      t.pegman_shadow = new t.gm.MarkerImage(
+      t.pegman_shadow = new t.GM.MarkerImage(
         t.path + 'pegman_48-shadow.png',
-        new t.gm.Size(73, 48),
-        new t.gm.Point(0,0),
-        new t.gm.Point(24, 48)
+        new t.GM.Size(73, 48),
+        new t.GM.Point(0,0),
+        new t.GM.Point(24, 48)
       );
-      t.g_pegman = new t.gm.Marker({
-        position: new t.gm.LatLng(lat, lng),
-        map: t.g_map,
+      t.g_pegman = new t.GM.Marker({
+        position: new t.GM.LatLng(lat, lng),
+        map: t.g.map,
         icon: t.pegman_pin,
         shadow: t.pegman_shadow
       });
@@ -173,9 +177,9 @@ GMapz = {
     if (!max) max = 16;
     if (!target) target = 14;
 
-    var listener = t.gm.event.addListener(t.g_map, 'idle', function() {
-      if (t.g_map.getZoom() > max) t.g_map.setZoom(target);
-      t.gm.event.removeListener(listener);
+    var listener = t.GM.event.addListener(t.g.map, 'idle', function() {
+      if (t.g.map.getZoom() > max) t.g.map.setZoom(target);
+      t.GM.event.removeListener(listener);
     });
   },
 
@@ -189,13 +193,13 @@ GMapz = {
   allMarkersVisible: function (visible) {
     var t = this;
     t.closeAllInfoWindows();
-    t.g_bnds = new t.gm.LatLngBounds();
-    for (var key in t.g_mrks) {
-      t.g_mrks[key].setVisible(visible);
-      t.g_bnds.extend(t.g_mrks[key].getPosition());
+    t.g.bnds = new t.GM.LatLngBounds();
+    for (var key in t.g.mrks) {
+      t.g.mrks[key].setVisible(visible);
+      t.g.bnds.extend(t.g.mrks[key].getPosition());
     }
     if (visible) {
-      t.g_map.fitBounds(t.g_bnds);
+      t.g.map.fitBounds(t.g.bnds);
     }
   },
 
@@ -205,12 +209,12 @@ GMapz = {
     t.closeAllInfoWindows();
     t.allMarkersVisible(false);
 
-    t.g_bnds = new t.gm.LatLngBounds();
+    t.g.bnds = new t.GM.LatLngBounds();
     for (var i in group) {
-      t.g_mrks[group[i]].setVisible(true);
-      t.g_bnds.extend(t.g_mrks[group[i]].getPosition());
+      t.g.mrks[group[i]].setVisible(true);
+      t.g.bnds.extend(t.g.mrks[group[i]].getPosition());
     }
-    t.g_map.fitBounds(t.g_bnds);
+    t.g.map.fitBounds(t.g.bnds);
 
     if (group.length == 1) {
       t.singleMarkerZoomAdjust();
@@ -219,14 +223,14 @@ GMapz = {
 
   zoomTo: function (lat, lng, zoom) {
     var t = this;
-    t.g_map.setCenter(new t.gm.LatLng(lat, lng));
-    t.g_map.setZoom(zoom);
+    t.g.map.setCenter(new t.GM.LatLng(lat, lng));
+    t.g.map.setZoom(zoom);
   },
 
   stopAllAnimations: function (idx) {
     var t = this;
-    for (var key in t.g_mrks) {
-      t.g_mrks[key].setAnimation(null);
+    for (var key in t.g.mrks) {
+      t.g.mrks[key].setAnimation(null);
     }
   },
 
@@ -241,9 +245,9 @@ GMapz = {
       distances = [],
       nearidx = -1;
 
-    for (var key in t.g_mrks) {
-      var mlat = t.g_mrks[key].position.lat();
-      var mlng = t.g_mrks[key].position.lng();
+    for (var key in t.g.mrks) {
+      var mlat = t.g.mrks[key].position.lat();
+      var mlng = t.g.mrks[key].position.lng();
       var dLat  = t.rad(mlat - lat);
       var dLong = t.rad(mlng - lng);
       var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(t.rad(lat)) * Math.cos(t.rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
@@ -261,13 +265,13 @@ GMapz = {
   findNearestMarkerToAddress: function (addr) {
     var
       t = this,
-      geocoder = new t.gm.Geocoder();
+      geocoder = new t.GM.Geocoder();
 
     //convert location into longitude and latitude
     geocoder.geocode({
       address: addr
     }, function(results, status) {
-      if (status == t.gm.GeocoderStatus.OK) {
+      if (status == t.GM.GeocoderStatus.OK) {
         t.geoShowPosition(results[0].geometry.location);
       } else {
         alert('No se ha encontrado la dirección.');
@@ -296,23 +300,23 @@ GMapz = {
 
     // Find nearest marker
     idx = t.findNearestMarkerTo(lat, lng);
-    near_lat = t.g_mrks[idx].position.lat();
-    near_lng = t.g_mrks[idx].position.lng();
+    near_lat = t.g.mrks[idx].position.lat();
+    near_lng = t.g.mrks[idx].position.lng();
 
     // Add pegman / you are here
     t.addPegmanMarker(lat, lng);
-    // t.g_map.setCenter(new t.gm.LatLng(lat, lng));
+    // t.g.map.setCenter(new t.GM.LatLng(lat, lng));
 
     t.closeAllInfoWindows();
-    t.g_mrks[idx].setVisible(true);
-    t.g_mrks[idx].setAnimation(t.gm.Animation.BOUNCE);
+    t.g.mrks[idx].setVisible(true);
+    t.g.mrks[idx].setAnimation(t.GM.Animation.BOUNCE);
 
-    t.g_bnds = t.g_bnds = new t.gm.LatLngBounds();
-    t.g_bnds.extend(t.g_mrks[idx].getPosition());
-    t.g_bnds.extend(t.getOppositeCorner(lat, lng, near_lat, near_lng));
-    t.g_map.fitBounds(t.g_bnds);
-    // t.iw_visible = t.g_nfws[idx];
-    // t.g_nfws[idx].open(t.g_map, t.g_mrks[idx]);
+    t.g.bnds = t.g.bnds = new t.GM.LatLngBounds();
+    t.g.bnds.extend(t.g.mrks[idx].getPosition());
+    t.g.bnds.extend(t.getOppositeCorner(lat, lng, near_lat, near_lng));
+    t.g.map.fitBounds(t.g.bnds);
+    // t.iw_visible = t.g.nfws[idx];
+    // t.g.nfws[idx].open(t.g.map, t.g.mrks[idx]);
     // t.zoomTo(near_lat, near_lng, 16);
   },
 
@@ -321,7 +325,7 @@ GMapz = {
       t = this,
       x = cx + (cx - rx),
       y = cy + (cy - ry);
-    return new t.gm.LatLng(x,y);
+    return new t.GM.LatLng(x,y);
   },
 
   geoShowError: function (error) {
@@ -364,10 +368,10 @@ GMapz = {
       var idx = $t.data('idx');
       if (idx) {
         var
-          lat = t.g_mrks[idx].position.lat(),
-          lng = t.g_mrks[idx].position.lng();
+          lat = t.g.mrks[idx].position.lat(),
+          lng = t.g.mrks[idx].position.lng();
 
-        t.g_mrks[idx].setVisible(true);
+        t.g.mrks[idx].setVisible(true);
         t.zoomTo(lat, lng, $t.data('zoom'));
       } else {
         t.zoomTo($t.data('lat'), $t.data('lng'), $t.data('zoom'));
