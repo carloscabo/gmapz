@@ -301,14 +301,27 @@ GMapz = {
 
     // Add pegman / you are here
     t.addPegmanMarker(lat, lng);
-    t.g_map.setCenter(new t.gm.LatLng(lat, lng));
+    // t.g_map.setCenter(new t.gm.LatLng(lat, lng));
 
     t.closeAllInfoWindows();
     t.g_mrks[idx].setVisible(true);
     t.g_mrks[idx].setAnimation(t.gm.Animation.BOUNCE);
-    t.iw_visible = t.g_nfws[idx];
-    t.g_nfws[idx].open(t.g_map, t.g_mrks[idx]);
-    t.zoomTo(near_lat, near_lng, 16);
+
+    t.g_bnds = t.g_bnds = new t.gm.LatLngBounds();
+    t.g_bnds.extend(t.g_mrks[idx].getPosition());
+    t.g_bnds.extend(t.getOppositeCorner(lat, lng, near_lat, near_lng));
+    t.g_map.fitBounds(t.g_bnds);
+    // t.iw_visible = t.g_nfws[idx];
+    // t.g_nfws[idx].open(t.g_map, t.g_mrks[idx]);
+    // t.zoomTo(near_lat, near_lng, 16);
+  },
+
+  getOppositeCorner: function (cx, cy, rx, ry) {
+    var
+      t = this,
+      x = cx + (cx - rx),
+      y = cy + (cy - ry);
+    return new t.gm.LatLng(x,y);
   },
 
   geoShowError: function (error) {
@@ -332,6 +345,8 @@ GMapz = {
     var
       t = this;
 
+    t.stopAllAnimations();
+
     switch (f) {
     case 'show-group':
       var d = $t.data('group') + '';
@@ -344,7 +359,6 @@ GMapz = {
       break;
     case 'show-all':
       t.allMarkersVisible(true);
-      t.stopAllAnimations();
       break;
     case 'zoom':
       var idx = $t.data('idx');
@@ -405,7 +419,3 @@ GMapz = {
 
   }
 };
-
-
-
-
