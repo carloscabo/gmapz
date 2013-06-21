@@ -1,3 +1,11 @@
+/*
+ ====================================
+ GMapz. Yet another gmaps manager
+ by carlos Cabo 2013
+ https://github.com/carloscabo/gmapz
+ ====================================
+*/
+
 GMapz = {
 
   // Abbreviatures

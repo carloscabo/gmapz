@@ -14,9 +14,7 @@ Features
 Setup and config
 ================
 
-The best way to see how **GMpaz** its to take a look to the files included in the sample you can find in the repository.
-
-Will be very useful if you take a look to the **ready.js** while you read this section.
+The best way to see how **GMpaz** its to take a look to the files included in the sample you can find in the repository. Will be very useful if you take a look to the `ready.js` while you read this section.
 
 ### HTML
 
@@ -71,11 +69,11 @@ You define the markers inside an object this way:
       }
       ...
 
-The **idx** (index) parameter helps to identify the marker inside the map, must be unique, but it's no necessary that the idxs are consecutive.
+- The **idx** (index) parameter helps to identify the marker inside the map, must be unique, but it's no necessary that the idxs are consecutive.
 
-The **iw** parameter defines the info that that marker will show when clicked, a.k.a. "infowindow".
+- The **iw** parameter defines the info that that marker will show when clicked, a.k.a. "infowindow".
 
-**pin** must be in the onees we defined in the previous step (_Defining the pins_), if you omit this parameter GMpaz will asign the pin named "default", if that is also undefined will asign a default Google Maps pin.
+- **pin** must be in the onees we defined in the previous step (_Defining the pins_), if you omit this parameter GMpaz will asign the pin named "default", if that is also undefined will asign a default Google Maps pin.
 
 ### Initializing the map
 
@@ -86,5 +84,22 @@ The **iw** parameter defines the info that that marker will show when clicked, a
     GMapz.draw(locations);
     
 This sentence pass our marker object to draw them in our map.
+
+Buttons and interactivity
+=========================
+
+When you call
+
+    GMapz.buttonInit();
+    
+GMapz automatically look for all the elements in the page with the attribute `data-gmapz-function` as follows.
+
+    <a href="#" data-gmapz-function="show-group" data-group="289,38">Show group B</a>
+
+TO-DO
+=====
+
+- Add custom color palette to the map
+- Have several maps in the same page
 
 
