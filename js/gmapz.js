@@ -24,9 +24,13 @@ GMapz = {
 
   // Custom objects / properties
   // are inside "z" object
-  locs: [], // Locations
-  iw_visible: false,
-  iw_template: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
+  z: {
+    locs: [], // Locations
+    iw_v: false,
+    // inforwindow template
+    iw_t: '<div class="gmapz-infowindow">{REPLACE}</a></div>'
+  },
+
   pins: {},
   path: 'img/gmapz/',
 
@@ -90,15 +94,15 @@ GMapz = {
       t = this;
 
     // Array de coordenadas
-    t.locs = locs;
+    t.z.locs = locs;
     t.g.bnds = new t.GM.LatLngBounds();
 
-    for (var i = t.locs.length - 1; i >= 0; i--) {
+    for (var i = t.z.locs.length - 1; i >= 0; i--) {
 
       var
         t_pin = null,
         t_sha = null,
-        idx = t.locs[i]['idx'];
+        idx = t.z.locs[i]['idx'];
 
       // Setting pin & shadow
       // Default
@@ -108,17 +112,17 @@ GMapz = {
       }
 
       // Customized for this point
-      if (t.locs[i]['pin'] && t.g.pins[t.locs[i]['pin']]) {
-        t_pin = t.g.pins[t.locs[i]['pin']].pin;
-        if (t.g.pins[t.locs[i]['pin']].shadow) {
-          t_sha = t.g.pins[t.locs[i]['pin']].shadow;
+      if (t.z.locs[i]['pin'] && t.g.pins[t.z.locs[i]['pin']]) {
+        t_pin = t.g.pins[t.z.locs[i]['pin']].pin;
+        if (t.g.pins[t.z.locs[i]['pin']].shadow) {
+          t_sha = t.g.pins[t.z.locs[i]['pin']].shadow;
         }
       }
 
       // Markers array
       t.g.mrks[idx] = new t.GM.Marker({
-        idx: t.locs[i]['idx'],
-        position: new t.GM.LatLng(t.locs[i]['lat'],t.locs[i]['lng']),
+        idx: t.z.locs[i]['idx'],
+        position: new t.GM.LatLng(t.z.locs[i]['lat'],t.z.locs[i]['lng']),
         map: t.g.map,
         icon: t_pin,
         shadow: t_sha
@@ -128,13 +132,13 @@ GMapz = {
 
       // Infowindows array
       t.g.nfws[idx] = new t.GM.InfoWindow({
-        content: t.iw_template.replace('{REPLACE}',t.locs[i]['iw'])
+        content: t.z.iw_t.replace('{REPLACE}',t.z.locs[i]['iw'])
       });
 
       // Click on marker event
       t.GM.event.addListener(t.g.mrks[idx], 'click', function() {
         t.closeAllInfoWindows();
-        t.iw_visible = t.g.nfws[this.idx];
+        t.z.iw_v = t.g.nfws[this.idx];
         t.g.nfws[this.idx].open(t.g.map, t.g.mrks[this.idx]);
       });
     } //for
@@ -193,8 +197,8 @@ GMapz = {
 
   closeAllInfoWindows: function () {
     var t = this;
-    if(t.iw_visible) {
-      t.iw_visible.close();
+    if(t.z.iw_v) {
+      t.z.iw_v.close();
     }
   },
 
@@ -323,7 +327,7 @@ GMapz = {
     t.g.bnds.extend(t.g.mrks[idx].getPosition());
     t.g.bnds.extend(t.getOppositeCorner(lat, lng, near_lat, near_lng));
     t.g.map.fitBounds(t.g.bnds);
-    // t.iw_visible = t.g.nfws[idx];
+    // t.z.iw_v = t.g.nfws[idx];
     // t.g.nfws[idx].open(t.g.map, t.g.mrks[idx]);
     // t.zoomTo(near_lat, near_lng, 16);
   },
