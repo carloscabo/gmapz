@@ -9,7 +9,7 @@ Features
 - Ease to add the map markers in a JSON way
 - Posibility to define different pin designs for the markers
 - Functionality to Show / hide "groups" of markers
-- Functionality to find the nearest marker to uer geolocalization or to an address provided in "text mode"
+- Functionality to find the nearest marker to user geolocalization or to an address provided in "text mode"
 
 Setup and config
 ================
@@ -30,15 +30,15 @@ You only need to define a DIV container with and unique ID
 Its useful to understand the way that GMpaz goes when triying to initialize your markers.
 
 1. If you dont define this section default Google Maps' "Pins" will be used to identify all the markers in the map.
-2. If you define a "default pin" this will be the one assigned by default to all the markers that don't have any other marker asigned. So it's allways recommended to define a "default pin".
-3. If a marker don't have a "shadow" parameter, GMapz will asign it the shadow of the "default pin", so if all the markers share the same shadow you don't need to define it again and again.
-4. The markers are identifyed by its "key", in the sample you can find in `ready.js` the keys are `default`, `orange`, `blue` ...
+2. If you define a `default` pin this will be the one assigned by default to **all the markers that don't have any other pin asigned**. So it's allways recommended to define a "default pin".
+3. If a marker don't have a `shadow` parameter, GMapz will asign it the shadow of the `default` pin, so if all the pins share the same shadow you don't need to define it again and again.
+4. The markers are identifyed by its `key`, in the sample you can find in `ready.js` the **keys** are `default`, `orange`, `blue` ...
 
 Take care of the path property that defines where are stored your "custom pin" images.
 
     GMapz.path = 'img/gmapz/';
     
-You must define your customized pins / markers this way
+You must define your customized pins this way
 
     GMapz.path = 'img/gmapz/'; // Path to the images
     GMapz.pins = {
@@ -69,11 +69,11 @@ You define the markers inside an object this way:
       }
       ...
 
-- The `idx` (index) parameter helps to identify the marker inside the map, must be unique, but it's no necessary that the idxs are consecutive.
+- The `idx` (index) parameter helps to identify the marker inside the map, must be unique, but it's not necessary that the idxs are consecutive / sequential.
 
-- The `iw` parameter defines the info that that marker will show when clicked, a.k.a. `infowindow`.
+- The `iw` parameter defines the info that the marker will show when clicked, a.k.a. `infowindow`.
 
-- `pin` must be in the onees we defined in the previous step ( _Defining the pins_ ), if you omit this parameter GMpaz will asign the pin named `default`, if that is also undefined will asign a default Google Maps pin.
+- `pin` must be in the ones we defined in the previous step ( _Defining the pins_ ), if you omit this parameter GMpaz will asign the pin named `default`, if that is also undefined will asign a default Google Maps pin.
 
 ### Initializing the map
 
@@ -92,34 +92,35 @@ When you call:
 
     GMapz.buttonInit();
     
-GMapz automatically look for all the elements in the page with the attribute `data-gmapz-function` and will asign then an `click` event.
+GMapz automatically look for all the elements in the page with the attribute `data-gmapz-function` and will asign them an JQuery `click` event.
     
-You can pass several additional data attributes to identify the parameters for the function asigned to the button.
+You can pass several additional `data-attributes` to identify the parameters for the function asigned to the button.
 
 For instance:
 
     <a href="#" data-gmapz-function="show-group" data-group="289,38">Show group B</a>
     
-Thios button hides all markers BUT the ones defined in `data-group` (with `idx` 298 and 38 ).
+This button hides all markers BUT the ones defined in `data-group` (with `idx` `298` and `38` ).
 
-### Available functions
+### Available button functions
 
-Show gorup of markers
-`data-gmapz-function="show-group" data-group="idx1,idx2..."`
+    data-gmapz-function="show-group" data-group="idx1,idx2..."
+Show group of markers
+
+    data-gmapz-function="show-all"
 Show all the markers
-`data-gmapz-function="show-all"`
 
+    data-gmapz-function="zoom" data-lat="43.361736" data-lng="-5.85029" data-zoom="16"
 Zoom to location coordinates
-`data-gmapz-function="zoom" data-lat="43.361736" data-lng="-5.85029" data-zoom="16"`
 
+    data-gmapz-function="zoom" data-idx="38"
 Zoom to a single marker idx
-`data-gmapz-function="zoom" data-idx="38"`
 
+    data-gmapz-function="find-near"
 Try to find nearest marker to your postion (using Geolocation)
-`data-gmapz-function="find-near"`
 
+    data-gmapz-function="find-near-address"
 Try to find nearest marker to an address entered by the user
-`data-gmapz-function="find-near-address"`
 
 TO-DO
 =====
