@@ -3,6 +3,10 @@ gmapz
 
 GMapz is yet another Google Maps JS library. I know there are other out there but I wanted to dig a little in how Google Maps works, and recopile in one only JS lib several features I've needed in past porjects including GMs.
 
+You can view the working sample included in the following URL
+
+<h3><a href="http://htmlpreview.github.io/?https://github.com/carloscabo/gmapz/blob/master/index.htm" target="_blank">GMapz working sample</a></h3>
+
 Features
 ========
 
