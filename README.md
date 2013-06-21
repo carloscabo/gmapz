@@ -32,7 +32,7 @@ Its useful to understand the way that GMpaz goes when triying to initialize your
 1. If you dont define this section default Google Maps' "Pins" will be used to identify all the markers in the map.
 2. If you define a "default pin" this will be the one assigned by default to all the markers that don't have any other marker asigned. So it's allways recommended to define a "default pin".
 3. If a marker don't have a "shadow" parameter, GMapz will asign it the shadow of the "default pin", so if all the markers share the same shadow you don't need to define it again and again.
-4. The markers are identifyed by its "key", in the sample you can find in **ready.js** the keys are _default_, _orange_, _blue_ ...
+4. The markers are identifyed by its "key", in the sample you can find in `ready.js` the keys are `default`, `orange`, `blue` ...
 
 Take care of the path property that defines where are stored your "custom pin" images.
 
@@ -69,11 +69,11 @@ You define the markers inside an object this way:
       }
       ...
 
-- The **idx** (index) parameter helps to identify the marker inside the map, must be unique, but it's no necessary that the idxs are consecutive.
+- The `idx` (index) parameter helps to identify the marker inside the map, must be unique, but it's no necessary that the idxs are consecutive.
 
-- The **iw** parameter defines the info that that marker will show when clicked, a.k.a. "infowindow".
+- The `iw` parameter defines the info that that marker will show when clicked, a.k.a. `infowindow`.
 
-- **pin** must be in the onees we defined in the previous step (_Defining the pins_), if you omit this parameter GMpaz will asign the pin named "default", if that is also undefined will asign a default Google Maps pin.
+- `pin` must be in the onees we defined in the previous step ( _Defining the pins_ ), if you omit this parameter GMpaz will asign the pin named `default`, if that is also undefined will asign a default Google Maps pin.
 
 ### Initializing the map
 
@@ -83,18 +83,43 @@ You define the markers inside an object this way:
 
     GMapz.draw(locations);
     
-This sentence pass our marker object to draw them in our map.
+This sentence pass our marker object `locations` to draw them in our map.
 
 Buttons and interactivity
 =========================
 
-When you call
+When you call:
 
     GMapz.buttonInit();
     
-GMapz automatically look for all the elements in the page with the attribute `data-gmapz-function` as follows.
+GMapz automatically look for all the elements in the page with the attribute `data-gmapz-function` and will asign then an `click` event.
+    
+You can pass several additional data attributes to identify the parameters for the function asigned to the button.
+
+For instance:
 
     <a href="#" data-gmapz-function="show-group" data-group="289,38">Show group B</a>
+    
+Thios button hides all markers BUT the ones defined in `data-group` (with `idx` 298 and 38 ).
+
+### Available functions
+
+Show gorup of markers
+`data-gmapz-function="show-group" data-group="idx1,idx2..."`
+Show all the markers
+`data-gmapz-function="show-all"`
+
+Zoom to location coordinates
+`data-gmapz-function="zoom" data-lat="43.361736" data-lng="-5.85029" data-zoom="16"`
+
+Zoom to a single marker idx
+`data-gmapz-function="zoom" data-idx="38"`
+
+Try to find nearest marker to your postion (using Geolocation)
+`data-gmapz-function="find-near"`
+
+Try to find nearest marker to an address entered by the user
+`data-gmapz-function="find-near-address"`
 
 TO-DO
 =====
