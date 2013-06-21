@@ -1,4 +1,90 @@
-gmama
+gmapz
 =====
 
-Simple GoogleMaps Manager
+GMapz is yet another Google Maps JS library. I know there are other out there but I wanted to dig a little in how Google Maps works, and recopile in one only JS lib several features I've needed in past porjects including GMs.
+
+Features
+========
+
+- Ease to add the map markers in a JSON way
+- Posibility to define different pin designs for the markers
+- Functionality to Show / hide "groups" of markers
+- Functionality to find the nearest marker to uer geolocalization or to an address provided in "text mode"
+
+Setup and config
+================
+
+The best way to see how **GMpaz** its to take a look to the files included in the sample you can find in the repository.
+
+Will be very useful if you take a look to the **ready.js** while you read this section.
+
+### HTML
+
+You only need to define a DIV container with and unique ID
+
+    <div id="map-container">
+      <!-- Map will be drawn here -->
+    </div>
+    
+
+### Defining the pins
+
+Its useful to understand the way that GMpaz goes when triying to initialize your markers.
+
+1. If you dont define this section default Google Maps' "Pins" will be used to identify all the markers in the map.
+2. If you define a "default pin" this will be the one assigned by default to all the markers that don't have any other marker asigned. So it's allways recommended to define a "default pin".
+3. If a marker don't have a "shadow" parameter, GMapz will asign it the shadow of the "default pin", so if all the markers share the same shadow you don't need to define it again and again.
+4. The markers are identifyed by its "key", in the sample you can find in **ready.js** the keys are _default_, _orange_, _blue_ ...
+
+Take care of the path property that defines where are stored your "custom pin" images.
+
+    GMapz.path = 'img/gmapz/';
+    
+You must define your customized pins / markers this way
+
+    GMapz.path = 'img/gmapz/'; // Path to the images
+    GMapz.pins = {
+      default: { // This is the "key" or "name" of the pin
+        pin: {
+          img: GMapz.path + 'pin.png',
+          size: [48.0, 48.0],  // Size of the img in pixels
+          anchor: [24.0, 48.0] // Point used as anchor
+        },
+        shadow: {
+          img: GMapz.path + 'pin-shadow.png',
+          size: [73.0, 48.0]
+        }
+      },
+      ...
+
+### Defining the markers
+
+You define the markers inside an object this way:
+
+    var locations = [
+      {
+        idx: 1, // MUST BE UNIQUE AND NUMERIC
+        pin: 'orange', // The key / name we asigned before
+        lat: 40.372,
+        lng: -3.915,
+        iw: 'Universidad Europea de Madrid.<br>Campus de Villaviciosa de Odón<br>C/ Tajo s/n. Villaciosa de Odón<br>28670 Madrid.<br><a href="http://www.uem.es/">Visita la web</a>'
+      }
+      ...
+
+The **idx** (index) parameter helps to identify the marker inside the map, must be unique, but it's no necessary that the idxs are consecutive.
+
+The **iw** parameter defines the info that that marker will show when clicked, a.k.a. "infowindow".
+
+**pin** must be in the onees we defined in the previous step (_Defining the pins_), if you omit this parameter GMpaz will asign the pin named "default", if that is also undefined will asign a default Google Maps pin.
+
+### Initializing the map
+
+    GMapz.init('map-container'); // You pass the map-container ID
+    
+### Draw all the markers and start
+
+    GMapz.draw(locations);
+    
+This sentence pass our marker object to draw them in our map.
+
+
