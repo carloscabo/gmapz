@@ -69,7 +69,7 @@ You define the markers inside an object this way:
         pin: 'orange', // The key / name we asigned before
         lat: 40.372,
         lng: -3.915,
-        iw: 'Universidad Europea de Madrid.<br>Campus de Villaviciosa de Odón<br>C/ Tajo s/n. Villaciosa de Odón<br>28670 Madrid.<br><a href="http://www.uem.es/">Visita la web</a>'
+        iw: 'Picos de Europa<br>Asturias<br><a href="http://es.wikipedia.org/wiki/Picos_de_Europa">Wikipedia</a>'
       }
       ...
 
