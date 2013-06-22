@@ -216,10 +216,14 @@ GMapz = {
   },
 
   // Expects array
-  showMarkerGroup: function (group) {
-    var t = this;
+  showMarkerGroup: function (group, hide_rest) {
+    var
+      t = this;
+
     t.closeAllInfoWindows();
-    t.allMarkersVisible(false);
+    if (hide_rest) {
+      t.allMarkersVisible(false);
+    }
 
     t.g.bnds = new t.GM.LatLngBounds();
     for (var i in group) {
@@ -383,12 +387,14 @@ GMapz = {
 
     switch (f) {
     case 'show-group':
-      var d = $t.data('group') + '';
+      var
+        d = $t.data('group') + '';
+        hr = $t.data('hide-rest');
       if(d.indexOf(',') === -1) {
-        t.showMarkerGroup([d]);
+        t.showMarkerGroup([d], hr);
       } else {
         // Trim and split
-        t.showMarkerGroup($.map(d.split(","),$.trim));
+        t.showMarkerGroup($.map(d.split(","),$.trim), hr);
       }
       break;
     case 'show-all':

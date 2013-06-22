@@ -108,8 +108,8 @@ This button hides all markers BUT the ones defined in `data-group` (with `idx` `
 
 ### Available button functions
 
-    data-gmapz-function="show-group" data-group="idx1,idx2..."
-Show group of markers
+    data-gmapz-function="show-group" data-group="2,4,11,12" data-hide-rest="true"
+Show group of markers. `data-hide-rest` optional attribute defines if rest of the markers will be visible or not.
 
     data-gmapz-function="show-all"
 Show all the markers
