@@ -126,10 +126,19 @@ Try to find nearest marker to your postion (using Geolocation)
     data-gmapz-function="find-near-address"
 Try to find nearest marker to an address entered by the user
 
+Helpers
+=======
+
+    GMapz.convertDMStoDec('13°44′00″S');
+    // Returns -13.733333333333333
+    
+Converts coordinates in DMS (Degree/Minutes/Seconds) to Decimal notation, the ones used by GoogleMaps.
+
 TO-DO
 =====
 
 - Add custom color palette to the map
 - Have several maps in the same page
+- Automatically convert coordinates in DMS (29°00′40″N) to Dec
 
 

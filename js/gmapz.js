@@ -332,6 +332,24 @@ GMapz = {
     // t.zoomTo(near_lat, near_lng, 16);
   },
 
+  // Converts coordinate in degree/minute/second
+  // into decimal notation.
+  convertDMStoDec: function (str) {
+    var
+      val = null;
+      coo = str.replace(/\D/g,' ').replace(/\s{2,}/g, ' ').trim().split(' ');
+
+      val = parseFloat(coo[0],10) + (parseFloat(coo[1],10) / 60) + (parseFloat(coo[2],10) / 3600);
+
+      // Sout / west / oeste
+      if (str.match(/[swo]/i)) {
+        val = val * -1;
+      }
+      return val;
+  },
+
+  // Given a center (cx, cy) and a corner (rx, ry)
+  // Returns the opposite corner of rectangle
   getOppositeCorner: function (cx, cy, rx, ry) {
     var
       t = this,
