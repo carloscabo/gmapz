@@ -137,8 +137,11 @@ Converts coordinates in DMS (Degree/Minutes/Seconds) to Decimal notation, the on
 TO-DO
 =====
 
+- Easy way to add new markers once the map is initialized
+- Add markers with AJAX
 - Add custom color palette to the map
 - Have several maps in the same page
+- Create maps on-the-fly
 - Automatically convert coordinates in DMS (29°00′40″N) to Dec
 
 
