@@ -162,4 +162,9 @@ $(document).ready(function() {
     GMapz.deleteMarkers([289,12,666]);
   });
 
+
+  var GMapz2 = Object.create(GMapz);
+  GMapz2.init('map-container-2');
+  GMapz.addMarkers(morocco);
+
 });
