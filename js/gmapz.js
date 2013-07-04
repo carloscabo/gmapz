@@ -154,8 +154,9 @@ GMapz = {
   deleteMarkers: function (idxArray) {
     var t = this;
     for (var i in idxArray) {
-      if (t.g.mrks[idxArray[i]]) {
+      if (t.g.mrks && t.g.mrks[idxArray[i]]) {
         t.g.mrks[idxArray[i]].setMap(null);
+        delete t.g.mrks[idxArray[i]];
       }
       if (t.g.locs && t.g.locs[idxArray[i]]) {
         delete t.g.locs[idxArray[i]];
@@ -184,7 +185,9 @@ GMapz = {
     } else {
       // Fit to idxs group
       for (var i in idxArray) {
-        t.g.bnds.extend(t.g.mrks[idxArray[i]].getPosition());
+        if (t.g.mrks && t.g.mrks[idxArray[i]]) {
+          t.g.bnds.extend(t.g.mrks[idxArray[i]].getPosition());
+        }
       }
     }
 
@@ -266,7 +269,9 @@ GMapz = {
       t.setMarkersVisibility(false);
     }
     for (var i in group) {
-      t.g.mrks[group[i]].setVisible(true);
+      if (t.g.mrks && t.g.mrks[group[i]]) {
+        t.g.mrks[group[i]].setVisible(true);
+      }
     }
     t.calculateBounds(group);
   },
