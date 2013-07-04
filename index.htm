@@ -27,17 +27,17 @@
   <h1>GMapz sample</h1>
   <h2><a href="https://github.com/carloscabo/gmapz">https://github.com/carloscabo/gmapz</a></h2>
 
-  <div class="map-style" id="map-container">
+  <div class="map-style" id="map-1">
     <!-- Map will be drawn here -->
   </div>
 
   <table>
     <tr>
       <td>
-        <a href="#" data-gmapz-function="show-group" data-group="2,4,11,12" data-hide-rest="true">Show group A</a><br>
-        <a href="#" data-gmapz-function="show-group" data-group="5, 8">Show group B</a><br>
-        <a href="#" data-gmapz-function="show-group" data-group="9">Show group C</a><br>
-        <a href="#" data-gmapz-function="show-all">Show all markers</a><br>
+        <a href="#" data-gmapz="map-1" data-function="show-group" data-group="2,4,11,12" data-hide-rest="true">Show group A</a><br>
+        <a href="#" data-gmapz="map-1" data-function="show-group" data-group="5, 8">Show group B</a><br>
+        <a href="#" data-gmapz="map-1" data-function="show-group" data-group="9">Show group C</a><br>
+        <a href="#" data-gmapz="map-1" data-function="show-all">Show all markers</a><br>
       </td>
       <td>
         <a href="#" id="js-new-locations">Add new locations</a>
@@ -46,22 +46,22 @@
         <a href="#" id="js-delete-markers">Delete markers</a>
       </td>
       <td>
-        <a href="#" data-gmapz-function="zoom" data-lat="43.248852" data-lng="-5.772265" data-zoom="18">Zoom to coordinates</a><br>
-        <a href="#" data-gmapz-function="zoom" data-idx="38" data-zoom="12">Zoom to location idx</a><br>
-        <a href="#" data-gmapz-function="find-near">Find nearest to your position</a>
+        <a href="#" data-gmapz="map-1" data-function="zoom" data-lat="43.248852" data-lng="-5.772265" data-zoom="18">Zoom to coordinates</a><br>
+        <a href="#" data-gmapz="map-1" data-function="zoom" data-idx="38" data-zoom="12">Zoom to location idx</a><br>
+        <a href="#" data-gmapz="map-1" data-function="find-near">Find nearest to your position</a>
       </td>
       <td>
-        <select name="" id="" data-gmapz-select>
+        <select name="" id="" data-gmapz-select="map-1">
           <option value="0">Select marker group</option>
-          <option data-gmapz-function="show-group" data-group="2,4,11,12">Show group A</option>
-          <option data-gmapz-function="show-group" data-group="5,8">Show group B</option>
-          <option data-gmapz-function="show-group" data-group="9">Show group C</option>
-          <option data-gmapz-function="zoom" data-idx="1" data-zoom="12">Zoom to location idx</a>
+          <option data-function="show-group" data-group="2,4,11,12">Show group A</option>
+          <option data-function="show-group" data-group="5,8">Show group B</option>
+          <option data-function="show-group" data-group="9">Show group C</option>
+          <option data-function="zoom" data-idx="1" data-zoom="12">Zoom to location idx</a>
         </select>
       </td>
       <td>
         <input type="text" placeholder="Introduce tu dirección">
-        <input data-gmapz-function="find-near-address" type="submit" value="Buscar más cercano">
+        <input data-gmapz="map-1" data-function="find-near-address" type="submit" value="Buscar más cercano">
       </td>
     </tr>
   </table>

@@ -28,7 +28,13 @@ GMapz = {
     locs: {}, // Locations
     iw_v: false,
     // infowindow template
-    iw_t: '<div class="gmapz-infowindow">{REPLACE}</a></div>'
+    iw_t: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
+    map_id: null
+  },
+
+  // Custom error messages for internacionalization
+  m: {
+    not_found: 'Lo sentimos, no se ha encontrado la dirección.'
   },
 
   pins: {},
@@ -37,6 +43,9 @@ GMapz = {
   init: function(map_id) {
     var
       t = this;
+
+    // Store map_id container
+    t.z.map_id = map_id;
 
     // Map options
     var options = {
@@ -329,7 +338,7 @@ GMapz = {
       if (status == t.GM.GeocoderStatus.OK) {
         t.geoShowPosition(results[0].geometry.location);
       } else {
-        alert('No se ha encontrado la dirección.');
+        alert(t.m.not_found);
       }
     });
   },
@@ -474,27 +483,26 @@ GMapz = {
   },
 
   // Button to control the map from outside
-  buttonInit: function(button_class) {
+  buttonInit: function() {
     var
       t = this;
 
     // Generic buttons / <A>
-    $('*[data-gmapz-function]').click(function (e) {
+    $('*[data-gmapz='+t.z.map_id+']').click(function (e) {
       e.preventDefault();
       var
         $t = $(this),
-        f  = $t.data('gmapz-function') + '';
+        f  = $t.data('function') + '';
       t.buttonsFunctionality(f, $t);
     });
 
     // Selects
-    $('select[data-gmapz-select]').change(function (e) {
+    $('select[data-gmapz-select='+t.z.map_id+']').change(function (e) {
       e.preventDefault();
       var
         $t = $(this).find(':selected'),
-        f = $t.data('gmapz-function') + '';
+        f = $t.data('function') + '';
       t.buttonsFunctionality(f, $t);
     });
-
   }
 };
