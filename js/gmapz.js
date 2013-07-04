@@ -167,7 +167,7 @@ GMapz = {
         }
       }
     } else {
-      // Fit to idx group
+      // Fit to idxs group
       for (var i in idxArray) {
         t.g.bnds.extend(t.g.mrks[idxArray[i]].getPosition());
       }
@@ -250,15 +250,10 @@ GMapz = {
     if (hide_rest) {
       t.setMarkersVisibility(false);
     }
-    //t.g.bnds = new t.GM.LatLngBounds();
     for (var i in group) {
       t.g.mrks[group[i]].setVisible(true);
     }
     t.calculateBounds(group);
-
-    // if (group.length == 1) {
-    //   t.singleMarkerZoomAdjust();
-    // }
   },
 
   zoomTo: function (lat, lng, zoom) {

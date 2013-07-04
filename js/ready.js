@@ -33,6 +33,13 @@ $(document).ready(function() {
         size: [48.0, 48.0],
         anchor: [24.0, 48.0]
       }
+    },
+    green: {
+      pin: {
+        img: GMapz.path + 'pin-green.png',
+        size: [48.0, 48.0],
+        anchor: [24.0, 48.0]
+      }
     }
   };
 
@@ -117,8 +124,31 @@ $(document).ready(function() {
     }
   ];
 
+  // Data
+  var morocco = [
+    {
+      idx: 667, // MUST BE UNIQUE AND NUMERIC
+      pin: 'green',
+      lat: 34.033884,
+      lng: -5.000206,
+      iw: 'Fez en Marruecos'
+    },{
+      idx: 668,
+      pin: 'green',
+      lat: 35.698013,
+      lng: -0.632942,
+      iw: 'Orán'
+    }
+  ];
+
   GMapz.init('map-container');
   GMapz.addMarkers(locations);
   GMapz.buttonInit();
+
+  // Button behaviors
+  $('#js-new-locations').click(function (e) {
+    e.preventDefault();
+    GMapz.addMarkers(morocco);
+  });
 
 });
