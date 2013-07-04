@@ -163,8 +163,8 @@ $(document).ready(function() {
   });
 
 
-  var GMapz2 = Object.create(GMapz);
+  /*var GMapz2 = Object.create(GMapz);
   GMapz2.init('map-container-2');
-  GMapz.addMarkers(morocco);
+  GMapz.addMarkers(morocco);*/
 
 });
