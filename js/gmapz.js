@@ -88,14 +88,17 @@ GMapz = {
     }
   },
 
-  draw: function(locs) {
+  addMarkers: function(locs) {
 
     var
       t = this;
 
     // Array de coordenadas
-    t.z.locs = locs;
-    t.g.bnds = new t.GM.LatLngBounds();
+    for (var i in locs) {
+      t.z.locs.push(locs[i]);
+    }
+    //t.z.locs = locs;
+    //t.g.bnds = new t.GM.LatLngBounds();
 
     for (var i = t.z.locs.length - 1; i >= 0; i--) {
 
@@ -128,7 +131,7 @@ GMapz = {
         shadow: t_sha
       });
 
-      t.g.bnds.extend(t.g.mrks[idx].getPosition());
+      //t.g.bnds.extend(t.g.mrks[idx].getPosition());
 
       // Infowindows array
       t.g.nfws[idx] = new t.GM.InfoWindow({
@@ -142,6 +145,33 @@ GMapz = {
         t.g.nfws[this.idx].open(t.g.map, t.g.mrks[this.idx]);
       });
     } //for
+
+    // Calculate bounds and zoom
+    t.calculateBounds();
+
+  },
+
+  // Recalculate bounds depending on markers
+  calculateBounds: function (idxArray) {
+    var
+      t = this;
+
+    // Reset bounds
+    t.g.bnds = new t.GM.LatLngBounds();
+
+    if (!idxArray) {
+      // Calculate all visible
+      for (var idx in t.g.mrks) {
+        if (t.g.mrks[idx].getVisible()) {
+          t.g.bnds.extend(t.g.mrks[idx].getPosition());
+        }
+      }
+    } else {
+      // Fit to idx group
+      for (var i in idxArray) {
+        t.g.bnds.extend(t.g.mrks[idxArray[i]].getPosition());
+      }
+    }
 
     // Bounds with several markers
     t.g.map.fitBounds(t.g.bnds);
@@ -202,17 +232,13 @@ GMapz = {
     }
   },
 
-  allMarkersVisible: function (visible) {
+  setMarkersVisibility: function (visible) {
     var t = this;
     t.closeAllInfoWindows();
-    t.g.bnds = new t.GM.LatLngBounds();
     for (var key in t.g.mrks) {
       t.g.mrks[key].setVisible(visible);
-      t.g.bnds.extend(t.g.mrks[key].getPosition());
     }
-    if (visible) {
-      t.g.map.fitBounds(t.g.bnds);
-    }
+    t.calculateBounds();
   },
 
   // Expects array
@@ -222,19 +248,17 @@ GMapz = {
 
     t.closeAllInfoWindows();
     if (hide_rest) {
-      t.allMarkersVisible(false);
+      t.setMarkersVisibility(false);
     }
-
-    t.g.bnds = new t.GM.LatLngBounds();
+    //t.g.bnds = new t.GM.LatLngBounds();
     for (var i in group) {
       t.g.mrks[group[i]].setVisible(true);
-      t.g.bnds.extend(t.g.mrks[group[i]].getPosition());
     }
-    t.g.map.fitBounds(t.g.bnds);
+    t.calculateBounds(group);
 
-    if (group.length == 1) {
-      t.singleMarkerZoomAdjust();
-    }
+    // if (group.length == 1) {
+    //   t.singleMarkerZoomAdjust();
+    // }
   },
 
   zoomTo: function (lat, lng, zoom) {
@@ -398,7 +422,7 @@ GMapz = {
       }
       break;
     case 'show-all':
-      t.allMarkersVisible(true);
+      t.setMarkersVisibility(true);
       break;
     case 'zoom':
       var idx = $t.data('idx');

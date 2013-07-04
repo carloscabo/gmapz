@@ -118,7 +118,7 @@ $(document).ready(function() {
   ];
 
   GMapz.init('map-container');
-  GMapz.draw(locations);
+  GMapz.addMarkers(locations);
   GMapz.buttonInit();
 
 });
