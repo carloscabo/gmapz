@@ -17,17 +17,17 @@ GMapz = {
     map: null,
     pins: {},  // Pins
     shds: {},  // Shadows
-    mrks: [],  // Markers
-    nfws: [],  // Info-windows
+    mrks: {},  // Markers
+    nfws: {},  // Info-windows
     bnds: null // Bounds
   },
 
   // Custom objects / properties
   // are inside "z" object
   z: {
-    locs: [], // Locations
+    locs: {}, // Locations
     iw_v: false,
-    // inforwindow template
+    // infowindow template
     iw_t: '<div class="gmapz-infowindow">{REPLACE}</a></div>'
   },
 
@@ -94,18 +94,16 @@ GMapz = {
       t = this;
 
     // Array de coordenadas
-    for (var i in locs) {
-      t.z.locs.push(locs[i]);
-    }
-    //t.z.locs = locs;
-    //t.g.bnds = new t.GM.LatLngBounds();
+    for (var idx in locs) {
+      // If exists delete
+      t.deleteMarkers([idx]);
 
-    for (var i = t.z.locs.length - 1; i >= 0; i--) {
+      // Add new
+      t.z.locs[idx] = locs[idx];
 
       var
         t_pin = null,
-        t_sha = null,
-        idx = t.z.locs[i]['idx'];
+        t_sha = null;
 
       // Setting pin & shadow
       // Default
@@ -115,40 +113,57 @@ GMapz = {
       }
 
       // Customized for this point
-      if (t.z.locs[i]['pin'] && t.g.pins[t.z.locs[i]['pin']]) {
-        t_pin = t.g.pins[t.z.locs[i]['pin']].pin;
-        if (t.g.pins[t.z.locs[i]['pin']].shadow) {
-          t_sha = t.g.pins[t.z.locs[i]['pin']].shadow;
+      if (locs[idx]['pin'] && t.g.pins[locs[idx]['pin']]) {
+        t_pin = t.g.pins[locs[idx]['pin']].pin;
+        if (t.g.pins[locs[idx]['pin']].shadow) {
+          t_sha = t.g.pins[locs[idx]['pin']].shadow;
         }
       }
 
       // Markers array
       t.g.mrks[idx] = new t.GM.Marker({
-        idx: t.z.locs[i]['idx'],
-        position: new t.GM.LatLng(t.z.locs[i]['lat'],t.z.locs[i]['lng']),
+        idx: idx,
+        position: new t.GM.LatLng(locs[idx]['lat'],locs[idx]['lng']),
         map: t.g.map,
         icon: t_pin,
         shadow: t_sha
       });
 
-      //t.g.bnds.extend(t.g.mrks[idx].getPosition());
+      // Only if iw exists
+      if (locs[idx]['iw']) {
+        // Infowindows array
+        t.g.nfws[idx] = new t.GM.InfoWindow({
+          content: t.z.iw_t.replace('{REPLACE}',locs[idx]['iw'])
+        });
 
-      // Infowindows array
-      t.g.nfws[idx] = new t.GM.InfoWindow({
-        content: t.z.iw_t.replace('{REPLACE}',t.z.locs[i]['iw'])
-      });
+        // Click on marker event
+        t.GM.event.addListener(t.g.mrks[idx], 'click', function() {
+          t.closeAllInfoWindows();
+          t.z.iw_v = t.g.nfws[this.idx];
+          t.g.nfws[this.idx].open(t.g.map, t.g.mrks[this.idx]);
+        });
+      }
 
-      // Click on marker event
-      t.GM.event.addListener(t.g.mrks[idx], 'click', function() {
-        t.closeAllInfoWindows();
-        t.z.iw_v = t.g.nfws[this.idx];
-        t.g.nfws[this.idx].open(t.g.map, t.g.mrks[this.idx]);
-      });
-    } //for
+    }
 
     // Calculate bounds and zoom
     t.calculateBounds();
 
+  },
+
+  deleteMarkers: function (idxArray) {
+    var t = this;
+    for (var i in idxArray) {
+      if (t.g.mrks[idxArray[i]]) {
+        t.g.mrks[idxArray[i]].setMap(null);
+      }
+      if (t.g.locs && t.g.locs[idxArray[i]]) {
+        delete t.g.locs[idxArray[i]];
+      }
+      if (t.g.nfws && t.g.nfws[idxArray[i]]) {
+        delete t.g.nfws[idxArray[i]];
+      }
+    }
   },
 
   // Recalculate bounds depending on markers
