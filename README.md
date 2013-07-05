@@ -144,24 +144,24 @@ Force maps bounds recalculation and zooms to all visible markers in that moment.
 
     GMapz.closeAllInfoWindows();
     // SELF-EXPLANATORY ;)
-&nbsp;
-    GMapz.setMarkersVisibility(BOOLEAN); 
+
+    GMapz.setMarkersVisibility(BOOLEAN);
     // Shows / hides all markers
     // Closes al infowindows
     // Zooms to the markers available
-&nbsp;
-    GMapz.showMarkerGroup(ARRAY_OF_IDX, BOOLEAN); 
+
+    GMapz.showMarkerGroup(ARRAY_OF_IDX, BOOLEAN);
     // Shows and zooms to the markers passed
     // Second parameter if true hides all the rest
-&nbsp;
+
     GMapz.oomTo(LAT, LNG, ZOOM);
 
     GMapz.stopAllAnimations();
     // SELF-EXPLANATORY ;)
-&nbsp;
+
     GMapz.findNearestMarkerTo(LAT, LNG);
     // Returns the marker IDX nearest to the LAT, LNG coordinates
-&nbsp;
+
     GMapz.findNearestMarkerToAddress(STRING);
     // Returns the marker IDX nearest to an address coordinates
 
