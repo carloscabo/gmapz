@@ -29,7 +29,13 @@ GMapz = {
     iw_v: false,
     // infowindow template
     iw_t: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
-    map_id: null
+    map_id: null,
+    // If you have a single marker you'll get a high zoom
+    // This value determines what zoom level determines that
+    // its necesary to adjust it.
+    smzl: 20,
+    // Automatic zomm will be set to this value
+    smzt: 17
   },
 
   // Custom error messages for internacionalization
@@ -191,6 +197,13 @@ GMapz = {
           t.g.bnds.extend(t.g.mrks[idx].getPosition());
         }
       }
+      // Bounds with several markers
+      t.g.map.fitBounds(t.g.bnds);
+
+      if (t.g.mrks.length < 2) {
+        t.singleMarkerZoomAdjust(t.z.smzl, t.z.smzt);
+      }
+
     } else {
       // Fit to idxs group
       for (var i in idxArray) {
@@ -198,13 +211,13 @@ GMapz = {
           t.g.bnds.extend(t.g.mrks[idxArray[i]].getPosition());
         }
       }
+      // Bounds with several markers
+      t.g.map.fitBounds(t.g.bnds);
+
+      if (idxArray.length < 2) {
+        t.singleMarkerZoomAdjust(t.z.smzl, t.z.smzt);
+      }
     }
-
-    // Bounds with several markers
-    t.g.map.fitBounds(t.g.bnds);
-
-    // Single mark zoom adjust
-    t.singleMarkerZoomAdjust();
   },
 
   addPegmanMarker: function (lat, lng) {
@@ -240,11 +253,15 @@ GMapz = {
 
   singleMarkerZoomAdjust: function (max, target) {
     // Single mark zoom adjust
+    // When you have an only marker focused adjust the
+    // map's zoom to a better adjustment
     var
       t = this;
 
-    if (!max) max = 16;
-    if (!target) target = 14;
+    if (!max) max = 18; //
+    if (!target) target = 16;
+
+    _log(t.g.map.getZoom());
 
     var listener = t.GM.event.addListener(t.g.map, 'idle', function() {
       if (t.g.map.getZoom() > max) t.g.map.setZoom(target);
