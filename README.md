@@ -46,13 +46,13 @@ You must define your customized pins this way
 
     GMapz.path = 'img/gmapz/'; // Path to the images
     GMapz.pins = {
-      default: { // This is the "key" or "name" of the pin
-        pin: {
+      'default': { // This is the "key" or "name" of the pin
+        'pin': {
           img: GMapz.path + 'pin.png',
           size: [48.0, 48.0],  // Size of the img in pixels
           anchor: [24.0, 48.0] // Point used as anchor
         },
-        shadow: {
+        'shadow': {
           img: GMapz.path + 'pin-shadow.png',
           size: [73.0, 48.0]
         }
@@ -65,10 +65,10 @@ You define the markers inside an object this way:
 
     var locations = [
       289: { // LOCATION IDX MUST BE UNIQUE AND NUMERIC
-        pin: 'orange', // RELATED TO THE ONES DEFINED BEFORE
-        lat: 42.5868,
-        lng: 0.9745,
-        iw: 'Infowindow text'
+        'pin': 'orange', // RELATED TO THE ONES DEFINED BEFORE
+        'lat': 42.5868,
+        'lng': 0.9745,
+        'iw': 'Infowindow text'
       },
       ...
 
