@@ -261,7 +261,7 @@ GMapz = {
     if (!max) max = 18; //
     if (!target) target = 16;
 
-    _log(t.g.map.getZoom());
+    //_log(t.g.map.getZoom());
 
     var listener = t.GM.event.addListener(t.g.map, 'idle', function() {
       if (t.g.map.getZoom() > max) t.g.map.setZoom(target);
