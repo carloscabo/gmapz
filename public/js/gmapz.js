@@ -9,7 +9,8 @@
 GMapz = {
 
   // Abbreviatures
-  GM: google.maps,
+  // GM: google.maps,
+  GM: null,
 
   // Related to GoogleMaps objects
   // All properties begin with "g"
@@ -28,7 +29,7 @@ GMapz = {
     locs: {}, // Locations
     iw_v: false,
     // infowindow template
-    iw_t: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
+    iw_t: '<div class="gmapz-infowindow">{{REPLACE}}</a></div>',
     map_id: null,
     // If you have a single marker you'll get a high zoom
     // This value determines what zoom level determines that
@@ -46,12 +47,23 @@ GMapz = {
   pins: {},
   path: 'img/gmapz/',
 
-  init: function(map_id) {
+  // Begin the party!
+  init: function (map_id) {
+    var
+      t = this;
+    // Store map_id container
+    t.z.map_id = map_id;
+    // Load Google Maps API
+    t.loadScript();
+  },
+
+  // This is suppossed to be called ONCE maps API is ready
+  postinit: function() {
     var
       t = this;
 
-    // Store map_id container
-    t.z.map_id = map_id;
+    // Google maps instance
+    t.GM = google.maps;
 
     // Map options
     var options = {
@@ -62,7 +74,7 @@ GMapz = {
     };
 
     // Calling the constructor, initializing the map
-    t.g.map = new t.GM.Map(document.getElementById(map_id), options);
+    t.g.map = new t.GM.Map(document.getElementById(t.z.map_id), options);
 
     // this.map.scrollWheelZoom.disable();
 
@@ -148,7 +160,7 @@ GMapz = {
       if (locs[idx]['iw']) {
         // Infowindows array
         t.g.nfws[idx] = new t.GM.InfoWindow({
-          content: t.z.iw_t.replace('{REPLACE}',locs[idx]['iw'])
+          content: t.z.iw_t.replace('{{REPLACE}}',locs[idx]['iw'])
         });
 
         // Click on marker event
@@ -158,7 +170,6 @@ GMapz = {
           t.g.nfws[this.idx].open(t.g.map, t.g.mrks[this.idx]);
         });
       }
-
     }
 
     // Calculate bounds and zoom
@@ -521,5 +532,12 @@ GMapz = {
         f = $t.data('function') + '';
       t.buttonsFunctionality(f, $t);
     });
+  },
+
+  loadScript: function() {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&'+'callback=GMapz.postinit';
+    document.body.appendChild(script);
   }
 };

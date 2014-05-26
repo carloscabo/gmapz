@@ -1,8 +1,10 @@
+var locations;
+
 $(document).ready(function() {
   // La magia aquí
 
   // Pins
-  // Mus be defined BEFORE map init
+  // Must be defined BEFORE map init
   GMapz.path = 'img/gmapz/';
   GMapz.pins = {
     /* IE8 Reserved word */
@@ -45,7 +47,7 @@ $(document).ready(function() {
   };
 
   // Data
-  var locations = {
+  locations = {
     1: { // LOCATION IDX MUST BE UNIQUE AND NUMERIC
       lat: 42.5868,
       lng: 0.9745,
@@ -146,10 +148,8 @@ $(document).ready(function() {
     },
   };
 
-  //console.log(morocco);
-
   GMapz.init('map-1'); // Map container ID
-  GMapz.addMarkers(locations);
+  // GMapz.addMarkers(locations);
   GMapz.buttonInit();
 
   // Button behaviors
