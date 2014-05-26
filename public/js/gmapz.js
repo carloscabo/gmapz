@@ -1,7 +1,7 @@
 /*
  ====================================
  GMapz. Yet another gmaps manager
- by carlos Cabo 2013
+ by carlos Cabo 2014
  https://github.com/carloscabo/gmapz
  ====================================
 */
@@ -58,7 +58,7 @@ GMapz = {
   },
 
   // This is suppossed to be called ONCE maps API is ready
-  postinit: function() {
+  post_init: function() {
     var
       t = this;
 
@@ -113,10 +113,14 @@ GMapz = {
         t.g.pins[key].shadow = null;
       }
     }
+
+    // Si hubiese algúna location la pintamos
+    if (!jQuery.isEmptyObject(t.z.locs)) {
+      t.processMarkers();
+    }
   },
 
   addMarkers: function(locs) {
-
     var
       t = this;
 
@@ -124,10 +128,23 @@ GMapz = {
     for (var idx in locs) {
       // If exists delete
       t.deleteMarkers([idx]);
-
       // Add new
       t.z.locs[idx] = locs[idx];
+    }
 
+    if (t.GM !== null) {
+      t.processMarkers();
+    }
+
+  },
+
+  // Takes the markers list and process them
+  processMarkers: function () {
+    var
+      t = this;
+
+    // Array de coordenadas
+    for (var idx in t.z.locs) {
       var
         t_pin = null,
         t_sha = null;
@@ -140,27 +157,27 @@ GMapz = {
       }
 
       // Customized for this point
-      if (locs[idx]['pin'] && t.g.pins[locs[idx]['pin']]) {
-        t_pin = t.g.pins[locs[idx]['pin']].pin;
-        if (t.g.pins[locs[idx]['pin']].shadow) {
-          t_sha = t.g.pins[locs[idx]['pin']].shadow;
+      if (t.z.locs[idx]['pin'] && t.g.pins[t.z.locs[idx]['pin']]) {
+        t_pin = t.g.pins[t.z.locs[idx]['pin']].pin;
+        if (t.g.pins[t.z.locs[idx]['pin']].shadow) {
+          t_sha = t.g.pins[t.z.locs[idx]['pin']].shadow;
         }
       }
 
       // Markers array
       t.g.mrks[idx] = new t.GM.Marker({
         idx: idx,
-        position: new t.GM.LatLng(locs[idx]['lat'],locs[idx]['lng']),
+        position: new t.GM.LatLng(t.z.locs[idx]['lat'],t.z.locs[idx]['lng']),
         map: t.g.map,
         icon: t_pin,
         shadow: t_sha
       });
 
       // Only if iw exists
-      if (locs[idx]['iw']) {
+      if (t.z.locs[idx]['iw']) {
         // Infowindows array
         t.g.nfws[idx] = new t.GM.InfoWindow({
-          content: t.z.iw_t.replace('{{REPLACE}}',locs[idx]['iw'])
+          content: t.z.iw_t.replace('{{REPLACE}}',t.z.locs[idx]['iw'])
         });
 
         // Click on marker event
@@ -171,10 +188,8 @@ GMapz = {
         });
       }
     }
-
     // Calculate bounds and zoom
     t.calculateBounds();
-
   },
 
   deleteMarkers: function (idxArray) {
@@ -537,7 +552,7 @@ GMapz = {
   loadScript: function() {
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&'+'callback=GMapz.postinit';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&'+'callback=GMapz.post_init';
     document.body.appendChild(script);
   }
 };

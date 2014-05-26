@@ -149,7 +149,7 @@ $(document).ready(function() {
   };
 
   GMapz.init('map-1'); // Map container ID
-  // GMapz.addMarkers(locations);
+  GMapz.addMarkers(locations);
   GMapz.buttonInit();
 
   // Button behaviors
