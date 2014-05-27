@@ -226,7 +226,8 @@ GMapz = {
       // Bounds with several markers
       t.g.map.fitBounds(t.g.bnds);
 
-      if (t.g.mrks.length < 2) {
+      // Only one marker, adjust zoom
+      if (t.objectLength(t.g.mrks) < 2) {
         t.singleMarkerZoomAdjust(t.z.smzl, t.z.smzt);
       }
 
@@ -554,5 +555,15 @@ GMapz = {
     script.type = 'text/javascript';
     script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&'+'callback=GMapz.post_init';
     document.body.appendChild(script);
+  },
+
+  objectLength: function ( object ) {
+    var length = 0;
+    for( var key in object ) {
+      if( object.hasOwnProperty(key) ) {
+        ++length;
+      }
+    }
+    return length;
   }
 };
