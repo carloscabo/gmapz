@@ -51,8 +51,10 @@ GMapz = {
   init: function (map_id) {
     var
       t = this;
+
     // Store map_id container
     t.z.map_id = map_id;
+
     // Load Google Maps API
     t.loadScript();
   },
