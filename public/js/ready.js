@@ -13,10 +13,6 @@ $(document).ready(function() {
         img: GMapz.path + 'pin.png',
         size: [48.0, 48.0],
         anchor: [24.0, 48.0]
-      },
-      shadow: {
-        img: GMapz.path + 'pin-shadow.png',
-        size: [73.0, 48.0]
       }
     },
     orange: {
@@ -24,10 +20,6 @@ $(document).ready(function() {
         img: GMapz.path + 'pin-orange.png',
         size: [48.0, 48.0],
         anchor: [24.0, 48.0]
-      },
-      shadow: {
-        img: GMapz.path + 'pin-shadow.png',
-        size: [73.0, 48.0]
       }
     },
     blue: {
@@ -48,7 +40,7 @@ $(document).ready(function() {
 
   // Data
   locations = {
-    1: { // LOCATION IDX MUST BE UNIQUE AND NUMERIC
+    1: { // LOCATION IDX MUST BE UNIQUE
       lat: 42.5868,
       lng: 0.9745,
       iw: 'idx:1 <br>Aigüestortes i Estany de Sant Maurici.<br>Lérida, Cataluña<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_de_Aig%C3%BCestortes_y_Lago_de_San_Mauricio">Wikipedia</a>'
@@ -128,19 +120,19 @@ $(document).ready(function() {
 
   // Data
   var morocco = {
-    667 : { // ITEM IDX MUST BE UNIQUE AND NUMERIC
+    'FEZ' : { // ITEM IDX MUST BE UNIQUE
       pin: 'green',
       lat: 34.033884,
       lng: -5.000206,
       iw: 'idx: 667<br>Fez en Marruecos'
     },
-    668 : {
+    'ORAN' : {
       pin: 'green',
       lat: 35.698013,
       lng: -0.632942,
       iw: 'idx: 668<br>Orán'
     },
-    8: { // Changed location on pourposse
+    12: { // Updated location on pourposse
       pin: 'green',
       lat: 43.257206,
       lng: -2.923763
@@ -162,7 +154,6 @@ $(document).ready(function() {
     e.preventDefault();
     GMapz.deleteMarkers([289,12,666]);
   });
-
 
   /*var GMapz2 = Object.create(GMapz);
   GMapz2.init('map-container-2');

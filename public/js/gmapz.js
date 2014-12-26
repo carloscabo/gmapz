@@ -17,7 +17,6 @@ GMapz = {
   g: {
     map: null,
     pins: {},  // Pins
-    shds: {},  // Shadows
     mrks: {},  // Markers
     nfws: {},  // Info-windows
     bnds: null // Bounds
@@ -36,7 +35,7 @@ GMapz = {
     // its necesary to adjust it.
     smzl: 20,
     // Automatic zomm will be set to this value
-    smzt: 17
+    smzt: 7
   },
 
   // Custom error messages for internacionalization
@@ -80,7 +79,7 @@ GMapz = {
 
     // this.map.scrollWheelZoom.disable();
 
-    // Create pins & shadows
+    // Create pins
     for (var key in t.pins) {
 
       // Pins
@@ -97,22 +96,8 @@ GMapz = {
           // anchor point
           new t.GM.Point(t.pins[key]['pin']['anchor'][0], t.pins[key]['pin']['anchor'][1])
         );
-        // Shadows
-        if (t.pins[key]['shadow']) {
-          t.g.pins[key].shadow = new t.GM.MarkerImage(t.pins[key]['shadow']['img'],
-             // width / height
-            new t.GM.Size(t.pins[key]['shadow']['size'][0], t.pins[key]['shadow']['size'][1]),
-            // origin
-            new t.GM.Point(0,0),
-            // anchor point same as pin
-            new t.GM.Point(t.pins[key]['pin']['anchor'][0], t.pins[key]['pin']['anchor'][1])
-          );
-        } else {
-          t.g.pins[key].shadow = null;
-        }
       } else {
         t.g.pins[key].pin = null;
-        t.g.pins[key].shadow = null;
       }
     }
 
@@ -151,19 +136,15 @@ GMapz = {
         t_pin = null,
         t_sha = null;
 
-      // Setting pin & shadow
+      // Setting pin
       // Default
       if (t.g.pins['default']) {
         t_pin = t.g.pins['default'].pin;
-        t_sha = t.g.pins['default'].shadow;
       }
 
       // Customized for this point
       if (t.z.locs[idx]['pin'] && t.g.pins[t.z.locs[idx]['pin']]) {
         t_pin = t.g.pins[t.z.locs[idx]['pin']].pin;
-        if (t.g.pins[t.z.locs[idx]['pin']].shadow) {
-          t_sha = t.g.pins[t.z.locs[idx]['pin']].shadow;
-        }
       }
 
       // Markers array
@@ -171,8 +152,7 @@ GMapz = {
         idx: idx,
         position: new t.GM.LatLng(t.z.locs[idx]['lat'],t.z.locs[idx]['lng']),
         map: t.g.map,
-        icon: t_pin,
-        shadow: t_sha
+        icon: t_pin
       });
 
       // Only if iw exists
@@ -333,6 +313,9 @@ GMapz = {
 
   zoomTo: function (lat, lng, zoom) {
     var t = this;
+    if (typeof zoom === 'undefined') {
+      zoom = t.z.smzt;
+    }
     t.g.map.setCenter(new t.GM.LatLng(lat, lng));
     t.g.map.setZoom(zoom);
   },
@@ -496,6 +479,7 @@ GMapz = {
       break;
     case 'zoom':
       var idx = $t.data('idx');
+      console.log(idx);
       if (idx) {
         var
           lat = t.g.mrks[idx].position.lat(),

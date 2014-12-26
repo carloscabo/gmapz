@@ -1,7 +1,7 @@
 gmapz
 =====
 
-GMapz is yet another Google Maps JS library. I know there are other out there but I wanted to dig a little in how Google Maps works, and recopile in one only JS lib several features I've needed in past porjects including GMs.
+GMapz is yet another Google Maps JS library. I know there are other out there but I wanted to dig a little in how Google Maps works, and recopile in one only JS lib several features I've needed in past projects including GMs.
 
 You can view the working sample included in the following URL
 
@@ -34,7 +34,7 @@ You only need to define a DIV container with and unique ID
     <div id="map-1">
       <!-- Map will be drawn here -->
     </div>
-    
+
 
 ### Defining the pins
 
@@ -42,13 +42,12 @@ Its useful to understand the way that GMpaz goes when triying to initialize your
 
 1. If you dont define this section default Google Maps' "Pins" will be used to identify all the markers in the map.
 2. If you define a `default` pin this will be the one assigned by default to **all the markers that don't have any other pin asigned**. So it's allways recommended to define a "default pin".
-3. If a marker don't have a `shadow` parameter, GMapz will asign it the shadow of the `default` pin, so if all the pins share the same shadow you don't need to define it again and again.
-4. The markers are identifyed by its `key`, in the sample you can find in `ready.js` the **keys** are `default`, `orange`, `blue` ...
+3. The markers are identifyed by its `key`, in the sample you can find in `ready.js` the **keys** are `default`, `orange`, `blue` ...
 
 Take care of the path property that defines where are stored your "custom pin" images.
 
     GMapz.path = 'img/gmapz/';
-    
+
 You must define your customized pins this way
 
     GMapz.path = 'img/gmapz/'; // Path to the images
@@ -58,10 +57,6 @@ You must define your customized pins this way
           img: GMapz.path + 'pin.png',
           size: [48.0, 48.0],  // Size of the img in pixels
           anchor: [24.0, 48.0] // Point used as anchor
-        },
-        'shadow': {
-          img: GMapz.path + 'pin-shadow.png',
-          size: [73.0, 48.0]
         }
       },
       ...
@@ -71,7 +66,7 @@ You must define your customized pins this way
 You define the markers inside an object this way:
 
     var locations = [
-      289: { // LOCATION IDX MUST BE UNIQUE AND NUMERIC
+      'location_key': { // LOCATION IDX MUST BE UNIQUE!!!
         'pin': 'orange', // RELATED TO THE ONES DEFINED BEFORE
         'lat': 42.5868,
         'lng': 0.9745,
@@ -79,7 +74,7 @@ You define the markers inside an object this way:
       },
       ...
 
-- The `idx` (index) key helps to identify the marker inside the map, must be unique, but it's not necessary that the idxs are consecutive / sequential.
+- The `idx` (index) key helps to identify the marker inside the map, must be unique.
 
 - The `iw` parameter defines the info that the marker will show when clicked, a.k.a. `infowindow`.
 
@@ -88,11 +83,11 @@ You define the markers inside an object this way:
 ### Initializing the map
 
     GMapz.init('map-1'); // You pass the map-container ID
-    
+
 ### Draw all the markers and start
 
     GMapz.addMarkers(locations);
-    
+
 This sentence pass our marker object `locations` to draw them in our map.
 
 Buttons and interactivity
@@ -108,9 +103,9 @@ You can pass several additional `data-attributes` to identify the parameters for
 
 For instance:
 
-    <a href="#" data-gmapz="map-1" data-function="show-group" data-group="5,8">
+    <a href="#" data-gmapz="map-1" data-function="show-group" data-group="ES,FR,IT">
 
-This button hides all markers BUT the ones defined in `data-group` (with `idx` `5` and `8` ).
+This button hides all markers BUT the ones defined in `data-group` (with `idx` `ES` and `FR` and `IT` ).
 
 ### Available button functions
 
@@ -123,7 +118,7 @@ Show all the markers
     data-function="zoom" data-lat="43.361736" data-lng="-5.85029" data-zoom="16"
 Zoom to location coordinates
 
-    data-function="zoom" data-idx="38"
+    data-function="zoom" data-idx="LOCATION_ID"
 Zoom to a single marker idx
 
     data-function="find-near"
@@ -141,7 +136,7 @@ There are several methods you can call from your own JS to interact with the map
 
 You can add new markers to the map when you need it, remember that markers are idenfied by its keys, so if you pass new markers with the same keys that the existing ones you will replace them.
 
-    GMapz.deleteMarkers([289,12,666]); // Expects Array of IDX
+    GMapz.deleteMarkers(['ES',12,'FR']); // Expects Array of IDX
 
 Delete array of markers that will be removed from the map.
 
