@@ -5,7 +5,14 @@ GMapz is yet another Google Maps JS library. I know there are other out there bu
 
 You can view the working sample included in the following URL
 
-<h3><a href="http://htmlpreview.github.io/?https://github.com/carloscabo/gmapz/blob/master/index.htm" target="_blank">GMapz working sample</a></h3>
+<h3><a href="http://htmlpreview.github.io/?https://github.com/carloscabo/gmapz/blob/master/public/index.htm" target="_blank">GMapz working sample</a></h3>
+
+Requirements
+============
+
+`JQuery 1.9.1+`
+
+You dont need to include the Google Maps API, **GMapz** includes it once its initialized.
 
 Features
 ========

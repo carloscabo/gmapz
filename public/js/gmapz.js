@@ -1,7 +1,7 @@
 /*
  ====================================
  GMapz. Yet another gmaps manager
- by carlos Cabo 2013
+ by carlos Cabo 2014
  https://github.com/carloscabo/gmapz
  ====================================
 */
@@ -9,7 +9,8 @@
 GMapz = {
 
   // Abbreviatures
-  GM: google.maps,
+  // GM: google.maps,
+  GM: null,
 
   // Related to GoogleMaps objects
   // All properties begin with "g"
@@ -28,7 +29,7 @@ GMapz = {
     locs: {}, // Locations
     iw_v: false,
     // infowindow template
-    iw_t: '<div class="gmapz-infowindow">{REPLACE}</a></div>',
+    iw_t: '<div class="gmapz-infowindow">{{REPLACE}}</a></div>',
     map_id: null,
     // If you have a single marker you'll get a high zoom
     // This value determines what zoom level determines that
@@ -46,12 +47,25 @@ GMapz = {
   pins: {},
   path: 'img/gmapz/',
 
-  init: function(map_id) {
+  // Begin the party!
+  init: function (map_id) {
     var
       t = this;
 
     // Store map_id container
     t.z.map_id = map_id;
+
+    // Load Google Maps API
+    t.loadScript();
+  },
+
+  // This is suppossed to be called ONCE maps API is ready
+  post_init: function() {
+    var
+      t = this;
+
+    // Google maps instance
+    t.GM = google.maps;
 
     // Map options
     var options = {
@@ -62,7 +76,7 @@ GMapz = {
     };
 
     // Calling the constructor, initializing the map
-    t.g.map = new t.GM.Map(document.getElementById(map_id), options);
+    t.g.map = new t.GM.Map(document.getElementById(t.z.map_id), options);
 
     // this.map.scrollWheelZoom.disable();
 
@@ -101,10 +115,14 @@ GMapz = {
         t.g.pins[key].shadow = null;
       }
     }
+
+    // Si hubiese algúna location la pintamos
+    if (!jQuery.isEmptyObject(t.z.locs)) {
+      t.processMarkers();
+    }
   },
 
   addMarkers: function(locs) {
-
     var
       t = this;
 
@@ -112,10 +130,23 @@ GMapz = {
     for (var idx in locs) {
       // If exists delete
       t.deleteMarkers([idx]);
-
       // Add new
       t.z.locs[idx] = locs[idx];
+    }
 
+    if (t.GM !== null) {
+      t.processMarkers();
+    }
+
+  },
+
+  // Takes the markers list and process them
+  processMarkers: function () {
+    var
+      t = this;
+
+    // Array de coordenadas
+    for (var idx in t.z.locs) {
       var
         t_pin = null,
         t_sha = null;
@@ -128,27 +159,27 @@ GMapz = {
       }
 
       // Customized for this point
-      if (locs[idx]['pin'] && t.g.pins[locs[idx]['pin']]) {
-        t_pin = t.g.pins[locs[idx]['pin']].pin;
-        if (t.g.pins[locs[idx]['pin']].shadow) {
-          t_sha = t.g.pins[locs[idx]['pin']].shadow;
+      if (t.z.locs[idx]['pin'] && t.g.pins[t.z.locs[idx]['pin']]) {
+        t_pin = t.g.pins[t.z.locs[idx]['pin']].pin;
+        if (t.g.pins[t.z.locs[idx]['pin']].shadow) {
+          t_sha = t.g.pins[t.z.locs[idx]['pin']].shadow;
         }
       }
 
       // Markers array
       t.g.mrks[idx] = new t.GM.Marker({
         idx: idx,
-        position: new t.GM.LatLng(locs[idx]['lat'],locs[idx]['lng']),
+        position: new t.GM.LatLng(t.z.locs[idx]['lat'],t.z.locs[idx]['lng']),
         map: t.g.map,
         icon: t_pin,
         shadow: t_sha
       });
 
       // Only if iw exists
-      if (locs[idx]['iw']) {
+      if (t.z.locs[idx]['iw']) {
         // Infowindows array
         t.g.nfws[idx] = new t.GM.InfoWindow({
-          content: t.z.iw_t.replace('{REPLACE}',locs[idx]['iw'])
+          content: t.z.iw_t.replace('{{REPLACE}}',t.z.locs[idx]['iw'])
         });
 
         // Click on marker event
@@ -158,12 +189,9 @@ GMapz = {
           t.g.nfws[this.idx].open(t.g.map, t.g.mrks[this.idx]);
         });
       }
-
     }
-
     // Calculate bounds and zoom
     t.calculateBounds();
-
   },
 
   deleteMarkers: function (idxArray) {
@@ -200,7 +228,8 @@ GMapz = {
       // Bounds with several markers
       t.g.map.fitBounds(t.g.bnds);
 
-      if (t.g.mrks.length < 2) {
+      // Only one marker, adjust zoom
+      if (t.objectLength(t.g.mrks) < 2) {
         t.singleMarkerZoomAdjust(t.z.smzl, t.z.smzt);
       }
 
@@ -521,5 +550,22 @@ GMapz = {
         f = $t.data('function') + '';
       t.buttonsFunctionality(f, $t);
     });
+  },
+
+  loadScript: function() {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&'+'callback=GMapz.post_init';
+    document.body.appendChild(script);
+  },
+
+  objectLength: function ( object ) {
+    var length = 0;
+    for( var key in object ) {
+      if( object.hasOwnProperty(key) ) {
+        ++length;
+      }
+    }
+    return length;
   }
 };
