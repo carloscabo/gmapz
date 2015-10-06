@@ -50,8 +50,8 @@
   // Reques api
   function requestAPI () {
     if (!this.data.map_api_requested) {
-      this.data.map_api_requested = true;
-      this.loadScript('GMapz.apiReady');
+      GMapz.data.map_api_requested = true;
+      loadScript('GMapz.onApiReady');
     }
   }
 
@@ -63,15 +63,23 @@
     document.body.appendChild(script);
   }
 
-  function apiReady() {
+  function onApiReady() {
     this.data.map_api_ready = true;
     console.log('api is ready');
+
+    // Alert each instance
+    $('[data-gmapz]').each(function(idx, el) {
+      var gz_obj = $(el).data('plugin_gmapz');
+      gz_obj.instanceReady();
+    });
   }
 
   //
   // Public methods / properties
   //
   window.GMapz = {
+    onApiReady: onApiReady,
+    loadScript: loadScript,
     requestAPI: requestAPI,
     getUniqueId: getUniqueId,
     data: data
