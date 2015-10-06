@@ -30,7 +30,8 @@ GMapz.gz_map = (function() {
       scaleControl: true,
       zoom: 9,
       center: [0,0],
-      mapTypeId: 'ROADMAP'
+      bounds: null,
+      mapTypeId: 'ROADMAP' // ROADMAP / SATELLITE / HYBRID / TERRAIN
       /*
         styles: [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
       */
@@ -48,17 +49,28 @@ GMapz.gz_map = (function() {
 
       console.log('instance is ready!');
 
-      console.log(this.map_settings);
-
       //function code
       this.gz_settings.is_initialized = true;
 
       // Fix spacial settings
       this.map_settings.mapTypeId = google.maps.MapTypeId[this.map_settings.mapTypeId];
-      this.maps_settings.center = new google.maps.LatLng(
-        this.maps_settings.center[0],
-        this.maps_settings.center[1]
+      this.map_settings.center = new google.maps.LatLng(
+        this.map_settings.center[0],
+        this.map_settings.center[1]
       );
+
+      // Bounds
+      if (this.map_settings.bounds) {
+        var bounds = new google.maps.LatLngBounds();
+        bounds.extend( new t.GM.LatLng(
+          this.map_settings.bounds[0],this.map_settings.bounds[1])
+        );
+        bounds.extend( new t.GM.LatLng(
+          this.map_settings.bounds[2],this.map_settings.bounds[3])
+        );
+        this.map_settings.bounds = bounds;
+        this.map.fitBounds(bounds);
+      }
 
       // Calling the constructor, initializing the map
       this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);

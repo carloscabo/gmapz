@@ -8,7 +8,6 @@
 
 /**
  * Core and general tools
- * @type {Object}
  */
 (function($, undefined) {
   'use strict';
@@ -25,7 +24,8 @@
     data = {
       map_api_requested: false,
       map_api_ready: false
-    };
+    },
+    pins = null;
 
   //
   // Methods
@@ -49,8 +49,8 @@
 
   // Reques api
   function requestAPI () {
-    if (!this.data.map_api_requested) {
-      GMapz.data.map_api_requested = true;
+    if (!data.map_api_requested) {
+      data.map_api_requested = true;
       loadScript('GMapz.onApiReady');
     }
   }
@@ -64,8 +64,13 @@
   }
 
   function onApiReady() {
-    this.data.map_api_ready = true;
+    data.map_api_ready = true;
     console.log('api is ready');
+
+    // Prepare custom if any pins (we need google.maps)
+    if(GMapz.pins) {
+      GMapz.createCustomPins();
+    }
 
     // Alert each instance
     $('[data-gmapz]').each(function(idx, el) {
@@ -74,15 +79,38 @@
     });
   }
 
+  function createCustomPins() {
+    var _p = $.extend(true, {}, this.pins); // Clone
+    this.pins = {}; // Erase
+
+    // Create pins
+    for (var key in _p) {
+      // Pins
+      if (_p[key].pin.img) {
+        this.pins[key] = {};
+        this.pins[key].pin = new google.maps.MarkerImage(_p[key].pin.img,
+          // width / height
+          new google.maps.Size(_p[key].pin.size[0], _p[key].pin.size[1]),
+          // origin
+          new google.maps.Point(0,0),
+          // anchor point
+          new google.maps.Point(_p[key].pin.anchor[0], _p[key].pin.anchor[1])
+        );
+      }
+    }
+  }
+
   //
   // Public methods / properties
   //
   window.GMapz = {
+    createCustomPins: createCustomPins,
     onApiReady: onApiReady,
     loadScript: loadScript,
     requestAPI: requestAPI,
     getUniqueId: getUniqueId,
-    data: data
+    data: data,
+    pins: pins // Custom pins
   };
 
 }(jQuery));
