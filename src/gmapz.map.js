@@ -1,4 +1,4 @@
-var GMapz.map = (function() {
+GMapz.map = (function() {
 
   function Constructor(map_id, options, markers) {
     this.seats = seats;

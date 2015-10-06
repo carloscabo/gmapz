@@ -21,11 +21,10 @@
   // Module general vars
   //
   var
-    // $document = $(document),
     data = {};
 
   // Return uniqueID string.
-  getUniqueId: function(len, prefix) {
+  function getUniqueId (len, prefix) {
     var
       chars = 'abcdefghiklmnopqrstuvwxyzABCDEFGHIKLMNOPQRSTUVWXYZ'.split(''),
       uniqid = '';
@@ -53,4 +52,3 @@
   };
 
 }(jQuery));
-
