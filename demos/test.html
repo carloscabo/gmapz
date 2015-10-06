@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .map {
+      width: 640px;
+      height: 480px;
+      background-color: #ccc;
+    }
+  </style>
+  <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  <script src="../src/gmapz.js"></script>
+  <script src="../src/gmapz.maps.js"></script>
+</head>
+<body>
+  <p>Eo!</p>
+  <div id="map" class="map">Maps goes here</div>
+  <script>
+  $(document).ready(function() {
+    // La magia aquí!
+    console.log('ready');
+    var map = new GMapz.map('')
+  });
+  </script>
+</body>
+</html>
