@@ -12,16 +12,20 @@
   </style>
   <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
   <script src="../src/gmapz.js"></script>
-  <script src="../src/gmapz.maps.js"></script>
+  <script src="../src/gmapz.map.js"></script>
 </head>
 <body>
   <p>Eo!</p>
-  <div id="map" class="map">Maps goes here</div>
+  <div id="map-1" class="map">Maps goes here</div>
   <script>
   $(document).ready(function() {
     // La magia aquí!
-    var map = new GMapz.map('');
-    console.log(map);
+
+    var custom_map_options = {
+      // Options here
+    };
+
+    window.test1 = $('#map-1').gmapz( custom_map_options );
 
   });
   </script>
