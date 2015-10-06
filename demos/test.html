@@ -16,7 +16,7 @@
 </head>
 <body>
   <div id="map-1" class="map">Maps goes here</div><br>
-  <div id="map-2" data-gmapz="ojete" class="map">Maps goes here</div>
+  <div id="map-2" class="map">Maps goes here</div>
   <script>
 
   var
@@ -112,7 +112,8 @@
         pin: 'green',
         lat: 34.033884,
         lng: -5.000206,
-        iw: 'idx: 667<br>Fez en Marruecos'
+        iw: 'idx: 667<br>Fez en Marruecos',
+        draggable: true
       },
       'ORAN' : {
         pin: 'green',
@@ -161,15 +162,20 @@
       }
     };
 
-
     var custom_map_options = {
       // Options here
-      mapTypeId: 'ROADMAP', // 'SATELLITE'... caps
+      mapTypeId: 'ROADMAP', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
+      // bounds: [ nw_lat, mw_lng, se_lat, sw_lng ],
       center: [48, 2],
-      zoom: 9
+      zoom: 2
     };
 
-    var map_1 = new GMapz.map( $('#map-1'), custom_map_options );
+    var map1 = new GMapz.map( $('#map-1'), custom_map_options );
+    // $('#map-1')[0].gmapz.addLocations(  )
+    console.log(map1);
+    $('#map-1')[0].gmapz.test('eo2');
+    map1.gz_settings.test_str = 'ojete';
+    console.log($('#map-1')[0].gmapz.gz_settings.test_str);
 
   });
   </script>

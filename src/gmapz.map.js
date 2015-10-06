@@ -5,47 +5,19 @@ GMapz.map = (function() {
 
   function Constructor($map, user_settings, locs) {
 
-    // Elementos de JQuery contenedor del mapa
-    this.$map = $map;
-
-    // ID único del mapa
-    var map_id = '';
-    if (this.$map.attr('data-gmapz')) {
-      map_id = this.$map.attr('data-gmapz');
-    } else {
-      map_id = GMapz.getUniqueId(8,'gz-');
-      this.$map.attr('data-gmapz', map_id);
-    }
-    this.map_id = map_id;
-
-    // Localizaciones
-    if (typeof locs !== 'undefined') {
-      this.locs = locs;
-    }
-
-    // Extend settings
-    $.extend(this.map_settings, user_settings);
-
-    // Request GM Api, instanceReady() will be called when done
-    GMapz.requestAPI();
-
-    $($map)[0].gmapz = this;
-  }
-
-  Constructor.prototype = {
-
     // map
-    map: null,
+    this.map = null;    // gm object
+    this.$map = $map;   // JQuery selector
+    this.map_id = null; // string ID
 
-    // Locations
-    locs: {},
-
-    gz_settings: {
-      is_initialized: false
-    },
+    // Settings of object
+    this.gz_settings = {
+      is_initialized: false,
+      test_str: 'unitialized'
+    };
 
     // Google maps settings on initialization
-    map_settings: {
+    this.map_settings = {
       scrollwheel: true,
       scaleControl: true,
       zoom: 9,
@@ -55,11 +27,45 @@ GMapz.map = (function() {
       /*
         styles: [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
       */
-    },
+    };
 
-    // Pins for markers
-    pins: {},
-    img_path: 'img/gmapz/',
+    // ID único del mapa
+    if (this.$map.attr('data-gmapz')) {
+      this.map_id = this.$map.attr('data-gmapz');
+    } else {
+      this.map_id = GMapz.getUniqueId(8,'gz-');
+      this.$map.attr('data-gmapz', this.map_id);
+    }
+
+    // Localizaciones
+    if (typeof locs !== 'undefined') {
+      this.locs = locs;
+    } else {
+      this.locs = {};
+    }
+
+    // Marcadores (objectos de google)
+    this.markers = {};
+
+    // Info windows (objectos de google)
+    this.iws = {};
+
+    // Eventos
+    onMarkerDragEnd = function(marker) {
+      console.log(marker);
+    }
+
+    // Extend settings
+    $.extend(this.map_settings, user_settings);
+
+    // Attach objecto DOM element
+    $map[0].gmapz = this;
+
+    // Request GM Api, instanceReady() will be called when done
+    GMapz.requestAPI();
+  }
+
+  Constructor.prototype = {
 
     //
     // Methods
@@ -67,7 +73,7 @@ GMapz.map = (function() {
 
     instanceReady: function(e) {
 
-      console.log('instance is ready!');
+      console.log('GMpaz instance is ready!');
 
       //function code
       this.gz_settings.is_initialized = true;
@@ -82,10 +88,10 @@ GMapz.map = (function() {
       // Bounds
       if (this.map_settings.bounds) {
         var bounds = new google.maps.LatLngBounds();
-        bounds.extend( new t.GM.LatLng(
+        bounds.extend( new google.maps.LatLng(
           this.map_settings.bounds[0],this.map_settings.bounds[1])
         );
-        bounds.extend( new t.GM.LatLng(
+        bounds.extend( new google.maps.LatLng(
           this.map_settings.bounds[2],this.map_settings.bounds[3])
         );
         this.map_settings.bounds = bounds;
@@ -94,7 +100,53 @@ GMapz.map = (function() {
 
       // Calling the constructor, initializing the map
       this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
+
+      // Si hubiese algúna location la pintamos
+      if (!jQuery.isEmptyObject(this.locs)) {
+        console.log('Add locations');
+        this.addLocations(this.locs);
+      }
     },
+
+    addLocations: function (locs) {
+
+      // Get default pin
+      if (GMapz.pins['default']) {
+        default_pin = GMapz.pins['default'].pin;
+      }
+
+      for (var idx in locs) {
+        current_pin = default_pin;
+        // Customized for this point
+        if (locs[idx].pin && GMapz.pins[locs[idx].pin]) {
+          current_pin = GMapz.pins[locs[idx].pin].pin;
+        }
+        // Markers array
+        var marker_options = {
+          idx: idx,
+          position: new google.maps.LatLng(locs[idx].lat,locs[idx].lng),
+          map: this.map,
+          icon: current_pin
+        };
+        // Draggable marker?
+        if (locs[idx].draggable) { marker_options.draggable = true; }
+        // Create marker
+        this.markers[idx] = new google.maps.Marker(marker_options);
+        // Draggable marker event
+        if (locs[idx].draggable) {
+          google.maps.event.addListener(
+            this.markers[idx], 'dragend', function() {
+              this.onMarkerDragEnd(this);
+          });
+        }
+
+      }
+
+    },
+
+    testMethod: function(msg) {
+      console.log(msg);
+    }
 
   };
 

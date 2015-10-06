@@ -73,10 +73,9 @@
     }
 
     // Alert each instance
-    /*$('[data-gmapz]').each(function(idx, el) {
-      var gz_obj = $(el).data('plugin_gmapz');
-      gz_obj.instanceReady();
-    });*/
+    $('[data-gmapz]').each(function(idx, el) {
+      $(el)[0].gmapz.instanceReady();
+    });
   }
 
   function createCustomPins() {
