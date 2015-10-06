@@ -73,10 +73,10 @@
     }
 
     // Alert each instance
-    $('[data-gmapz]').each(function(idx, el) {
+    /*$('[data-gmapz]').each(function(idx, el) {
       var gz_obj = $(el).data('plugin_gmapz');
       gz_obj.instanceReady();
-    });
+    });*/
   }
 
   function createCustomPins() {
@@ -106,7 +106,6 @@
   window.GMapz = {
     createCustomPins: createCustomPins,
     onApiReady: onApiReady,
-    loadScript: loadScript,
     requestAPI: requestAPI,
     getUniqueId: getUniqueId,
     data: data,

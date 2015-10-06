@@ -15,11 +15,13 @@
   <script src="../src/gmapz.map.js"></script>
 </head>
 <body>
-  <p>Eo!</p>
-  <div id="map-1" class="map">Maps goes here</div>
+  <div id="map-1" class="map">Maps goes here</div><br>
+  <div id="map-2" data-gmapz="ojete" class="map">Maps goes here</div>
   <script>
 
-  var locs;
+  var
+    locs,
+    map_1;
 
   $(document).ready(function() {
     // La magia aquí!
@@ -167,7 +169,7 @@
       zoom: 9
     };
 
-    $('#map-1').gmapz( custom_map_options );
+    var map_1 = new GMapz.map( $('#map-1'), custom_map_options );
 
   });
   </script>

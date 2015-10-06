@@ -1,15 +1,35 @@
 //
 // Creates instances of GMapz maps
 //
-GMapz.gz_map = (function() {
+GMapz.map = (function() {
 
-  function Constructor(map_id, user_settings, locs) {
+  function Constructor($map, user_settings, locs) {
+
+    // Elementos de JQuery contenedor del mapa
+    this.$map = $map;
+
+    // ID único del mapa
+    var map_id = '';
+    if (this.$map.attr('data-gmapz')) {
+      map_id = this.$map.attr('data-gmapz');
+    } else {
+      map_id = GMapz.getUniqueId(8,'gz-');
+      this.$map.attr('data-gmapz', map_id);
+    }
     this.map_id = map_id;
-    this.locs = locs;
+
+    // Localizaciones
+    if (typeof locs !== 'undefined') {
+      this.locs = locs;
+    }
+
+    // Extend settings
     $.extend(this.map_settings, user_settings);
 
     // Request GM Api, instanceReady() will be called when done
     GMapz.requestAPI();
+
+    $($map)[0].gmapz = this;
   }
 
   Constructor.prototype = {
@@ -85,17 +105,44 @@ GMapz.gz_map = (function() {
 //
 // JQuery hook
 //
-$.fn.gmapz = function ( options, markers ) {
-  return this.each(function () {
-    // Avoid multiple instances
-    if (!$.data(this, "plugin_gmapz")) {
-      // If there is a data-gmapz use it, in other case generate and guid
+/*(function($){
+
+  var methods = {
+    init: function(options) {
       var gz_id = $(this).attr('data-gmapz');
       if (typeof gz_id !== typeof undefined && gz_id !== false) {
         gz_id = GMapz.getUniqueId(8,'gz-');
         $(this).attr('data-gmapz', gz_id);
       }
-      $(this).data("plugin_gmapz", new GMapz.gz_map(gz_id, options));
+      $(this).data('plugin_gmapz', new GMapz.gz_map(gz_id, options));
+    },
+    show: function( ) { },
+    hide: function( ) { },
+    addMarkers: function(locs) {  }
+  };
+
+  $.fn.gmapz = function ( methodOrOptions ) {
+
+    if ( methods[methodOrOptions] ) {
+      // Its a method
+      return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else {
+      // Its creation?
+      if (!$.data(this, "plugin_gmapz")) {
+        return methods.init.apply( this, arguments );
+      }
     }
-  });
-};
+return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+
+
+    return this.each(function () {
+      // Avoid multiple instances
+      if (!$.data(this, "plugin_gmapz")) {
+        // If there is a data-gmapz use it, in other case generate and guid
+
+      }
+    });
+  };
+
+})( jQuery );
+*/
