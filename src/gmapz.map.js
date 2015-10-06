@@ -31,7 +31,7 @@ GMapz.gz_map = (function() {
       zoom: 9,
       center: [0,0],
       bounds: null,
-      mapTypeId: 'ROADMAP' // ROADMAP / SATELLITE / HYBRID / TERRAIN
+      mapTypeId: 'ROADMAP' // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'
       /*
         styles: [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
       */
@@ -87,9 +87,15 @@ GMapz.gz_map = (function() {
 //
 $.fn.gmapz = function ( options, markers ) {
   return this.each(function () {
+    // Avoid multiple instances
     if (!$.data(this, "plugin_gmapz")) {
-      var map_id = GMapz.getUniqueId(8,'gz-');
-      $(this).attr('data-gmapz', map_id).data("plugin_gmapz", new GMapz.gz_map(map_id, options));
+      // If there is a data-gmapz use it, in other case generate and guid
+      var gz_id = $(this).attr('data-gmapz');
+      if (typeof gz_id !== typeof undefined && gz_id !== false) {
+        gz_id = GMapz.getUniqueId(8,'gz-');
+        $(this).attr('data-gmapz', gz_id);
+      }
+      $(this).data("plugin_gmapz", new GMapz.gz_map(gz_id, options));
     }
   });
 };
