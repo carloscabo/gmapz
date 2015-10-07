@@ -23,6 +23,9 @@ GMapz.map = (function() {
       }
     };
 
+    // Google Maps event listener
+    this.listener = null;
+
     // Google maps settings on initialization
     this.map_settings = {
       scrollwheel: true,
@@ -171,7 +174,7 @@ GMapz.map = (function() {
           });
           // Click on marker event open Infowindow
           google.maps.event.addListener(this.markers[idx], 'click', function() {
-            that.closeInfoWindows();
+            that.closeAllInfoWindows();
             that.iw_current_idx = this.idx;
             that.iws[this.idx].open(that.map, that.markers[this.idx]);
           });
@@ -184,9 +187,14 @@ GMapz.map = (function() {
     }, // addLocations
 
     // Info windows
-    closeInfoWindows: function() {
-      for (var i in this.iws) {
-        this.iws[i].close();
+
+    closeInfoWindow: function(idx) {
+      this.iws[i].close();
+    },
+
+    closeAllInfoWindows: function() {
+      for (var idx in this.iws) {
+        this.closeInfoWindow(idx);
       }
       this.iw_current_idx = false;
     },
@@ -221,9 +229,9 @@ GMapz.map = (function() {
       }
 
       // More than one marker fit Bounds
-      if (visible_count > 1) {
+      // if (visible_count > 1) {
         this.map.fitBounds(bounds);
-      }
+      // }
 
       // If NO marker set, do nothing ;)
       // Will use the default cenrter and zoom
@@ -233,18 +241,44 @@ GMapz.map = (function() {
       // Single mark zoom adjust
       // When you have an only marker focused adjust the
       // map's zoom to a better adjustment
+      console.log('attach single marker');
       if (!max) max = 18; //
       if (!target) target = 9;
-      var listener = google.maps.event.addListener(this.map, 'idle', function() {
-        if (this.map.getZoom() > max) this.map.setZoom(target);
-        google.maps.event.removeListener(listener);
+      var
+        that = this;
+      this.listener = google.maps.event.addListener(this.map, 'idle', function() {
+        if (that.map.getZoom() > max) {
+          that.map.setZoom(target);
+        };
+        google.maps.event.removeListener(this.listener);
       });
     },
 
+    setMarkerVisibility: function (visible, idx) {
+      if (!visible) {
+        this.closeWindow(idx);
+      }
+      this.markers[key].setVisible(visible);
+      t.fitBounds();
+    },
+
+    setAllMarkerVisibility: function (visible) {
+      for (var idx in this.markers) {
+        this.setMarkerVisibility(visible, idx);
+      }
+      this.calculateBounds();
+    },
+
+    //
+    // Eventos
+    //
     onMarkerDragEnd: function(marker) {
       console.log(marker);
     },
 
+    //
+    // Test / debug
+    //
     testMethod: function(msg) {
       console.log(msg);
     }

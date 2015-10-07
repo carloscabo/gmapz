@@ -27,6 +27,14 @@
     // La magia aquí!
 
     // Data
+    single = {
+      1: { // LOCATION IDX MUST BE UNIQUE
+        lat: 42.5868,
+        lng: 0.9745,
+        iw: 'idx:1 <br>Aigüestortes i Estany de Sant Maurici.<br>Lérida, Cataluña<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_de_Aig%C3%BCestortes_y_Lago_de_San_Mauricio">Wikipedia</a>'
+      }
+    };
+
     locs = {
       1: { // LOCATION IDX MUST BE UNIQUE
         lat: 42.5868,
@@ -180,7 +188,7 @@
     // Thing to to when map is ready
     map1.onReady = function() {
       console.log('#map-1 ready');
-      this.addLocations(morocco).fitBounds();
+      this.addLocations(single).fitBounds();
     };
 
     // var map2 = new GMapz.map(
