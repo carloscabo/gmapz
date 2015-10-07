@@ -127,15 +127,12 @@
         target  = $(this).attr('data-gmapz-target');
       // Get all data attributes ans send them to gmpaz handler
       $('[data-gmapz="'+target+'"]')[0].gmapz.btnAction($(this).data());
-    });
-
-    /*.on('change', 'select[data-gmapz-target]', function (e) {
+    }).on('change', 'select[data-gmapz-target]', function (e) {
       // <select>
       var
-        target  = $(this).attr('data-gmapz-target')
-        action  = $(this).attr('data-gmapz-action');
-      t.buttonsFunctionality(f, $t);
-    });*/
+        target  = $(this).attr('data-gmapz-target');
+      $('[data-gmapz="'+target+'"]')[0].gmapz.btnAction($(this).find('option:selected').data());
+    });
 
   }
 

@@ -136,8 +136,8 @@ GMapz.map = (function() {
     centerTo: function (lat, lng, zoom) {
       var t = this;
       this.map.setCenter(new google.maps.LatLng(lat, lng));
-      if (typeof zoom === 'undefined' && zoom !== false) {
-        this.setZoom(zoom);
+      if (typeof zoom !== 'undefined' && zoom !== false) {
+        this.map.setZoom(zoom);
       }
       return this;
     },
@@ -147,6 +147,7 @@ GMapz.map = (function() {
         zoom = false;
       }
       if (this.markers[idx]) {
+        this.setMarkerVisibility(true, idx);
         this.centerTo(
           this.markers[idx].position.lat(),
           this.markers[idx].position.lng(),
@@ -174,6 +175,11 @@ GMapz.map = (function() {
     addLocations: function (locs) {
 
       var that = this;
+
+      // Delete marker if exists
+      if (this.markers && this.markers[idx]) {
+        this.deleteMarkers([idx]);
+      }
 
       // Get default pin
       if (GMapz.pins['default']) {
@@ -358,6 +364,11 @@ GMapz.map = (function() {
       console.log(data);
       // console.log(data['gmapzShowGroup']);
 
+      var zoom = false;
+      if (typeof data.gmapzZoom !== 'undefined') {
+        zoom = parseInt(data.gmapzZoom, 10);
+      }
+
       // Show all markers and fit map
       if (typeof data.gmapzShowAll !== 'undefined') {
         console.log('eo');
@@ -372,7 +383,7 @@ GMapz.map = (function() {
         if (typeof data.gmapzHideRest !== 'undefined' && data.gmapzHideRest === true) {
           hide_rest = true;
         }
-        if (typeof group === 'string') {
+        if (data === parseInt(data, 10) || typeof group === 'string') {
           group = [group];
         }
         this.showMarkerGroup(group, hide_rest);
@@ -380,11 +391,6 @@ GMapz.map = (function() {
 
       // Center on marker
       if (typeof data.gmapzCenterIdx !== 'undefined') {
-        var
-          zoom = false;
-        if (typeof data.gmapzZoom !== 'undefined') {
-          zoom = data.gmapzZoom;
-        }
         this.centerToMarker(data.gmapzCenterIdx, zoom);
       }
 
