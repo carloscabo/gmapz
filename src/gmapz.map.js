@@ -53,9 +53,6 @@ GMapz.map = (function() {
     this.iw_template = '<div class="gmapz-infowindow">{{__REPLACE__}}</div>';
 
     // Eventos
-    onMarkerDragEnd = function(marker) {
-      console.log(marker);
-    };
     eOnBeforeAddLocations = function() {
 
     };
@@ -107,7 +104,6 @@ GMapz.map = (function() {
       this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
 
       // Si hubiese algúna location la pintamos
-      console.log(this.locs);
       if (!jQuery.isEmptyObject(this.locs)) {
         console.log('Add locations');
         this.addLocations(this.locs);
@@ -144,10 +140,16 @@ GMapz.map = (function() {
         if (locs[idx].draggable) {
           google.maps.event.addListener(
             this.markers[idx], 'dragend', function() {
+              console.log(that);
               that.onMarkerDragEnd(this);
           });
         }
-        // Create infowindows
+        // If set 'hidden'
+        if (locs[idx].hidden) {
+          this.markers[idx].setVisible(false);
+        }
+        // Create standard infowindows
+        // TO-DO create custom infowindows GMapz.infowindow?
         if (locs[idx].iw) {
           // Infowindows array
           this.iws[idx] = new google.maps.InfoWindow({
@@ -170,6 +172,10 @@ GMapz.map = (function() {
         this.iws[i].close();
       }
       this.iw_current_idx = false;
+    },
+
+    onMarkerDragEnd: function(marker) {
+      console.log(marker);
     },
 
     testMethod: function(msg) {
