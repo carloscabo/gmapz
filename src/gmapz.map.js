@@ -127,6 +127,36 @@ GMapz.map = (function() {
 
     },
 
+    // Map
+    setZoom: function (zoom) {
+      this.map.setZoom(zoom);
+      return this;
+    },
+
+    zoomTo: function (lat, lng, zoom) {
+      var t = this;
+      this.map.setCenter(new google.maps.LatLng(lat, lng));
+      if (typeof zoom === 'undefined') {
+        this.setZoom(zoom);
+      }
+      return this;
+    },
+
+    // Expects array
+    showMarkerGroup: function (group, hide_rest) {
+      this.closeAllInfoWindows();
+      if (hide_rest) {
+        this.setAllMarkersVisibility(false);
+      }
+      for (var i in group) {
+        if (this.markers && this.markers[group[i]]) {
+          this.markers[group[i]].setVisible(true);
+        }
+      }
+      this.fitBounds(group);
+    },
+
+    // Locations & markers
     addLocations: function (locs) {
 
       var that = this;
@@ -182,14 +212,15 @@ GMapz.map = (function() {
 
       }
 
-      return this;
-
+      return this; // Chainning
     }, // addLocations
 
     // Info windows
 
     closeInfoWindow: function(idx) {
-      this.iws[i].close();
+      if (this.iws[idx]) {
+        this.iws[idx].close();
+      }
     },
 
     closeAllInfoWindows: function() {
@@ -235,6 +266,8 @@ GMapz.map = (function() {
 
       // If NO marker set, do nothing ;)
       // Will use the default cenrter and zoom
+
+      return this; // Chainning
     },
 
     singleMarkerZoomAdjust: function (max, target) {
@@ -256,17 +289,101 @@ GMapz.map = (function() {
 
     setMarkerVisibility: function (visible, idx) {
       if (!visible) {
-        this.closeWindow(idx);
+        this.closeInfoWindow(idx);
       }
-      this.markers[key].setVisible(visible);
-      t.fitBounds();
+      this.markers[idx].setVisible(visible);
     },
 
-    setAllMarkerVisibility: function (visible) {
+    setAllMarkersVisibility: function (visible) {
       for (var idx in this.markers) {
         this.setMarkerVisibility(visible, idx);
       }
-      this.calculateBounds();
+      if (visible) {
+        this.fitBounds();
+      }
+    },
+
+    //
+    // Buttons and interaction
+    //
+
+    btnAction: function (data) {
+      // t.stopAllAnimations();
+
+      console.log(data);
+      // console.log(data['gmapzShowGroup']);
+
+      // Show all markers and fit map
+      if (typeof data.gmapzShowAll !== 'undefined') {
+        console.log('eo');
+        this.setAllMarkersVisibility(true);
+      }
+
+      // Show group of markers
+      if (typeof data.gmapzShowGroup !== 'undefined') {
+        var
+          group = data.gmapzShowGroup,
+          hide_rest = false;
+        if (typeof data.gmapzHideRest !== 'undefined' && data.gmapzHideRest === true) {
+          hide_rest = true;
+        }
+        if (typeof group === 'string') {
+          group = [group];
+        }
+        this.showMarkerGroup(group, hide_rest);
+      }
+
+      /*switch (f) {
+      case 'show-group':
+        var
+          d = $t.data('group') + '';
+          hr = $t.data('hide-rest');
+        if(d.indexOf(',') === -1) {
+          t.showMarkerGroup([d], hr);
+        } else {
+          // Trim and split
+          t.showMarkerGroup($.map(d.split(","),$.trim), hr);
+        }
+        break;
+      case 'show-all':
+        t.setMarkersVisibility(true);
+        break;
+      case 'zoom':
+        var idx = $t.data('idx');
+        t.closeAllInfoWindows();
+        if (idx) {
+          var
+            lat = t.g.markers[idx].position.lat(),
+            lng = t.g.markers[idx].position.lng(),
+            siw = $t.data('show-infowindow');
+
+          t.g.markers[idx].setVisible(true);
+          t.zoomTo(lat, lng, $t.data('zoom'));
+          t.z.infowindow_current_idx = idx;
+          t.g.infowindows[idx].open(t.g.map, t.g.markers[idx]);
+        } else {
+          t.zoomTo($t.data('lat'), $t.data('lng'), $t.data('zoom'));
+        }
+        break;
+      case 'find-near':
+        var
+          n = navigator.geolocation;
+        if(n) {
+          n.getCurrentPosition(t.geoShowPosition.bind(t), t.geoShowError.bind(t));
+        } else {
+          alert('Su navegador no soporta Geolocalización.');
+        }
+        break;
+      case 'find-near-address':
+        var
+          a = $t.siblings('input[type=text]').val();
+          if (a) {
+            t.findNearestMarkerToAddress(a);
+          }
+        break;
+      default:
+        return false;
+      }*/
     },
 
     //
