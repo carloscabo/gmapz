@@ -133,11 +133,25 @@ GMapz.map = (function() {
       return this;
     },
 
-    zoomTo: function (lat, lng, zoom) {
+    centerTo: function (lat, lng, zoom) {
       var t = this;
       this.map.setCenter(new google.maps.LatLng(lat, lng));
-      if (typeof zoom === 'undefined') {
+      if (typeof zoom === 'undefined' && zoom !== false) {
         this.setZoom(zoom);
+      }
+      return this;
+    },
+
+    centerToMarker: function(idx, zoom) {
+      if (typeof zoom === 'undefined') {
+        zoom = false;
+      }
+      if (this.markers[idx]) {
+        this.centerTo(
+          this.markers[idx].position.lat(),
+          this.markers[idx].position.lng(),
+          zoom
+        );
       }
       return this;
     },
@@ -270,6 +284,8 @@ GMapz.map = (function() {
       return this; // Chainning
     },
 
+
+
     singleMarkerZoomAdjust: function (max, target) {
       // Single mark zoom adjust
       // When you have an only marker focused adjust the
@@ -285,6 +301,12 @@ GMapz.map = (function() {
         };
         google.maps.event.removeListener(this.listener);
       });
+    },
+
+    stopAllAnimations: function (idx) {
+      for (var key in this.markers) {
+        this.markers[key].setAnimation(null);
+      }
     },
 
     // Deletes a group os markers idxs (array)
@@ -354,6 +376,16 @@ GMapz.map = (function() {
           group = [group];
         }
         this.showMarkerGroup(group, hide_rest);
+      }
+
+      // Center on marker
+      if (typeof data.gmapzCenterIdx !== 'undefined') {
+        var
+          zoom = false;
+        if (typeof data.gmapzZoom !== 'undefined') {
+          zoom = data.gmapzZoom;
+        }
+        this.centerToMarker(data.gmapzCenterIdx, zoom);
       }
 
       /*switch (f) {
