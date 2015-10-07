@@ -49,11 +49,16 @@ GMapz.map = (function() {
 
     // Info windows (objectos de google)
     this.iws = {};
+    this.iw_current_idx = false;
+    this.iw_template = '<div class="gmapz-infowindow">{{__REPLACE__}}</div>';
 
     // Eventos
     onMarkerDragEnd = function(marker) {
       console.log(marker);
-    }
+    };
+    eOnBeforeAddLocations = function() {
+
+    };
 
     // Extend settings
     $.extend(this.map_settings, user_settings);
@@ -102,6 +107,7 @@ GMapz.map = (function() {
       this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
 
       // Si hubiese algúna location la pintamos
+      console.log(this.locs);
       if (!jQuery.isEmptyObject(this.locs)) {
         console.log('Add locations');
         this.addLocations(this.locs);
@@ -139,14 +145,37 @@ GMapz.map = (function() {
               this.onMarkerDragEnd(this);
           });
         }
+        // Create infowindows
+        if (locs[idx].iw) {
+          // Infowindows array
+          this.iws[idx] = new google.maps.InfoWindow({
+            content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw)
+          });
+          // Click on marker event open Infowindow
+          var that = this;
+          google.maps.event.addListener(this.markers[idx], 'click', function() {
+            that.closeInfoWindows();
+            that.iw_current_idx = this.idx;
+            that.iws[this.idx].open(that.map, that.markers[this.idx]);
+          });
+        }
 
       }
 
     },
 
+    closeInfoWindows: function() {
+      for (var i in this.iws) {
+        this.iws[i].close();
+      }
+      this.iw_current_idx = false;
+    },
+
     testMethod: function(msg) {
       console.log(msg);
     }
+
+    //
 
   };
 
@@ -154,47 +183,3 @@ GMapz.map = (function() {
 
 })();
 
-//
-// JQuery hook
-//
-/*(function($){
-
-  var methods = {
-    init: function(options) {
-      var gz_id = $(this).attr('data-gmapz');
-      if (typeof gz_id !== typeof undefined && gz_id !== false) {
-        gz_id = GMapz.getUniqueId(8,'gz-');
-        $(this).attr('data-gmapz', gz_id);
-      }
-      $(this).data('plugin_gmapz', new GMapz.gz_map(gz_id, options));
-    },
-    show: function( ) { },
-    hide: function( ) { },
-    addMarkers: function(locs) {  }
-  };
-
-  $.fn.gmapz = function ( methodOrOptions ) {
-
-    if ( methods[methodOrOptions] ) {
-      // Its a method
-      return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-    } else {
-      // Its creation?
-      if (!$.data(this, "plugin_gmapz")) {
-        return methods.init.apply( this, arguments );
-      }
-    }
-return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-
-
-    return this.each(function () {
-      // Avoid multiple instances
-      if (!$.data(this, "plugin_gmapz")) {
-        // If there is a data-gmapz use it, in other case generate and guid
-
-      }
-    });
-  };
-
-})( jQuery );
-*/

@@ -119,12 +119,14 @@
         pin: 'green',
         lat: 35.698013,
         lng: -0.632942,
-        iw: 'idx: 668<br>Orán'
+        iw: 'idx: 668<br>Orán',
+        draggable: true
       },
       12: { // Updated location on pourposse
         pin: 'green',
         lat: 43.257206,
-        lng: -2.923763
+        lng: -2.923763,
+        draggable: true
       },
     };
 
@@ -170,10 +172,21 @@
       zoom: 2
     };
 
-    var map1 = new GMapz.map( $('#map-1'), custom_map_options );
+    var map1 = new GMapz.map(
+      $('#map-1'),
+      custom_map_options,
+      locs
+    );
+
+    // map1.addLocations(morocco);
+
+    // map1.fitAll();
+
+    // map1.fitLocations();
+
     // $('#map-1')[0].gmapz.addLocations(  )
     console.log(map1);
-    $('#map-1')[0].gmapz.test('eo2');
+    $('#map-1')[0].gmapz.testMethod('eo2');
     map1.gz_settings.test_str = 'ojete';
     console.log($('#map-1')[0].gmapz.gz_settings.test_str);
 
