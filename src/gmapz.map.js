@@ -355,13 +355,82 @@ GMapz.map = (function() {
     },
 
     //
+    // Geolocation
+    //
+
+    findNearestMarkerTo: function (lat, lng) {
+      var
+        R = 6371, // radius of earth in km
+        distances = [],
+        nearidx = -1,
+        to_rad = Math.PI/180;
+
+      for (var key in this.markers) {
+        var
+          mlat = this.markers[key].position.lat(),
+          mlng = this.markers[key].position.lng(),
+          dLat = (mlat - lat)*to_rad,
+          dLng = (mlng - lng)*to_rad,
+          a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat*to_rad) * Math.cos(lat*to_rad) * Math.sin(dLng/2) * Math.sin(dLng/2),
+          c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)),
+          d = R * c;
+
+        distances[key] = d;
+        if ( nearidx == -1 || d < distances[nearidx] ) {
+          nearidx = key;
+        }
+      }
+      return nearidx;
+    },
+
+    geoShowPosition: function (pos){
+      var
+        lat = null,
+        lng = null,
+        idx = null,
+        near_lat = null,
+        near_lng = null;
+
+      if (pos.coords) {
+        // Coords from Navigator.geolocation
+        lat = pos.coords.latitude;
+        lng = pos.coords.longitude;
+      } else {
+        // Coords from address
+        lat = pos.jb;
+        lng = pos.kb;
+      }
+
+      // Find nearest marker
+      idx = t.findNearestMarkerTo(lat, lng);
+      near_lat = t.g.markers[idx].position.lat();
+      near_lng = t.g.markers[idx].position.lng();
+
+      // Add pegman / you are here
+      t.addPegmanMarker(lat, lng);
+      // t.g.map.setCenter(new t.GM.LatLng(lat, lng));
+
+      t.closeAllInfoWindows();
+      t.g.markers[idx].setVisible(true);
+      t.g.markers[idx].setAnimation(t.GM.Animation.BOUNCE);
+
+      t.g.bounds = t.g.bounds = new t.GM.LatLngBounds();
+      t.g.bounds.extend(t.g.markers[idx].getPosition());
+      t.g.bounds.extend(t.getOppositeCorner(lat, lng, near_lat, near_lng));
+      t.g.map.fitBounds(t.g.bounds);
+      // t.z.infowindow_current_idx = t.g.infowindows[idx];
+      // t.g.infowindows[idx].open(t.g.map, t.g.markers[idx]);
+      // t.zoomTo(near_lat, near_lng, 16);
+    },
+
+    //
     // Buttons and interaction
     //
 
     btnAction: function (data) {
       // t.stopAllAnimations();
 
-      // console.log(data);
+      console.log(data);
       // console.log(data['gmapzShowGroup']);
 
       var zoom = false;
@@ -392,6 +461,23 @@ GMapz.map = (function() {
       if (typeof data.gmapzCenterIdx !== 'undefined') {
         this.centerToMarker(data.gmapzCenterIdx, zoom);
       }
+
+      // Find near geolocation
+      if (typeof data.gmapzFindNearGeolocation !== 'undefined') {
+        var
+          n = navigator.geolocation;
+        if(n) {
+          n.getCurrentPosition(this.geoShowPosition.bind(this), this.geoShowError.bind(this));
+        } else {
+          alert('Su navegador no soporta Geolocalización.');
+        }
+      }
+
+      // Find near address
+      if (typeof data.gmapzFindNear !== 'undefined') {
+        this.centerToMarker(data.gmapzCenterIdx, zoom);
+      }
+
 
       /*switch (f) {
       case 'show-group':

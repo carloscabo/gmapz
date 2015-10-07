@@ -47,7 +47,7 @@
     return uniqid;
   }
 
-  // Reques api
+  // Request API
   function requestAPI () {
     if (!data.map_api_requested) {
       data.map_api_requested = true;

@@ -14,8 +14,6 @@
   <script src="js/demo_locations.js"></script>
 </head>
 <body>
-  <div id="map-1" data-gmapz="gz-123456789" class="map">Maps goes here</div><br>
-  <!-- <div id="map-2" class="map">Maps goes here</div> -->
 
   <table>
     <tr>
@@ -41,8 +39,20 @@
         <a href="#" id="js-delete-markers-1">Delete markers</a><br>
         <a href="#" id="js-update-marker-1">Update marker</a>
       </td>
+      <td>
+        <input type="text" placeholder="Introduce tu dirección"><br>
+        <button data-gmapz-target="gz-123456789" data-gmapz-find-near-address>Buscar más cercano</button>
+        <br><br>
+        <a href="#" data-gmapz-target="gz-123456789" data-gmapz-find-near >Find nearest to my location</a>
+      </td>
     </tr>
   </table>
+
+  <div id="map-1" data-gmapz="gz-123456789" class="map">Maps goes here</div>
+
+  <hr>
+  <!-- <div id="map-2" class="map">Maps goes here</div> -->
+
 
 
   <script>
