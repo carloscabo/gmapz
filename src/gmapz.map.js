@@ -287,6 +287,29 @@ GMapz.map = (function() {
       });
     },
 
+    // Deletes a group os markers idxs (array)
+    deleteMarkers: function (idxArray) {
+      for (var i in idxArray) {
+        if (this.markers && this.markers[idxArray[i]]) {
+          this.markers[idxArray[i]].setMap(null);
+          delete this.markers[idxArray[i]];
+        }
+        if (this.iws && this.iws[idxArray[i]]) {
+          delete this.infowindows[idxArray[i]];
+        }
+      }
+    },
+
+    // Removes ALL markers in current map
+    deleteAllMarkers: function () {
+      if (this.markers) {
+        for (var idx in this.markers) {
+          if (this.markers[idx]) delete this.markers[idx];
+          if (this.iws[idx]) delete this.iw[idx];
+        }
+      }
+    },
+
     setMarkerVisibility: function (visible, idx) {
       if (!visible) {
         this.closeInfoWindow(idx);
