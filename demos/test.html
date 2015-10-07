@@ -16,7 +16,7 @@
 </head>
 <body>
   <div id="map-1" class="map">Maps goes here</div><br>
-  <div id="map-2" class="map">Maps goes here</div>
+  <!-- <div id="map-2" class="map">Maps goes here</div> -->
   <script>
 
   var
@@ -172,17 +172,22 @@
       zoom: 2
     };
 
-    var map1 = new GMapz.map(
+    map1 = new GMapz.map(
       $('#map-1'),
-      custom_map_options,
-      locs
+      custom_map_options
     );
 
-    var map2 = new GMapz.map(
-      $('#map-2'),
-      custom_map_options,
-      morocco
-    );
+    // Thing to to when map is ready
+    map1.onReady = function() {
+      console.log('#map-1 ready');
+      this.addLocations(morocco).fitBounds();
+    };
+
+    // var map2 = new GMapz.map(
+      // $('#map-2'),
+      // custom_map_options,
+      // morocco
+    // );
 
     // map1.addLocations(morocco);
 

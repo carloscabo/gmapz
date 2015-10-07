@@ -13,7 +13,14 @@ GMapz.map = (function() {
     // Settings of object
     this.gz_settings = {
       is_initialized: false,
-      test_str: 'unitialized'
+      test_str: 'unitialized',
+      zoom: {
+        // If you have a single marker you'll get a high zoom
+        // This value is the threshold that will trigger the
+        // automatic zoom level
+        threshold: 20,
+        auto: 7
+      }
     };
 
     // Google maps settings on initialization
@@ -104,10 +111,17 @@ GMapz.map = (function() {
       this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
 
       // Si hubiese algúna location la pintamos
-      if (!jQuery.isEmptyObject(this.locs)) {
-        console.log('Add locations');
-        this.addLocations(this.locs);
-      }
+      // if (!jQuery.isEmptyObject(this.locs)) {
+      //   console.log('Add locations');
+      //   this.addLocations(this.locs);
+      // }
+
+      this.onReady();
+    },
+
+    // Override from outside
+    onReady: function() {
+
     },
 
     addLocations: function (locs) {
@@ -165,13 +179,66 @@ GMapz.map = (function() {
 
       }
 
-    },
+      return this;
 
+    }, // addLocations
+
+    // Info windows
     closeInfoWindows: function() {
       for (var i in this.iws) {
         this.iws[i].close();
       }
       this.iw_current_idx = false;
+    },
+
+    // Recalculate bounds and fit view depending on markers
+    fitBounds: function (idxArray) {
+      var
+        visible_count = 0,
+        bounds = new google.maps.LatLngBounds();
+
+      // Calculate all visible
+      if (!idxArray) {
+        for (var idx in this.markers) {
+          if (this.markers[idx].getVisible()) {
+            bounds.extend(this.markers[idx].getPosition());
+            visible_count++;
+          }
+        }
+      } else {
+        // Fit to idxs group
+        for (var i in idxArray) {
+          if (this.markers && this.markers[idxArray[i]]) {
+            bounds.extend(this.markers[idxArray[i]].getPosition());
+            visible_count++;
+          }
+        }
+      }
+
+      // Only one marker auto zoom
+      if (visible_count == 1) {
+        this.singleMarkerZoomAdjust(this.gz_settings.zoom.threshold, this.gz_settings.zoom.auto);
+      }
+
+      // More than one marker fit Bounds
+      if (visible_count > 1) {
+        this.map.fitBounds(bounds);
+      }
+
+      // If NO marker set, do nothing ;)
+      // Will use the default cenrter and zoom
+    },
+
+    singleMarkerZoomAdjust: function (max, target) {
+      // Single mark zoom adjust
+      // When you have an only marker focused adjust the
+      // map's zoom to a better adjustment
+      if (!max) max = 18; //
+      if (!target) target = 9;
+      var listener = google.maps.event.addListener(this.map, 'idle', function() {
+        if (this.map.getZoom() > max) this.map.setZoom(target);
+        google.maps.event.removeListener(listener);
+      });
     },
 
     onMarkerDragEnd: function(marker) {
