@@ -3,13 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <style>
-    .map {
-      width: 640px;
-      height: 480px;
-      background-color: #ccc;
-    }
-  </style>
+
+  <link rel="stylesheet" href="css/demo_stylesheet.css">
+
   <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
   <script src="../src/gmapz.js"></script>
   <script src="../src/gmapz.pins.js"></script>
@@ -21,19 +17,33 @@
   <div id="map-1" data-gmapz="gz-123456789" class="map">Maps goes here</div><br>
   <!-- <div id="map-2" class="map">Maps goes here</div> -->
 
-  <a href="#" data-gmapz-target="gz-123456789" data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest="true">Show group A</a><br>
-  <a href="#" data-gmapz-target="gz-123456789" data-gmapz-show-group='[2,"garajonay","teide",12]'>Show group B</a><br>
-  <a href="#" data-gmapz-target="gz-123456789" data-gmapz-show-group='[5,"picos_de_europa"]'>Show group C</a><br>
-  <a href="#" data-gmapz-target="gz-123456789" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >center view on marker</a><br>
-  <a href="#" data-gmapz-target="gz-123456789" data-gmapz-show-all >Show all markers</a><br>
+  <table>
+    <tr>
+      <td>
+        <a href="#" data-gmapz-target="gz-123456789" data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest="true">Show group A</a><br>
+        <a href="#" data-gmapz-target="gz-123456789" data-gmapz-show-group='[2,"garajonay","teide",12]'>Show group B</a><br>
+        <a href="#" data-gmapz-target="gz-123456789" data-gmapz-show-group='[5,"picos_de_europa"]'>Show group C</a><br>
+        <a href="#" data-gmapz-target="gz-123456789" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >Center view on marker and zoom</a><br>
+        <a href="#" data-gmapz-target="gz-123456789" data-gmapz-show-all >Show all markers</a>
+      </td>
+      <td>
+        <select name="" id="" data-gmapz-target="gz-123456789">
+          <option value="0">Select marker group</option>
+          <option data-gmapz-show-group='[1,289,38,3,6,7,9,10]'>Show group A</option>
+          <option data-gmapz-show-group='[2,"garajonay","teide",12]' data-gmapz-hide-rest="true">Show group B</option>
+          <option data-gmapz-show-group='[5,"picos_de_europa"]'>Show group C</option>
+          <option data-gmapz-center-idx="teide" data-gmapz-zoom="12">Center view on marker and zoom</option>
+          <option data-gmapz-show-all>Show all markers</option>
+        </select>
+      </td>
+      <td>
+        <a href="#" id="js-add-markers-1">Add new markers</a><br>
+        <a href="#" id="js-delete-markers-1">Delete markers</a><br>
+        <a href="#" id="js-update-marker-1">Update marker</a>
+      </td>
+    </tr>
+  </table>
 
-  <select name="" id="" data-gmapz-target="gz-123456789">
-    <option value="0">Select marker group</option>
-    <option data-gmapz-show-group='[2,4,11,12]'>Show group A</option>
-    <option data-gmapz-show-group='[5,8]'>Show group B</option>
-    <option data-gmapz-show-group='9'>Show group C</option>
-    <option data-gmapz-center-idx='1' data-gmapz-zoom='12'>Zoom to location idx</a>
-  </select>
 
   <script>
 
@@ -65,6 +75,19 @@
     };
 
     GMapz.attachActionButtons();
+
+    $('#js-add-markers-1').on('click', function(e) {
+      e.preventDefault();
+      map1.addLocations(morocco);
+    });
+    $('#js-delete-markers-1').on('click', function(e) {
+      e.preventDefault();
+      map1.deleteMarkers(['FEZ','ORAN',12]);
+    });
+    $('#js-update-marker-1').on('click', function(e) {
+      e.preventDefault();
+      map1.addLocations(update);
+    });
 
     // var map2 = new GMapz.map(
       // $('#map-2'),

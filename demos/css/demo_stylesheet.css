@@ -1,0 +1,28 @@
+html {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+.map {
+  width: 640px;
+  height: 480px;
+  background: cyan; /* DEBUG */
+}
+
+.map * {
+  box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+}
+
+table {
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table td {
+  vertical-align: top;
+  padding: 10px;
+  border: 1px solid #000;
+}

@@ -1,14 +1,6 @@
 // You can include this data wherever you want
 
 // Data
-single = {
-  1: { // LOCATION IDX MUST BE UNIQUE
-    lat: 42.5868,
-    lng: 0.9745,
-    iw: 'idx:1 <br>Aigüestortes i Estany de Sant Maurici.<br>Lérida, Cataluña<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_de_Aig%C3%BCestortes_y_Lago_de_San_Mauricio">Wikipedia</a>'
-  }
-};
-
 locs = {
   1: { // LOCATION IDX MUST BE UNIQUE
     lat: 42.5868,
@@ -111,4 +103,13 @@ var morocco = {
     lng: -2.923763,
     draggable: true
   },
+};
+
+// Update
+update = {
+  289: {
+    lat: 42.1541,
+    lng: 9.0884,
+    iw: 'idx: 289<br><b>Ahora está en Córcega ;)</b>'
+  }
 };

@@ -176,17 +176,18 @@ GMapz.map = (function() {
 
       var that = this;
 
-      // Delete marker if exists
-      if (this.markers && this.markers[idx]) {
-        this.deleteMarkers([idx]);
-      }
-
       // Get default pin
       if (GMapz.pins['default']) {
         default_pin = GMapz.pins['default'].pin;
       }
 
       for (var idx in locs) {
+
+        // Delete marker if exists
+        if (this.markers && this.markers[idx]) {
+          this.deleteMarkers([idx]);
+        }
+
         current_pin = default_pin;
         // Customized for this point
         if (locs[idx].pin && GMapz.pins[locs[idx].pin]) {
@@ -207,7 +208,6 @@ GMapz.map = (function() {
         if (locs[idx].draggable) {
           google.maps.event.addListener(
             this.markers[idx], 'dragend', function() {
-              console.log(that);
               that.onMarkerDragEnd(this);
           });
         }
@@ -296,7 +296,7 @@ GMapz.map = (function() {
       // Single mark zoom adjust
       // When you have an only marker focused adjust the
       // map's zoom to a better adjustment
-      console.log('attach single marker');
+      console.log('Attach single marker');
       if (!max) max = 18; //
       if (!target) target = 9;
       var
@@ -318,12 +318,12 @@ GMapz.map = (function() {
     // Deletes a group os markers idxs (array)
     deleteMarkers: function (idxArray) {
       for (var i in idxArray) {
-        if (this.markers && this.markers[idxArray[i]]) {
+        if (this.markers[idxArray[i]]) {
           this.markers[idxArray[i]].setMap(null);
           delete this.markers[idxArray[i]];
         }
-        if (this.iws && this.iws[idxArray[i]]) {
-          delete this.infowindows[idxArray[i]];
+        if (this.iws[idxArray[i]]) {
+          delete this.iws[idxArray[i]];
         }
       }
     },
@@ -361,7 +361,7 @@ GMapz.map = (function() {
     btnAction: function (data) {
       // t.stopAllAnimations();
 
-      console.log(data);
+      // console.log(data);
       // console.log(data['gmapzShowGroup']);
 
       var zoom = false;
@@ -371,7 +371,6 @@ GMapz.map = (function() {
 
       // Show all markers and fit map
       if (typeof data.gmapzShowAll !== 'undefined') {
-        console.log('eo');
         this.setAllMarkersVisibility(true);
       }
 
@@ -453,6 +452,7 @@ GMapz.map = (function() {
     onMarkerDragEnd: function(marker) {
       console.log(marker);
     },
+    afterAddingMarkers: function() {},
 
     //
     // Test / debug
