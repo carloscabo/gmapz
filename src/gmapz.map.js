@@ -116,6 +116,8 @@ GMapz.map = (function() {
 
     addLocations: function (locs) {
 
+      var that = this;
+
       // Get default pin
       if (GMapz.pins['default']) {
         default_pin = GMapz.pins['default'].pin;
@@ -142,7 +144,7 @@ GMapz.map = (function() {
         if (locs[idx].draggable) {
           google.maps.event.addListener(
             this.markers[idx], 'dragend', function() {
-              this.onMarkerDragEnd(this);
+              that.onMarkerDragEnd(this);
           });
         }
         // Create infowindows
@@ -152,7 +154,6 @@ GMapz.map = (function() {
             content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw)
           });
           // Click on marker event open Infowindow
-          var that = this;
           google.maps.event.addListener(this.markers[idx], 'click', function() {
             that.closeInfoWindows();
             that.iw_current_idx = this.idx;
