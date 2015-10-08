@@ -53,36 +53,51 @@
   <hr>
   <!-- <div id="map-2" class="map">Maps goes here</div> -->
 
-
+  <div id="map-2" data-gmapz="gz-france-populated-cities" class="map">Maps goes here</div>
 
   <script>
 
   var
     locs,
-    map1;
+    map1,
+    map2;
 
   $(document).ready(function() {
     // La magia aquí!
 
-    var custom_map_options = {
+    var map1_options = {
       // Options here
       mapTypeId: 'ROADMAP', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
       // bounds: [ nw_lat, mw_lng, se_lat, sw_lng ],
-      center: [48, 2],
+      center: [40.4165, -3.7025],
       zoom: 2
+    };
+
+    var map2_options = {
+      // Options here
+      mapTypeId: 'SATELLITE', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
+      center: [48, 2],
+      zoom: 5
     };
 
     map1 = new GMapz.map(
       $('#map-1'),
-      custom_map_options
+      map1_options
     );
 
-    // Thing to to when map is ready
     map1.onReady = function() {
-      console.log('#map-1 ready');
+      // console.log('#map-1 ready');
       // this.addLocations(morocco).fitBounds().setZoom(8);
-      this.addLocations(locs).setZoom(8);
+      this.addLocations(locs).setZoom(5);
     };
+
+    map2 = new GMapz.map(
+      $('#map-2'),
+      map2_options,
+      france_cities
+    );
+    /*
+    // Thing to to when map is ready
 
     GMapz.attachActionButtons();
 
@@ -97,13 +112,10 @@
     $('#js-update-marker-1').on('click', function(e) {
       e.preventDefault();
       map1.addLocations(update);
-    });
+    });*/
 
-    // var map2 = new GMapz.map(
-      // $('#map-2'),
-      // custom_map_options,
-      // morocco
-    // );
+
+
 
     // map1.addLocations(morocco);
 
