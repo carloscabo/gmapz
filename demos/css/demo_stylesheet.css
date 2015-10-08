@@ -21,7 +21,7 @@ html {
 /* TABLET */
 @media only screen and (max-width: 1024px) {
   body {
-    background-color: #ccc;
+    background-color: lightgray;
   }
   /* To check from MQBE */
   body:after {
@@ -124,3 +124,6 @@ table td {
   content: '';
   background-image: url(../img/gmapz/scroll_disabled.svg);
 }
+
+
+/*****/

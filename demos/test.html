@@ -7,15 +7,19 @@
   <link rel="stylesheet" href="css/demo_stylesheet.css">
 
   <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+
+  <!-- THIRD PARTY LIBS -->
+  <script src="../src/lib/MQBE.1.04.js"></script>
+  <script src="../src/lib/markerclusterer.js"></script>
+
+  <!-- GMAPZ -->
   <script src="../src/gmapz.js"></script>
   <script src="../src/gmapz.pins.js"></script>
   <script src="../src/gmapz.map.js"></script>
 
-  <!-- THIRD PARTY LIBS -->
-  <script src="../src/lib/jquery.mq_breakpoint_events.js"></script>
-  <script src="../src/lib/markerclusterer.js"></script>
-
+  <!-- DEMO INCLUDES -->
   <script src="js/demo_locations.js"></script>
+
 </head>
 <body>
 
@@ -181,17 +185,9 @@
       this.addScrollControl();
 
       MQBE.on('enter', 'mobile', function() {
-        that.map.setOptions({
-          draggable: false,
-          scrollwheel: false
-        });
-        $('.gmapz-scroll-control').addClass('disabled');
+        map3.lockScroll();
       }).on('leave', 'mobile', function() {
-        that.map.setOptions({
-          draggable: true,
-          scrollwheel: true
-        });
-        $('.gmapz-scroll-control').removeClass('disabled');
+        map3.resumeScroll();
       });
     };
 
@@ -212,5 +208,6 @@
 
   });
   </script>
+
 </body>
 </html>

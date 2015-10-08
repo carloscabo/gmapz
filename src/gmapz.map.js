@@ -467,7 +467,7 @@ GMapz.map = (function() {
     btnAction: function (data) {
       // t.stopAllAnimations();
 
-      console.log(data);
+      // console.log(data);
       // console.log(data['gmapzShowGroup']);
 
       var zoom = false;
