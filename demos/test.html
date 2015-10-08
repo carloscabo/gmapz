@@ -56,6 +56,13 @@
   <hr>
   <!-- <div id="map-2" class="map">Maps goes here</div> -->
 
+  <table>
+    <tr>
+      <td>
+        <a href="#" data-gmapz-target="gz-france-populated-cities" data-gmapz-show-all >Show all markers</a>
+      </td>
+    </tr>
+  </table>
   <div id="map-2" data-gmapz="gz-france-populated-cities" class="map">Maps goes here</div>
 
   <script>
@@ -122,7 +129,8 @@
           height: 48,
           width: 48,
           textSize: '17',
-          backgroundPosition: '0 1px' // bottom / center
+          backgroundPosition: '0 0'
+          // anchorIcon: [-24.0, -48.0] // This propoerty its not supported actually
         }];
 
     map2.onReady = function() {
