@@ -100,7 +100,7 @@ table td {
 }
 
 .gmapz-scroll-control .content:after {
-  content: ' enabled';
+  content: 'Scroll is enabled';
 }
 
 .gmapz-scroll-control .content:before {
@@ -108,19 +108,19 @@ table td {
   display: inline-block;
   width: 16px;
   height: 16px;
-  margin: -1px 3px 0 0;
+  margin: -2px 3px 0 0;
   vertical-align: middle;
-  background: #fff url(../img/scroll_enabled.svg) center center no-repeat;
+  background: #fff url(../img/gmapz/scroll_enabled.svg) center center no-repeat;
   -webkit-background-size: cover;
        -o-background-size: cover;
           background-size: cover;
 }
 
 .gmapz-scroll-control.disabled .content:after {
-  content: ' disabled';
+  content: 'Scroll is disabled';
 }
 
 .gmapz-scroll-control.disabled .content:before {
   content: '';
-  background-image: url(../img/scroll_disabled.svg);
+  background-image: url(../img/gmapz/scroll_disabled.svg);
 }
