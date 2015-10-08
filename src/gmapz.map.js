@@ -294,8 +294,6 @@ GMapz.map = (function() {
       return this; // Chainning
     },
 
-
-
     singleMarkerZoomAdjust: function (max, target) {
       // Single mark zoom adjust
       // When you have an only marker focused adjust the
@@ -425,6 +423,34 @@ GMapz.map = (function() {
       // t.z.infowindow_current_idx = t.g.infowindows[idx];
       // t.g.infowindows[idx].open(t.g.map, t.g.markers[idx]);
       // t.zoomTo(near_lat, near_lng, 16);
+    },
+
+    //
+    // Custom scroll control
+    //
+    addScrollControl: function() {
+      var
+        that = this,
+        $control = $('<div class="gmapz-scroll-control disabled" title="Click to toggle map scroll"><div class="content"><span></span></div></div>');
+
+      // Attach custom control
+      this.map.controls[google.maps.ControlPosition.TOP_CENTER].push($control[0]);
+
+      $(document).on('click', '.gmapz-scroll-control', function(e) {
+        e.preventDefault();
+        $(this).toggleClass('disabled');
+        if ($(this).hasClass('disabled')) {
+          that.map.setOptions({
+            draggable: false,
+            scrollwheel: false
+          });
+        } else {
+          that.map.setOptions({
+            draggable: true,
+            scrollwheel: true
+          });
+        }
+      });
     },
 
     //

@@ -5,6 +5,47 @@ html {
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
  }
 
+/* MQBE.js CSS rules */
+
+/* DESKTOP */
+@media all and (min-width:1px) {
+  body {
+    background-color: white;
+  }
+  body:after {
+    content: 'desktop'; /* <- string that defines this state */
+    display:none;
+  }
+}
+
+/* TABLET */
+@media only screen and (max-width: 1024px) {
+  body {
+    background-color: #ccc;
+  }
+  /* To check from MQBE */
+  body:after {
+    content: 'tablet'; /* <- string that defines this state */
+    display:none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    background-color: pink;
+  }
+  .gmapz-scroll-control {
+    display: block !important;
+  }
+  /* To check from MQBE */
+  body:after {
+    content: 'mobile'; /* <- string that defines this state */
+    display:none;
+  }
+}
+
+/* GMapz demo CSS */
+
 .wrapper {
   max-width: 640px;
   overflow: hidden;
@@ -15,15 +56,6 @@ html {
   height: 450px;
   background: cyan; /* DEBUG */
   overflow: hidden;
-}
-
-.map iframe {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 }
 
 .map * {
@@ -40,4 +72,55 @@ table td {
   vertical-align: top;
   padding: 10px;
   border: 1px solid #000;
+}
+
+/* Custom control */
+
+.gmapz-scroll-control {
+  display: none;
+  margin: 10px;
+  background: #fff;
+  border: 2px solid #fff;
+  border-radius: 3px;
+
+  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.3);
+          box-shadow: 0 2px 6px rgba(0,0,0,.3);
+
+  cursor: pointer;
+  text-align: center;
+}
+
+
+.gmapz-scroll-control .content {
+  font-family: Roboto, Arial, sans-serif;
+  color: rgb(25,25,25);
+  font-size: 11px;
+  line-height: 150%;
+  padding: 10px 10px 10px 5px;
+}
+
+.gmapz-scroll-control .content:after {
+  content: ' enabled';
+}
+
+.gmapz-scroll-control .content:before {
+  content: ' ';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: -1px 3px 0 0;
+  vertical-align: middle;
+  background: #fff url(../img/scroll_enabled.svg) center center no-repeat;
+  -webkit-background-size: cover;
+       -o-background-size: cover;
+          background-size: cover;
+}
+
+.gmapz-scroll-control.disabled .content:after {
+  content: ' disabled';
+}
+
+.gmapz-scroll-control.disabled .content:before {
+  content: '';
+  background-image: url(../img/scroll_disabled.svg);
 }

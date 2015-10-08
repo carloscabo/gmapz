@@ -69,6 +69,11 @@
 
   <div id="map-2" data-gmapz="gz-france-populated-cities" class="map">Maps goes here</div>
 
+  <hr>
+
+  <div id="map-3" data-gmapz="gz-main-cities-italy" class="map">Maps goes here</div>
+
+
 </div>
 
   <script>
@@ -154,8 +159,47 @@
       );
     };
 
+    var map3_options = {
+      // Options here
+      mapTypeId: 'ROADMAP', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
+      center: [41.8919, 12.5113],
+      zoom: 9,
+      styles: [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
+    };
+
+    // Map 3 *****************************************
+
+    map3 = new GMapz.map(
+      $('#map-3'),
+      map3_options
+    );
+
+    map3.onReady = function() {
+      var
+        that = this;
+      this.addLocations(italy_cities);
+      this.addScrollControl();
+
+      MQBE.on('enter', 'mobile', function() {
+        that.map.setOptions({
+          draggable: false,
+          scrollwheel: false
+        });
+        $('.gmapz-scroll-control').addClass('disabled');
+      }).on('leave', 'mobile', function() {
+        that.map.setOptions({
+          draggable: true,
+          scrollwheel: true
+        });
+        $('.gmapz-scroll-control').removeClass('disabled');
+      });
+    };
+
     // Attach button with data-gmapz attribute
     GMapz.attachActionButtons();
+
+    // Init media query events
+    MQBE.init();
 
     // map1.addLocations(morocco);
     // map1.fitAll();

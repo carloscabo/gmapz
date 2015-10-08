@@ -417,3 +417,57 @@ france_cities = {
     iw: 'Saint-nazaire, population:70000'
   }
 };
+
+// France main cities
+italy_cities = {
+  roma: {
+    lat: 41.890,
+    lng: 12.500,
+    iw: 'Roma'
+  },
+  milano: {
+    lat: 45.480,
+    lng: 9.190,
+    iw: 'Milano'
+  },
+  napoli: {
+    lat: 40.850,
+    lng: 14.270,
+    iw: 'Napoli'
+  },
+  torino: {
+    lat: 45.080,
+    lng: 7.680,
+    iw: 'Torino'
+  },
+  palermo: {
+    lat: 38.120,
+    lng: 13.360,
+    iw: 'Palermo'
+  },
+  genova: {
+    lat: 44.420,
+    lng: 8.930,
+    iw: 'Genova'
+  },
+  bologna: {
+    lat: 44.500,
+    lng: 11.340,
+    iw: 'Bologna'
+  },
+  firenze: {
+    lat: 43.780,
+    lng: 11.240,
+    iw: 'Firenze'
+  },
+  catania: {
+    lat: 37.500,
+    lng: 15.080,
+    iw: 'Catania'
+  },
+  bari: {
+    lat: 41.120,
+    lng: 16.870,
+    iw: 'Bari'
+  }
+};
