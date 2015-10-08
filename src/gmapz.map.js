@@ -25,6 +25,7 @@ GMapz.map = (function() {
 
     // Google Maps event listener
     this.listener = null;
+    this.listener_zoom_on_scroll_lock = null;
 
     // Google maps settings on initialization
     this.map_settings = {
@@ -436,21 +437,25 @@ GMapz.map = (function() {
       // Attach custom control
       this.map.controls[google.maps.ControlPosition.TOP_CENTER].push($control[0]);
 
-      $(document).on('click', '.gmapz-scroll-control', function(e) {
+      $(document).on('click', '[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control', function(e) {
         e.preventDefault();
-        $(this).toggleClass('disabled');
         if ($(this).hasClass('disabled')) {
-          that.lockScroll();
-        } else {
           that.resumeScroll();
+        } else {
+          that.lockScroll();
         }
       });
     },
 
     lockScroll: function() {
+      var that = this;
       this.map.setOptions({
         draggable: false,
         scrollwheel: false
+      });
+      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('disabled');
+      this.listener_zoom_on_scroll_lock = google.maps.event.addListener(this.map, 'zoom_changed', function() {
+        that.resumeScroll();
       });
     },
     resumeScroll: function() {
@@ -458,6 +463,8 @@ GMapz.map = (function() {
         draggable: true,
         scrollwheel: true
       });
+      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').removeClass('disabled');
+      google.maps.event.removeListener(this.listener_zoom_on_scroll_lock);
     },
 
     //
