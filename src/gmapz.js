@@ -65,7 +65,7 @@
 
   function onApiReady() {
     data.map_api_ready = true;
-    console.log('api is ready');
+    console.log('Google maps api is ready');
 
     // Prepare custom if any pins (we need google.maps)
     if(GMapz.pins) {

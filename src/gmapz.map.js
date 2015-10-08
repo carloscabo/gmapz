@@ -3,7 +3,7 @@
 //
 GMapz.map = (function() {
 
-  function Constructor($map, user_settings, locs) {
+  function Constructor($map, user_settings, initial_locs) {
 
     // map
     this.map = null;    // gm object
@@ -48,10 +48,10 @@ GMapz.map = (function() {
     }
 
     // Localizaciones
-    if (typeof locs !== 'undefined') {
-      this.locs = locs;
+    if (typeof initial_locs !== 'undefined' && !jQuery.isEmptyObject(initial_locs)) {
+      this.initial_locs = initial_locs;
     } else {
-      this.locs = {};
+      this.initial_locs = {};
     }
 
     // Marcadores (objectos de google)
@@ -85,7 +85,7 @@ GMapz.map = (function() {
 
     instanceReady: function(e) {
 
-      console.log('GMpaz instance is ready!');
+      console.log(this.map_id+' instance is initialized');
 
       //function code
       this.gz_settings.is_initialized = true;
@@ -114,17 +114,21 @@ GMapz.map = (function() {
       this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
 
       // Si hubiese algúna location la pintamos
-      // if (!jQuery.isEmptyObject(this.locs)) {
+      // if (!jQuery.isEmptyObject(this.initial_locs)) {
       //   console.log('Add locations');
-      //   this.addLocations(this.locs);
+      //   this.addLocations(this.initial_locs);
       // }
+
+      if(!jQuery.isEmptyObject(this.initial_locs)) {
+        this.addLocations(this.initial_locs);
+      }
 
       this.onReady();
     },
 
     // Override from outside
     onReady: function() {
-
+      console.log(this.map_id+' instance is ready');
     },
 
     // Map

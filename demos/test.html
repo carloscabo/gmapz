@@ -11,6 +11,9 @@
   <script src="../src/gmapz.pins.js"></script>
   <script src="../src/gmapz.map.js"></script>
 
+  <!-- THIRD PARTY LIBS -->
+  <script src="../src/lib/markerclusterer.js"></script>
+
   <script src="js/demo_locations.js"></script>
 </head>
 <body>
@@ -65,41 +68,25 @@
   $(document).ready(function() {
     // La magia aquí!
 
+    // Map 1 *****************************************
+
     var map1_options = {
       // Options here
-      mapTypeId: 'ROADMAP', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
+      mapTypeId: 'SATELLITE', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
       // bounds: [ nw_lat, mw_lng, se_lat, sw_lng ],
       center: [40.4165, -3.7025],
       zoom: 2
     };
 
-    var map2_options = {
-      // Options here
-      mapTypeId: 'SATELLITE', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
-      center: [48, 2],
-      zoom: 5
-    };
-
     map1 = new GMapz.map(
       $('#map-1'),
-      map1_options
+      map1_options,
+      locs
     );
 
     map1.onReady = function() {
-      // console.log('#map-1 ready');
-      // this.addLocations(morocco).fitBounds().setZoom(8);
-      this.addLocations(locs).setZoom(5);
+      this.setZoom(5);
     };
-
-    map2 = new GMapz.map(
-      $('#map-2'),
-      map2_options,
-      france_cities
-    );
-    /*
-    // Thing to to when map is ready
-
-    GMapz.attachActionButtons();
 
     $('#js-add-markers-1').on('click', function(e) {
       e.preventDefault();
@@ -112,17 +99,49 @@
     $('#js-update-marker-1').on('click', function(e) {
       e.preventDefault();
       map1.addLocations(update);
-    });*/
+    });
 
+    // Map 2 *****************************************
 
+    var map2_options = {
+      // Options here
+      mapTypeId: 'ROADMAP', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
+      center: [48, 2],
+      zoom: 5
+    };
 
+    map2 = new GMapz.map(
+      $('#map-2'),
+      map2_options,
+      france_cities
+    );
+
+    var marker_cluster_style = [{
+          textColor: 'white',
+          url: 'img/gmapz/pin-cluster.png',
+          height: 60,
+          width: 48,
+          textSize: '17',
+          backgroundPosition: '0 1px'
+        }];
+
+    map2.onReady = function() {
+      this.marker_cluster = new MarkerClusterer(
+        this.map,
+        this.markers, {
+          gridSize: 100,
+          maxZoom: 15,
+          styles: marker_cluster_style
+        }
+      );
+    };
+
+    // Attach button with data-gmapz attribute
+    GMapz.attachActionButtons();
 
     // map1.addLocations(morocco);
-
     // map1.fitAll();
-
     // map1.fitLocations();
-
     // $('#map-1')[0].gmapz.addLocations(  )
     // console.log(map1);
     // $('#map-1')[0].gmapz.testMethod('eo2');

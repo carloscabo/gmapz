@@ -124,296 +124,296 @@ france_cities = {
   marseille: {
     lat: 43.310,
     lng: 5.370,
-    iw: 'Marseille 826300'
+    iw: 'Marseille, population: 826300'
   },
   lyon: {
     lat: 45.760,
     lng: 4.830,
-    iw: 'Lyon  443600'
+    iw: 'Lyon, population: 443600'
   },
   toulouse: {
     lat: 43.620,
     lng: 1.450,
-    iw: 'Toulouse  417400'
+    iw: 'Toulouse, population: 417400'
   },
   Nice: {
     lat: 43.700,
     lng: 7.270,
-    iw: 'Nice  329800'
+    iw: 'Nice, population: 329800'
   },
   Nantes: {
     lat: 47.230,
     lng: -1.570,
-    iw: 'Nantes  285700'
+    iw: 'Nantes, population: 285700'
   },
   Strasbourg: {
     lat: 48.580,
     lng: 7.760,
-    iw: 'Strasbourg  274700'
+    iw: 'Strasbourg, population: 274700'
   },
   Montpellier: {
     lat: 43.610,
     lng: 3.870,
-    iw: 'Montpellier 231900'
+    iw: 'Montpellier, population: 231900'
   },
   Bordeaux: {
     lat: 44.840,
     lng: -0.580,
-    iw: 'Bordeaux  217400'
+    iw: 'Bordeaux, population: 217400'
   },
   rennes: {
     lat: 48.110,
     lng: -1.680,
-    iw: 'Rennes  214200'
+    iw: 'Rennes, population: 214200'
   },
   le_havre: {
     lat: 49.500,
     lng: 0.120,
-    iw: 'Le havre  189000'
+    iw: 'Le havre, population: 189000'
   },
   reims: {
     lat: 49.250,
     lng: 4.030,
-    iw: 'Reims 183900'
+    iw: 'Reims, population: 183900'
   },
   lille: {
     lat: 50.640,
     lng: 3.070,
-    iw: 'Lille 180100'
+    iw: 'Lille, population: 180100'
   },
   saint_etienne: {
     lat: 45.430,
     lng: 4.390,
-    iw: 'Saint-etienne 168600'
+    iw: 'Saint-etienne, population: 168600'
   },
   toulon: {
     lat: 43.130,
     lng: 5.920,
-    iw: 'Toulon 161600'
+    iw: 'Toulon, population: 161600'
   },
   grenoble: {
     lat: 45.190,
     lng: 5.720,
-    iw: 'Grenoble 156200'
+    iw: 'Grenoble, population: 156200'
   },
   angers: {
     lat: 47.480,
     lng: -0.540,
-    iw: 'Angers 153800'
+    iw: 'Angers, population: 153800'
   },
   brest: {
     lat: 48.390,
     lng: -4.500,
-    iw: 'Brest 152000'
+    iw: 'Brest, population: 152000'
   },
   le_mans: {
     lat: 48.000,
     lng: 0.200,
-    iw: 'Le mans 149300'
+    iw: 'Le mans, population: 149300'
   },
   dijon: {
     lat: 47.330,
     lng: 5.030,
-    iw: 'Dijon 146400'
+    iw: 'Dijon, population: 146400'
   },
   aix_en_provence: {
     lat: 43.530,
     lng: 5.440,
-    iw: 'Aix-en-provence 139000'
+    iw: 'Aix-en-provence, population: 139000'
   },
   clermont_ferrand: {
     lat: 45.780,
     lng: 3.080,
-    iw: 'Clermont-ferrand 137300'
+    iw: 'Clermont-ferrand, population: 137300'
   },
   nimes: {
     lat: 43.840,
     lng: 4.350,
-    iw: 'Nimes 137200'
+    iw: 'Nimes, population: 137200'
   },
   amiens: {
     lat: 49.900,
     lng: 2.300,
-    iw: 'Amiens 135800'
+    iw: 'Amiens, population: 135800'
   },
   tours: {
     lat: 47.380,
     lng: 0.690,
-    iw: 'Tours 133700'
+    iw: 'Tours, population: 133700'
   },
   limoges: {
     lat: 45.830,
     lng: 1.250,
-    iw: 'Limoges 131900'
+    iw: 'Limoges, population: 131900'
   },
   metz: {
     lat: 49.120,
     lng: 6.180,
-    iw: 'Metz 125300'
+    iw: 'Metz, population: 125300'
   },
   villeurbanne: {
     lat: 45.770,
     lng: 4.880,
-    iw: 'Villeurbanne 121800'
+    iw: 'Villeurbanne, population: 121800'
   },
   besancon: {
     lat: 47.240,
     lng: 6.020,
-    iw: 'Besancon 118300'
+    iw: 'Besancon, population: 118300'
   },
   caen: {
     lat: 49.190,
     lng: -0.360,
-    iw: 'Caen 116800'
+    iw: 'Caen, population: 116800'
   },
   orleans: {
     lat: 47.900,
     lng: 1.900,
-    iw: 'Orleans 112200'
+    iw: 'Orleans, population: 112200'
   },
   mulhouse: {
     lat: 47.760,
     lng: 7.340,
-    iw: 'Mulhouse 111500'
+    iw: 'Mulhouse, population: 111500'
   },
   perpignan: {
     lat: 42.700,
     lng: 2.890,
-    iw: 'Perpignan 111400'
+    iw: 'Perpignan, population: 111400'
   },
   boulogne_billancourt: {
     lat: 48.830,
     lng: 2.240,
-    iw: 'Boulogne-billancourt 108500'
+    iw: 'Boulogne-billancourt, population: 108500'
   },
   rouen: {
     lat: 49.440,
     lng: 1.080,
-    iw: 'Rouen 105100'
+    iw: 'Rouen, population: 105100'
   },
   nancy: {
     lat: 48.690,
     lng: 6.170,
-    iw: 'Nancy 103100'
+    iw: 'Nancy, population: 103100'
   },
   roubaix: {
     lat: 50.690,
     lng: 3.170,
-    iw: 'Roubaix 95800'
+    iw: 'Roubaix, population: 95800'
   },
   tourcoing: {
     lat: 50.720,
     lng: 3.160,
-    iw: 'Tourcoing 92400'
+    iw: 'Tourcoing, population: 92400'
   },
   argenteuil: {
     lat: 48.940,
     lng: 2.240,
-    iw: 'Argenteuil 90300'
+    iw: 'Argenteuil, population: 90300'
   },
   avignon: {
     lat: 43.960,
     lng: 4.810,
-    iw: 'Avignon 87100'
+    iw: 'Avignon, population: 87100'
   },
   montreuil: {
     lat: 48.860,
     lng: 2.430,
-    iw: 'Montreuil 86600'
+    iw: 'Montreuil, population: 86600'
   },
   nanterre: {
     lat: 48.900,
     lng: 2.200,
-    iw: 'Nanterre 86100'
+    iw: 'Nanterre, population: 86100'
   },
   poitiers: {
     lat: 46.580,
     lng: 0.340,
-    iw: 'Poitiers 85900'
+    iw: 'Poitiers, population: 85900'
   },
   saint_denis: {
     lat: 48.940,
     lng: 2.360,
-    iw: 'Saint-denis 82000'
+    iw: 'Saint-denis, population: 82000'
   },
   versailles: {
     lat: 48.810,
     lng: 2.140,
-    iw: 'Versailles 81200'
+    iw: 'Versailles, population: 81200'
   },
   creteil: {
     lat: 48.790,
     lng: 2.450,
-    iw: 'Creteil 79700'
+    iw: 'Creteil, population: 79700'
   },
   pau: {
     lat: 43.300,
     lng: -0.390,
-    iw: 'Pau 79600'
+    iw: 'Pau, population: 79600'
   },
   la_rochelle: {
     lat: 46.170,
     lng: -1.180,
-    iw: 'La rochelle 79400'
+    iw: 'La rochelle, population: 79400'
   },
   colombes: {
     lat: 48.930,
     lng: 2.250,
-    iw: 'Colombes 78400'
+    iw: 'Colombes, population: 78400'
   },
   asnieres_sur_seine: {
     lat: 48.910,
     lng: 2.290,
-    iw: 'Asnieres-sur-seine 77400'
+    iw: 'Asnieres-sur-seine, population: 77400'
   },
   calais: {
     lat: 50.950,
     lng: 1.860,
-    iw: 'Calais 77200'
+    iw: 'Calais, population: 77200'
   },
   aulnay_sous_bois: {
     lat: 48.960,
     lng: 2.490,
-    iw: 'Aulnay-sous-bois 76500'
+    iw: 'Aulnay-sous-bois, population: 76500'
   },
   vitry_sur_seine: {
     lat: 48.790,
     lng: 2.390,
-    iw: 'Vitry-sur-seine 76300'
+    iw: 'Vitry-sur-seine, population: 76300'
   },
   rueil_malmaison: {
     lat: 48.890,
     lng: 2.170,
-    iw: 'Rueil-malmaison 75000'
+    iw: 'Rueil-malmaison, population: 75000'
   },
   champigny_sur_marne: {
     lat: 48.820,
     lng: 2.510,
-    iw: 'Champigny-sur-marne 72000'
+    iw: 'Champigny-sur-marne, population: 72000'
   },
   beziers: {
     lat: 43.350,
     lng: 3.210,
-    iw: 'Beziers 71200'
+    iw: 'Beziers, population: 71200'
   },
   saint_maur_des_fosses: {
     lat: 48.800,
     lng: 2.490,
-    iw: 'Saint-maur-des-fosses 70900'
+    iw: 'Saint-maur-des-fosses, population: 70900'
   },
   dunkerque: {
     lat: 51.040,
     lng: 2.340,
-    iw: 'Dunkerque 70400'
+    iw: 'Dunkerque, population: 70400'
   },
   antibes: {
     lat: 43.600,
     lng: 7.120,
-    iw: 'Antibes 70100'
+    iw: 'Antibes, population: 70100'
   },
   saint_nazaire: {
     lat: 47.28,
     lng: -2.220,
-    iw: 'Saint-nazaire 70000'
+    iw: 'Saint-nazaire, population:70000'
   }
 };
