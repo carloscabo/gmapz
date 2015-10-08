@@ -119,16 +119,20 @@
     var marker_cluster_style = [{
           textColor: 'white',
           url: 'img/gmapz/pin-cluster.png',
-          height: 60,
+          height: 48,
           width: 48,
           textSize: '17',
-          backgroundPosition: '0 1px'
+          backgroundPosition: '0 1px' // bottom / center
         }];
 
     map2.onReady = function() {
+      // Convert markers object, into array
+      markers_array = $.map(this.markers, function(val, idx){
+        return [val];
+      });
       this.marker_cluster = new MarkerClusterer(
         this.map,
-        this.markers, {
+        markers_array, {
           gridSize: 100,
           maxZoom: 15,
           styles: marker_cluster_style
