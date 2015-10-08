@@ -440,16 +440,23 @@ GMapz.map = (function() {
         e.preventDefault();
         $(this).toggleClass('disabled');
         if ($(this).hasClass('disabled')) {
-          that.map.setOptions({
-            draggable: false,
-            scrollwheel: false
-          });
+          that.lockScroll();
         } else {
-          that.map.setOptions({
-            draggable: true,
-            scrollwheel: true
-          });
+          that.resumeScroll();
         }
+      });
+    },
+
+    lockScroll: function() {
+      this.map.setOptions({
+        draggable: false,
+        scrollwheel: false
+      });
+    },
+    resumeScroll: function() {
+      this.map.setOptions({
+        draggable: true,
+        scrollwheel: true
       });
     },
 
@@ -510,20 +517,6 @@ GMapz.map = (function() {
 
 
       /*switch (f) {
-      case 'show-group':
-        var
-          d = $t.data('group') + '';
-          hr = $t.data('hide-rest');
-        if(d.indexOf(',') === -1) {
-          t.showMarkerGroup([d], hr);
-        } else {
-          // Trim and split
-          t.showMarkerGroup($.map(d.split(","),$.trim), hr);
-        }
-        break;
-      case 'show-all':
-        t.setMarkersVisibility(true);
-        break;
       case 'zoom':
         var idx = $t.data('idx');
         t.closeAllInfoWindows();
