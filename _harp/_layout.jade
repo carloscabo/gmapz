@@ -5,6 +5,19 @@ html
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
     link(rel="stylesheet" href="scss/application.css")
 
+    //- Third party libs
+    script(src="js/lib/MQBE.1.04.js")
+    script(src="js/lib/markerclusterer.js")
+
+    script(src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js")
     script(src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert")
+
+    //- GMapz core
+    script(src="js/gmapz.js")
+    script(src="js/gmapz.pins.js")
+    script(src="js/gmapz.map.js")
+
+    script(src="js/demo_locations.js")
+    script(src="js/demo_ready.js")
   body
     != yield

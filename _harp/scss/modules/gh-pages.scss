@@ -4,6 +4,26 @@ body {
 
 p {
   font-size: 16px;
+  line-height: 1.5;
+}
+
+.mb16 {
+  margin-bottom: 16px;
+}
+.mb32 {
+  margin-bottom: 32px;
+}
+.mt16 {
+  margin-top: 16px;
+}
+.mt32 {
+  margin-top: 32px;
+}
+
+hr.spacer-16 {
+  border: 0;
+  clear: both;
+  margin:0 0 16px;
 }
 
 .bs-docs-header {
