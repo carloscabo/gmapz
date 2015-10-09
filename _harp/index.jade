@@ -11,9 +11,14 @@
         small &nbsp;&nbsp;&nbsp;Ficeros necesarios (y para qué)
       .row
         .col-lg-6
-          #map-sample-1.map
-            p.
-              map goes here
+          p.
+            Los ficheros básicos necesarios para el funcionamiento de <b>GMpaz</b> son:<br><br>
+            <code>GMapz.js</code> (el <em>core</em> de la librería y funciones comunes)<br>
+            <code>GMapz.maps.js</code> (funcionalidades necesarias para la creación de mapas)<br>
+            <code>GMapz.autocomplete.js</code> (necesario para el autocompletado de direcciones)
+          p.
+            <code>GMapz.pins.js</code>
+
         .col-lg-6
           p.
             Solo se necesita crear una instancia de <code>GMapz</code> indicando las coordenadas de <code>center</code> y opcionalmente unos límites (<code>bounds</code>) con las esquinas de la zona de visualización en un array con la forma: <code>[nortwest_lat, nortwest_lng, southeast_lat, southwest_lng]</code>.
