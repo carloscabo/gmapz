@@ -361,7 +361,7 @@ GMapz.map = (function() {
     // Geolocation
     //
 
-    findNearestMarkerTo: function (lat, lng) {
+    findNearestMarkerToPos: function (lat, lng) {
       var
         R = 6371, // radius of earth in km
         distances = [],
@@ -405,25 +405,57 @@ GMapz.map = (function() {
       }
 
       // Find nearest marker
-      idx = t.findNearestMarkerTo(lat, lng);
-      near_lat = t.g.markers[idx].position.lat();
-      near_lng = t.g.markers[idx].position.lng();
+      idx = this.findNearestMarkerToPos(lat, lng);
+      near_lat = this.markers[idx].position.lat();
+      near_lng = this.markers[idx].position.lng();
 
       // Add pegman / you are here
-      t.addPegmanMarker(lat, lng);
-      // t.g.map.setCenter(new t.GM.LatLng(lat, lng));
+      this.addUserLocationMarker(lat, lng);
+      this.map.setCenter(new google.maps.LatLng(lat, lng));
 
-      t.closeAllInfoWindows();
-      t.g.markers[idx].setVisible(true);
-      t.g.markers[idx].setAnimation(t.GM.Animation.BOUNCE);
+      this.closeAllInfoWindows();
+      this.markers[idx].setVisible(true);
+      this.markers[idx].setAnimation(google.maps.Animation.DROP);
 
-      t.g.bounds = t.g.bounds = new t.GM.LatLngBounds();
-      t.g.bounds.extend(t.g.markers[idx].getPosition());
-      t.g.bounds.extend(t.getOppositeCorner(lat, lng, near_lat, near_lng));
-      t.g.map.fitBounds(t.g.bounds);
+      var bounds = new google.maps.LatLngBounds();
+      bounds.extend(this.markers[idx].getPosition());
+      bounds.extend(GMapz.getOppositeCorner(lat, lng, near_lat, near_lng));
+      this.map.fitBounds(bounds);
+
       // t.z.infowindow_current_idx = t.g.infowindows[idx];
       // t.g.infowindows[idx].open(t.g.map, t.g.markers[idx]);
       // t.zoomTo(near_lat, near_lng, 16);
+    },
+
+    addUserLocationMarker: function (lat, lng) {
+      var
+        pos = new google.maps.LatLng(lat,lng);
+      if (!this.markers.user_location) {
+        this.markers.user_location = new google.maps.Marker({
+          position: pos,
+          map: this.map,
+          icon: GMapz.pins.user_location.pin
+        });
+      } else {
+        this.markers.user_location.setPosition(pos);
+      }
+    },
+
+    geoShowError: function (error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          console.log('User denied the request for Geolocation.');
+          break;
+        case error.POSITION_UNAVAILABLE:
+          console.log('Location information is unavailable.');
+          break;
+        case error.TIMEOUT:
+          console.log('The request to get user location timed out.');
+          break;
+        case error.UNKNOWN_ERROR:
+          console.log('An unknown error occurred.');
+          break;
+      }
     },
 
     //
@@ -474,7 +506,7 @@ GMapz.map = (function() {
     btnAction: function (data) {
       // t.stopAllAnimations();
 
-      // console.log(data);
+      console.log(data);
       // console.log(data['gmapzShowGroup']);
 
       var zoom = false;
@@ -507,7 +539,7 @@ GMapz.map = (function() {
       }
 
       // Find near geolocation
-      if (typeof data.gmapzFindNearGeolocation !== 'undefined') {
+      if (typeof data.gmapzFindNear !== 'undefined') {
         var
           n = navigator.geolocation;
         if(n) {

@@ -9,6 +9,13 @@ GMapz.pins = {
       anchor: [24.0, 48.0]
     }
   },
+  user_location: { // Used for geolocation
+    pin: {
+      img: base_path + 'pin-user-location.png',
+      size: [48.0, 48.0],
+      anchor: [24.0, 48.0]
+    }
+  },
   orange: {
     pin: {
       img: base_path + 'pin-orange.png',
