@@ -6,38 +6,26 @@
 .main-content
   .container
     .row
-      h2 Introduction
+      h2.page-header Introduction
       p.
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et soluta rerum impedit dolore aperiam, fuga nemo ex, officia non dolores voluptatibus, officiis quis ab a odit. Sit debitis natus ex quod neque recusandae ducimus, pariatur! Deleniti fugit quas molestiae magnam maiores nam, dignissimos exercitationem minima non officia omnis nemo, cum blanditiis iure dolorem dolor, illum mollitia necessitatibus. Neque autem dicta quidem est facere vel ut enim et, inventore ab quam beatae nobis, commodi esse possimus nam, hic doloremque? Quisquam, at incidunt laboriosam totam sit pariatur modi, dolor ab quibusdam ipsum similique. Nihil culpa dolores facere sit minima, explicabo iure assumenda corporis labore nam ab itaque, accusantium illo quaerat, officiis expedita, nostrum fugiat. Odio inventore minima impedit eaque sint, in perferendis.
 
 #sample-1
   .container
-    .row
-      h2 Sample 1
-        small Subtitle
-    .row
-      .col-lg-7
-        #map-sample-1.map
-          p.
-            map goes here
-      .col-lg-5
-        .row
-          p.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt, qui facere tenetur alias vel aspernatur veritatis autem perferendis nesciunt ea iure, nam voluptas magnam! Temporibus suscipit adipisci nesciunt illum ut culpa quae sapiente enim maiores, repellendus, magni a, facere impedit praesentium voluptatum numquam illo assumenda voluptatem modi ratione commodi aliquid! Nam magnam, incidunt quidem accusantium ut error, deserunt odio qui illo, porro sunt. Possimus obcaecati vero exercitationem voluptatibus, quod iusto voluptas magni facere dolore, similique ut consequuntur repellat, non numquam modi repudiandae adipisci mollitia. Numquam at nobis dolorem nam eius, debitis ratione eum beatae quo! Eos, commodi. Minima nobis tenetur accusantium voluptatibus adipisci velit laborum enim distinctio placeat temporibus, excepturi odio molestias voluptatem consequuntur, assumenda sit quia ad eos vel.
-          pre
-            code.language-html.
-              | <div class="row">
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              |   <div class="col-md-1">.col-md-1</div>
-              | </div>
+    h2 Sample 1
+      small Subtitle
+    .col-lg-7
+      #map-sample-1.map
+        p.
+          map goes here
+      .actions
+        a.btn.btn-primary Show location
+    .col-lg-5
+      p.
+        Lorem ipsum dolor sit amet, consectetur adipisicing <code>elit. Incidunt, qui facere tenetur alias vel aspernatur veritatis autem perferendis nesciunt ea iure, nam voluptas magnam!</code> Temporibus suscipit adipisci nesciunt illum ut culpa quae sapiente enim maiores, repellendus, magni a, facere impedit praesentium voluptatum numquam illo assumenda voluptatem modi ratione commodi aliquid! Nam magnam, incidunt quidem accusantium ut error, deserunt odio qui illo, porro sunt. Possimus obcaecati vero exercitationem voluptatibus, quod iusto voluptas magni facere dolore, similique ut consequuntur repellat, non numquam modi repudiandae adipisci mollitia. Numquam at nobis dolorem nam eius, debitis ratione eum beatae quo! Eos, commodi. Minima nobis tenetur accusantium voluptatibus adipisci velit laborum enim distinctio placeat temporibus, excepturi odio molestias voluptatem consequuntur, assumenda sit quia ad eos vel.
+      pre.prettyprint
+        | function isSafe(number) {
+        |    return /^\d+(\.\d+)?(e\d+)?$/i.test(number);
+        | }
+        | typeof number === 'string' &amp;&amp; isSafe(number) &amp;&amp; typeof eval(number) !== 'number'
 
