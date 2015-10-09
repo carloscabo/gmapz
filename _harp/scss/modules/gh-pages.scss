@@ -2,16 +2,26 @@ body {
   // background-color: pink;
 }
 
+ul.left > * {
+  float: left;
+}
+
 p {
   font-size: 16px;
   line-height: 1.5;
 }
 
+.mb0 {
+  margin-bottom: 0;
+}
 .mb16 {
   margin-bottom: 16px;
 }
 .mb32 {
   margin-bottom: 32px;
+}
+.mt0 {
+  margin-top: 0;
 }
 .mt16 {
   margin-top: 16px;
@@ -24,6 +34,10 @@ hr.spacer-16 {
   border: 0;
   clear: both;
   margin:0 0 16px;
+}
+
+.navbar {
+  min-height: 0;
 }
 
 .bs-docs-header {
@@ -39,6 +53,10 @@ hr.spacer-16 {
 
   h1 {
     color: #fff;
+    margin: 4px 0 10px 0;
+    small {
+      color: rgba(255,255,255,0.5);
+    }
   }
 }
 
