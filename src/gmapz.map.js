@@ -435,9 +435,9 @@ GMapz.map = (function() {
         $control = $('<div class="gmapz-scroll-control disabled" title="Click to toggle map scroll"><div class="content"><span></span></div></div>');
 
       // Attach custom control
-      this.map.controls[google.maps.ControlPosition.TOP_CENTER].push($control[0]);
+      this.map.controls[google.maps.ControlPosition.TOP_LEFT].push($control[0]);
 
-      $(document).on('click', '[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control', function(e) {
+      $(document).on('click touchstart', '[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control', function(e) {
         e.preventDefault();
         if ($(this).hasClass('disabled')) {
           that.resumeScroll();
