@@ -3,38 +3,168 @@
     .container
       h2.page-header Introducción
       p.
-        <b>GMapz</b> es una librería creada con la finalidad de simplificar la creación de mapas con Google Maps API V3, es responsive, soporta múltiples instancias en la misma página y settings personalizados para cada una ellas. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.
-#sample-1.mb32
+        <b>GMapz</b> es una librería creada con la finalidad de simplificar la creación de mapas con Google Maps API V3, es <b>responsive</b>, soporta <b>múltiples instancias en la misma página</b> y settings personalizados para cada instancia. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.
+#intro-1.mb32
   .row
     .container
-      h2 Ficheros
-        small &nbsp;&nbsp;&nbsp;Ficeros necesarios (y para qué)
       .row
         .col-lg-6
+          h2 Ficheros básicos
+            small &nbsp;&nbsp;&nbsp;y cual es su función
           p.
-            Los ficheros básicos necesarios para el funcionamiento de <b>GMpaz</b> son:<br><br>
+            GMpaz está dividido en varias librerías lo que permite que se se incluyan únicamente las partes de la librería necesarias para la funcionalidada que se necesita.
+          p.
+            Para un proyecto con la funcionalidad básica necesitaremos incluir:<br><br>
+            <code>JQuery (1.8+)</code><br>
             <code>GMapz.js</code> (el <em>core</em> de la librería y funciones comunes)<br>
+            <code>GMapz.pins.js</code> (definición de los pins)<br>
             <code>GMapz.maps.js</code> (funcionalidades necesarias para la creación de mapas)<br>
-            <code>GMapz.autocomplete.js</code> (necesario para el autocompletado de direcciones)
           p.
-            <code>GMapz.pins.js</code>
+            Si necesitamos un input para emplear las funcionalidades de autocompletado y búsqueda de localizaciones de Google (ver <a href="/autocompletado.html">ejemplos de geolocalización</a>), necesitaremos añadir además:<br>
+            <code>GMapz.autocomplete.js</code>
 
         .col-lg-6
+          h2 Librerías de terceros
+            small &nbsp;&nbsp;&nbsp;para funcionalidad extendida
           p.
-            Solo se necesita crear una instancia de <code>GMapz</code> indicando las coordenadas de <code>center</code> y opcionalmente unos límites (<code>bounds</code>) con las esquinas de la zona de visualización en un array con la forma: <code>[nortwest_lat, nortwest_lng, southeast_lat, southwest_lng]</code>.
+            Algunas funcionalidades extendidas de <b>GMapz</b> requireren de librerías de terceros que deberemos incluír en caso de necesitar dichas funcionalidades.
+          h3.
+            Mapas responsive
           p.
-            A continuación pueden verse varias opciones de inicialización de GMapz.
+            Para la funcionalidad del mapa responsive es necesario incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">https://github.com/carloscabo/MQBE</a>). Puedes ver un ejemplo de su funcionamiento en la sercción correspondiente de esta ayuda ( <a href="/responsive.html">GMapz responsive</a>).
+          h3.
+            Agrupación de marcadores
+          p.
+            Para agrupar marcadores automáticamente cuando se hace <em>zoom</em> en la página se emplea la librería <code>MarkerClusterer.js</code>, de la cual puede encontrarse más información y ejemplos en: <a href="https://github.com/googlemaps/js-marker-clusterer" target="_blank">https://github.com/googlemaps/js-marker-clusterer</a>.
+#includes-header.mb16
+  .row
+    .container
+      p.
+        A continuación dispones de un ejemplo de el orden típico necesario para incluir las liberías en tu proyecto
+      pre.prettyprint
+        | // JQuery
+        | &lt;script src=&quot;http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js&quot;&gt;&lt;/script&gt;
+        | &nbsp;
+        | // Librer&#237;as de terceros, opcionales
+        | &lt;script src=&quot;js/lib/MQBE.1.04.js&quot;&gt;&lt;/script&gt;
+        | &lt;script src=&quot;js/lib/markerclusterer.js&quot;&gt;&lt;/script&gt;
+        | &nbsp;
+        | // GMapz y sus m&#243;dulos
+        | &lt;script src=&quot;js/gmapz.js&quot;&gt;&lt;/script&gt;
+        | &lt;script src=&quot;js/gmapz.pins.js&quot;&gt;&lt;/script&gt; // JSON de "pins" para los mapas
+        | &lt;script src=&quot;js/gmapz.map.js&quot;&gt;&lt;/script&gt;
+        | &lt;script src=&quot;js/gmapz.locations.js&quot;&gt;&lt;/script&gt; // JSON de localizaciones
+        | &nbsp;
+        | // Ready de tu aplicaci&#243;n
+        | &lt;script src=&quot;js/ready.js&quot;&gt;&lt;/script&gt;
+#pins-and-locations
+  .row
+    .container
+      .row
+        .col-lg-6
+          h2 Fichero de "pins"
+          p.
+            Cuando hablamos de "pins" nos referimos a las imagenes que emplea Google Maps para señalar las localicaciones en los mapas. Para personalizar estos gráficos en tu aplicación basta con definir un fichero <code>JSON</code> con sus nombres y propiedades que después podrás emplear en el correspondiente fichero de ubicaciones / posiciones / coordenadas (ver a la derecha).
+          p
+            mark.
+              Siempre debes definir los pins <b>ANTES</b> de inicializar ningún mapa, en caso contrario se emplearán los "pins" por defecto de google maps.
+          p.
+            A continuación tienes el fichero <code>gmapz.pins.js</code> que se ha empleado en todas las demos de esta documentación, empléalo como base para personalicar los <em>pins</em> de tu aplicación. Los pins <b>deben tener una clave única</b> que permita referenciarlos más tarde en el fichero de coordenadas.
+          h3.
+            Hay 2 <b>casos especiales</b> de pins:
+          p.
+            <b>1.</b> El pin <code>'default'</code> que es el <b>pin que se usará por defecto cuando no se indique ningún otro.</b>
+          p.
+            <b>2.</b> El pin <code>user_location</code> que es el indica la posición del usuario en el mapa cuando se usan las funciones de geolocalización, o las funcionalidades de encontrar la ubicación más cercana a la del usuario (ver ejemplo a continuación)
           pre.prettyprint
-            |  map_sample_1 = new GMapz.map(
-            |    $('#map-sample-1'),
-            |    { // Standard Google Maps options
-            |      scrollwheel: true, // Default
-            |      scaleControl: true, // Default
-            |      center: [48.860, 2.340],
-            |      bound: [4.1335, 49.7198, 0.5464, 47.9851],
-            |      // zoom: 9 You can set `zoom` instead of bounds
-            |      // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'
-            |      mapTypeId: 'ROADMAP', // Default
-            |    }
-            |  );
+            | // Pins must be defined BEFORE map initialization
+            | var base_path = 'img/gmapz/';
+            | GMapz.pins = {
+            |   'default': { // IE8 Reserved word, allways must be QUOTED!
+            |     pin: {
+            |       img: base_path + 'pin.png',
+            |       size: [48.0, 48.0],
+            |       anchor: [24.0, 48.0]
+            |     }
+            |   },
+            |   user_location: { // Used for user location
+            |     pin: {
+            |       img: base_path + 'pin-user-location.png',
+            |       size: [48.0, 48.0],
+            |       anchor: [24.0, 48.0]
+            |     }
+            |   },
+            |   orange: {
+            |     pin: {
+            |       img: base_path + 'pin-orange.png',
+            |       size: [48.0, 48.0],
+            |       anchor: [24.0, 48.0]
+            |     }
+            |   },
+            |   blue: {
+            |     pin: {
+            |       img: base_path + 'pin-blue.png',
+            |       size: [48.0, 48.0],
+            |       anchor: [24.0, 48.0]
+            |     }
+            |   },
+            |   green: {
+            |     pin: {
+            |       img: base_path + 'pin-green.png',
+            |       size: [48.0, 48.0],
+            |       anchor: [24.0, 48.0]
+            |     }
+            |   }
+            | };
+        .col-lg-6
+          h2 Fichero localizaciones / marcadores
+          p.
+            Este fichero define las <code>coordenadas</code> de cada marcador en el mapa (en formato <code>latitud</code>, <code>longitud</code>), así como el <code>pin</code> que se dibujará, y el contenido del <code>infowindow</code> (la ventanita que se muestra cuando pulsamos sobre un marcador).
+          p
+            mark.
+              Cada marcador comienza con una <code>clave / key / index</code> que <b>debe ser única</b>, esta clave puede ser numérica o alfanumérica y solo debe emplear caracteres dentro del rango: <b>[a-zA-z0-9_]</b>.
+          p.
+            Los marcadores pueden tener dos propiedades adicionales: <code>draggable</code>, que indica que usuario podrá mover el marcador y <code>hidden</code> que indica que el marcador se añadirá al mapa, pero inicialmente estará <b>oculto</b>.
+          p.
+            Es útil agrupar los marcadores en diferentes objetos, así podremos tener los marcadores organizados.
+          pre.prettyprint
+            | // Grupo de en Marruecos
+            | var morocco = {
+            |   'FEZ' : { // Clave única
+            |     pin: 'green', // Pin que se dibujará
+            |     lat: 34.0338,
+            |     lng: -5.0002,
+            |     iw: 'Fez en Marruecos', // Infowindow
+            |     draggable: true, // Por defecto es false
+            |     hidden: // Por defecto es false
+            |   },
+            |   'ORAN' : {
+            |     lat: 35.6980,
+            |     lng: -0.6329
+            |   },
+            |   12: { // Clave numérica
+            |     pin: 'blue',
+            |     lat: 43.257206,
+            |     lng: -2.923763
+            |   }
+            | };
+            | &nbsp;
+            | // France main cities
+            | france_cities = {
+            |   paris: {
+            |     lat: 48.8601,
+            |     lng: 2.3402,
+            |     iw: 'Paris, population: 2107700'
+            |   },
+            |   marseille: {
+            |     lat: 43.3103,
+            |     lng: 5.3704,
+            |     iw: 'Marseille, population: 826300'
+            |   },
+            |   lyon: {
+            |     lat: 45.7605,
+            |     lng: 4.8306,
+            |     iw: 'Lyon, population: 443600'
+            |   },
+            |   //...
 

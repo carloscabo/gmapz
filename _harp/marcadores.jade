@@ -1,9 +1,9 @@
 .main-content
   .row
     .container
-      h2.page-header Marcadores y configuración básica
+      h2.page-header Marcadores y configuración
       p.
-        <b>GMapz</b> es una librería creada con la finalidad de simplificar la creación de mapas con Google Maps API V3, es responsive, soporta múltiples instancias en la misma página y settings personalizados para cada una ellas. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.
+        A continuación dsipones de los ejemplos más habituales para configurar un mapa con <b>GMapz</b>, y diferentes opciones de configuración. También dispones de un ejemplo que incorpora <b>agrupación automática de markers</b>.
 #sample-1.mb32
   .row
     .container
@@ -45,7 +45,7 @@
               map goes here
         .col-lg-6
           p.
-            GMapz también soporta diferentes <b>estilos de color</b> como los generados por <a href="https://snazzymaps.com/" target="_blank">Snazzy Mpas</a>, deben pasarse en la inicialización del mapa con el resto de parámetros.
+            GMapz también soporta diferentes <b>estilos de color</b> como los generados por <a href="https://snazzymaps.com/" target="_blank">Snazzy Maps</a>, deben pasarse en la inicialización del mapa con el resto de parámetros.
           pre.prettyprint
             | // Map sample 2
             | map_sample_2 = new GMapz.map(
@@ -65,9 +65,9 @@
       .row.mb16
         .col-lg-6
           p.
-            A la derecha puede verse la estructura de este objeto JSON. Los marcadores están identificados por una <code>key</code> esta puede ser numérica o alfanumérica, pero es <b>importante que se ÚNICA</b>. Échale un ojo al fichero <code>demo_locations.js</code> en el repositorio.
+            A la derecha puede verse la estructura de este objeto JSON. Los marcadores están identificados por una <code>key</code> esta puede ser numérica o alfanumérica, pero es <b>importante que se ÚNICA</b>. Échale un ojo al fichero <code>GMapz.locations.js</code> en el repositorio.
           p.
-            La opción <code>iw:</code> determina el contenido del <code>infowindow</code> que se abre cuando pulsamos en uno de los marcadores. Y el <code>pin:</code> el puntero que se le asignará a este marcador, si no asignamos ninguno se empleará el pin definido como <code>default</code>.
+            La opción <code>iw:</code> determina el contenido del <code>infowindow</code> que se abre cuando pulsamos en uno de los marcadores. Y el <code>pin:</code> el puntero que se le asignará a este marcador, si no asignamos ninguno se empleará el pin definido como <code>'default'</code> en el fichero <code>gmapz.pins.js</code>.
         .col-lg-6
           pre.prettyprint
             | // Group of markers
@@ -103,31 +103,28 @@
             | map_sample_3 = new GMapz.map(
             |   $('#map-sample-3'),
             |   {}, // Empty options
-            |   france_cities // demo_locations.js
+            |   france_cities // gmapz.locations.js
             | );
             | &nbsp;
             | map_sample_3.onReady = function(){
-            |   // this = google.maps instance
+            |   // this is google.maps instance
             |   // También podríamos hacer:
             |   // this.addLocations(france_cities);
             |   this.fitBounds();
             | }
-
-#sample-3.mb32
+#sample-4.mb32
   .row
     .container
-      h2 Sample 3
-        small &nbsp;&nbsp;&nbsp;Subtitle
-      p.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi quia, a iure tempora pariatur est, at adipisci quo illo repellat!
+      h2 Sample 4
+        small &nbsp;&nbsp;&nbsp;Agrupado de markers según el zoom
       .row
-        .col-lg-7.first
-          #map-sample-3.map
+        .col-lg-6.first
+          #map-sample-4.map
             p.
               map goes here
           .actions.mt16.mb32
             a.btn.btn-primary Show location
-        .col-lg-5
+        .col-lg-6
           p.
             Lorem ipsum dolor sit amet, consectetur adipisicing <code>elit. Incidunt, qui facere tenetur alias vel aspernatur veritatis autem perferendis nesciunt ea iure, nam voluptas magnam!</code> Temporibus suscipit adipisci nesciunt illum ut culpa quae sapiente enim maiores, repellendus, magni a, facere impedit praesentium voluptatum numquam illo.
           p.
