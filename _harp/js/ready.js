@@ -158,17 +158,18 @@ $(document).ready(function() {
       place = this.instance.getPlace(),
       pos = {};
 
-    if(typeof place.location === 'undefined') {
+    if(typeof place.geometry === 'undefined') {
+      // No se ha encontrado el lugar
       alert('No encontrado');
       return;
     }
-
+    // Creamos un nuevo marcador
     pos['autocomplete'] = {
       pin: 'autocomplete',
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
       draggable: true,
-      iw : 'My infowindow'
+      iw : 'My infowindow 1'
     };
     map_sample_8.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
   };
@@ -185,23 +186,36 @@ $(document).ready(function() {
 
   autocomplete.onChange = function () {
     // this = autocomplete
-    var
-      place = this.instance.getPlace(),
-      pos = {};
-
-    if(typeof place.location === 'undefined') {
+    var place = this.instance.getPlace();
+    if(typeof place.geometry === 'undefined') {
+      // No se ha encontrado el lugar
       alert('No encontrado');
       return;
     }
+    // Mostramos la ubicación y elpuntero más cercano
+    map_sample_9.geoShowPosition(place);
+  };
+  
+  // Map sample 10 *************************************************************
 
-    pos['autocomplete'] = {
-      pin: 'autocomplete',
-      lat: place.geometry.location.lat(),
-      lng: place.geometry.location.lng(),
-      draggable: true,
-      iw : 'My infowindow'
-    };
-    map_sample_9.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
+  map_sample_9 = new GMapz.map($('#map-sample-9'));
+
+  map_sample_9.onReady = function() {
+    this.addLocations(italy_cities).fitBounds();
+  }
+
+  var autocomplete = new GMapz.autocomplete($('#my-autocomplete-2'));
+
+  autocomplete.onChange = function () {
+    // this = autocomplete
+    var place = this.instance.getPlace();
+    if(typeof place.geometry === 'undefined') {
+      // No se ha encontrado el lugar
+      alert('No encontrado');
+      return;
+    }
+    // Mostramos la ubicación y elpuntero más cercano
+    map_sample_9.geoShowPosition(place);
   };
 
   // Attachear botones ********************************************************

@@ -46,8 +46,7 @@ include ./includes/mixins.jade
               |     place = this.instance.getPlace(),
               |     pos = {};
               | 
-              |   // No existe información
-              |   if(typeof place.location === 'undefined') {
+              |   if(typeof place.geometry === 'undefined') {
               |     alert('No encontrado');
               |     return;
               |   }
@@ -58,7 +57,7 @@ include ./includes/mixins.jade
               |     lat: place.geometry.location.lat(),
               |     lng: place.geometry.location.lng(),
               |     draggable: true,
-              |     iw : 'My infowindow'
+              |     iw : 'My infowindow 1'
               |   };
               |   // Añadimos la nueva localización
               |   // Centramos la vista en la nueva localización
@@ -73,7 +72,7 @@ include ./includes/mixins.jade
       .row
         .col-lg-6
           div.
-            <input id="my-autocomplete-2" type="text" class="form-control" placeholder="Cerca de dirección...">
+            <input id="my-autocomplete-2" type="text" class="form-control" placeholder="Busca Venecia, Italia...">
           #map-sample-9.map
             p.
               map goes here
@@ -83,46 +82,22 @@ include ./includes/mixins.jade
               | <input id="my-autocomplete-2" placeholder="Introduce una dirección...">
           pre.prettyprint.lang-javascript
             +escape()
-              | // Creamos un mapa con un centro y un zoom
-              | map_sample_8 = new GMapz.map(
-              |   $('#map-sample-8'), {
-              |     center: [41.8919, 12.5113],
-              |     zoom: 12
-              |   }
-              | );
+              | map_sample_9 = new GMapz.map($('#map-sample-9'));
               | 
-              | // Una vez listo añadimos las localizaciones
-              | map_sample_8.onReady = function() {
-              |   this.addLocations(italy_cities);
-              | };
+              | map_sample_9.onReady = function() {
+              |   this.addLocations(italy_cities).fitBounds();
+              | }
               | 
-              | // Creamos en autocomplete asignado a un elemento de la página
-              | var autocomplete = new GMapz.autocomplete($('#my-autocomplete'));
+              | var autocomplete = new GMapz.autocomplete($('#my-autocomplete-2'));
               | 
-              | // Cuando el usuario selecciona una ubicación...
               | autocomplete.onChange = function () {
               |   // this = autocomplete
-              |   var
-              |     place = this.instance.getPlace(),
-              |     pos = {};
-              | 
-              |   // No existe información
-              |   if(typeof place.location === 'undefined') {
+              |   var place = this.instance.getPlace();
+              |   if(typeof place.geometry === 'undefined') {
+              |     // No se ha encontrado el lugar
               |     alert('No encontrado');
               |     return;
               |   }
-              | 
-              |   // Creamos un marker
-              |   pos['autocomplete'] = {
-              |     pin: 'autocomplete',
-              |     lat: place.geometry.location.lat(),
-              |     lng: place.geometry.location.lng(),
-              |     draggable: true,
-              |     iw : 'My infowindow'
-              |   };
-              |   // Escondemos todos los otros markers
-              |   // Añadimos la nueva localización
-              |   // Centramos la vista en la nueva localización
-              |   // Abrimos el infowindow de la misma
-              |   map_sample_8.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
+              |   // Mostramos la ubicación y elpuntero más cercano
+              |   map_sample_9.geoShowPosition(place);
               | };

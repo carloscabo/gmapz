@@ -451,7 +451,7 @@ GMapz.map = (function() {
       );
     },
 
-    geoShowPosition: function (pos){
+    geoShowPosition: function (pos_or_place){
       var
         lat = null,
         lng = null,
@@ -459,14 +459,18 @@ GMapz.map = (function() {
         near_lat = null,
         near_lng = null;
 
-      // Coords from Navigator.geolocation
-      if (pos.coords) {
-        lat = pos.coords.latitude;
-        lng = pos.coords.longitude;
+      // Coords from autocomplete (place)
+      if (pos_or_place.geometry) {
+        lat = pos_or_place.geometry.location.lat();
+        lng = pos_or_place.geometry.location.lng();
+      } else if (pos_or_place.coords) {
+        // Coords from Navigator.geolocation
+        lat = pos_or_place.coords.latitude;
+        lng = pos_or_place.coords.longitude;
       } else {
         // Coords from address geocode
-        lat = pos.lat();
-        lng = pos.lng();
+        lat = pos_or_place.lat();
+        lng = pos_or_place.lng();
       }
 
       // Find nearest marker

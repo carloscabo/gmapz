@@ -2,26 +2,24 @@ include ./includes/mixins.jade
 .main-content
   .row
     .container
-      h2.page-header Geolocalización
+      h2.page-header Responsive
       p.
-        <b>GMapz</b> también dispone de 3 helpers para trabajar con localizaciones y direcciones, para, por ejemplo localizar el marcador más cercano a la posición de un usuario.
-#sample-6.mb32
+        Una de las funcionalidades más interesantes de <code>GMapz</code> es que está preparado para móbiles y tabletas. Cunado se encuntra en un dispositivo <em>mobile</em> el scroll y el zoom se bloquen <b>automáticamente</b> y el usuario decide cuando desbloquearlo.
+      p.
+        Para esta funcionalidad hace falta incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">Media Query Breakpoint Events</a>), y una hoja de estilo que defina los diferentes <em>breakpoints</em>.
+#sample-10.mb32
   .row
     .container
-      h2 Sample 6
-        small &nbsp;&nbsp;&nbsp;Marcador más cercano
+      h2 Sample 10
+        small &nbsp;&nbsp;&nbsp;Bloqueo automático en responsive
       .row
         .col-lg-6
-          #map-sample-5.map(data-gmapz='gz-sample-6')
+          #map-sample-10.map
             p.
               map goes here
         .col-lg-6
           p.
-            <b>Mostar el marcador más cercano al usuario</b>
-          p.
-            <a href="#" class="btn btn-primary"  data-gmapz-target="gz-sample-6" data-gmapz-find-near >Encontrar marcador más cercano</a><br>
-          p.
-            Para esta funcionalidad basta crear un elemento html con un data-attribute <code>data-gmapz-target="..."</code> y otro <code>data-gmapz-find-near</code>.<br>
+            <b>Encoge el navgeador por debajo de 768 para ver esta funcionalidad en marcha.</b>
           pre.prettyprint
             +escape()
               <a href="#" data-gmapz-target="gz-sample-6" data-gmapz-find-near >Encontrar marcador más cercano</a>
