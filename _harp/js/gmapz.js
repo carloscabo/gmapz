@@ -72,8 +72,8 @@
       GMapz.createCustomPins();
     }
 
-    // Alert each instance
-    $('[data-gmapz]').each(function(idx, el) {
+    // Alert each map instance
+    $('[data-gmapz], [data-gmapz-autocomplete]').each(function(idx, el) {
       $(el)[0].gmapz.instanceReady();
     });
   }
@@ -108,7 +108,7 @@
     return new google.maps.LatLng(x,y);
   }
 
-  // Converts google.maps bounds object into
+  // Converts google.maps bounds object into "NW_lat, NW_lng, SE_lat, SE_lng" sting
   function serializeBounds (bounds) {
     var
       sw = bounds.getSouthWest(),

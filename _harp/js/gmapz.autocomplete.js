@@ -35,7 +35,7 @@ GMapz.autocomplete = (function() {
     $.extend(this.autocomplete_settings, user_settings);
 
     // Attach objecto DOM element
-    $input[0].autocompletez = this;
+    $input[0].gmapz = this;
 
     // Request GM Api, instanceReady() will be called when done
     GMapz.requestAPI();
@@ -59,20 +59,33 @@ GMapz.autocomplete = (function() {
       this.onReady();
     },
 
+    //
+    // Eventos
+    //
+
     // Override from outside
     onReady: function() {
       console.log(this.input_id+' autocomplete instance is ready');
     },
 
+    onAutocompleteChanged: function () {
+      /*
+      GMapz.deleteAllMarkers();
+      var locs = {};
+      var place = GMapz.g.autocomplete.getPlace();
+      locs['autocomplete'] = {
+        pin: 'coo',
+        lat: place.geometry.location.A,
+        lng: place.geometry.location.F,
+        draggable:true,
+        title:"Drag me!"
+      };
+      GMapz.fitToPlace(place);
+      */
+    }
 
-    //
-    // Eventos
-    //
-    onMarkerDragEnd: function(marker) {
-      console.log(marker);
-    },
-    afterAddingMarkers: function() {},
-    errorAddressNotFound: function(addr) {},
+
+
 
   };
 
