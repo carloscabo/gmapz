@@ -5,7 +5,8 @@ var
 $(document).ready(function() {
   // La magia aquí
 
-  // Map sample 1
+  // Map sample 1 *************************************************************
+
   map_sample_1 = new GMapz.map(
     $('#map-sample-1'),
     { // Google Maps options
@@ -19,7 +20,8 @@ $(document).ready(function() {
     }
   );
 
-  // Map sample 2
+  // Map sample 2 *************************************************************
+
   map_sample_2 = new GMapz.map(
     $('#map-sample-2'),
     { // Google Maps options
@@ -29,14 +31,15 @@ $(document).ready(function() {
     }
   );
 
-  // Map sample 3
-  var map_3_options = {
+  // Map sample 3 *************************************************************
+
+  var map_sample_3_options = {
       center: [43.2486, -5.7767]
   };
 
   map_sample_3 = new GMapz.map(
     $('#map-sample-3'),
-    map_3_options,
+    map_sample_3_options,
     france_cities // demo_locations.js
   );
 
@@ -44,5 +47,45 @@ $(document).ready(function() {
     // this = google.maps instance
     this.fitBounds();
   }
+
+  // Map sample 4 *************************************************************
+
+  var map_sample_4_options = {
+    // Options here
+    mapTypeId: 'ROADMAP', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
+    center: [48, 2],
+    zoom: 5
+  };
+
+  map_sample_4 = new GMapz.map(
+    $('#map-sample-4'),
+    map_sample_4_options,
+    france_cities
+  );
+
+  var marker_cluster_style = [{
+    textColor: 'white',
+    url: 'img/gmapz/pin-cluster.png',
+    height: 48,
+    width: 48,
+    textSize: '17',
+    backgroundPosition: '0 0'
+    // anchorIcon: [-24.0, -48.0] // This propoerty its not supported actually
+  }];
+
+  map_sample_4.onReady = function() {
+    // Convert markers object, into array
+    markers_array = $.map(this.markers, function(val, idx){
+      return [val];
+    });
+    this.marker_cluster = new MarkerClusterer(
+      this.map,
+      markers_array, {
+        gridSize: 100,
+        maxZoom: 15,
+        styles: marker_cluster_style
+      }
+    );
+  };
 
 });

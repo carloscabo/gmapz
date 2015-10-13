@@ -1,3 +1,4 @@
+include ./includes/mixins.jade
 .main-content
   .row
     .container
@@ -20,18 +21,19 @@
           p.
             A continuación pueden verse varias opciones de inicialización de GMapz.
           pre.prettyprint
-            |  map_sample_1 = new GMapz.map(
-            |    $('#map-sample-1'),
-            |    { // Standard Google Maps options
-            |      scrollwheel: true, // Default
-            |      scaleControl: true, // Default
-            |      center: [48.860, 2.340],
-            |      bound: [4.1335, 49.7198, 0.5464, 47.9851],
-            |      // zoom: 9 You can set `zoom` instead of bounds
-            |      // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'
-            |      mapTypeId: 'ROADMAP', // Default
-            |    }
-            |  );
+            +escape()
+              | map_sample_1 = new GMapz.map(
+              |   $('#map-sample-1'),
+              |   { // Standard Google Maps options
+              |     scrollwheel: true, // Default
+              |     scaleControl: true, // Default
+              |     center: [48.860, 2.340],
+              |     bound: [4.1335, 49.7198, 0.5464, 47.9851],
+              |     // zoom: 9 You can set `zoom` instead of bounds
+              |     // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'
+              |     mapTypeId: 'ROADMAP', // Default
+              |   }
+              | );
 
 #sample-2.mb32
   .row
@@ -47,15 +49,16 @@
           p.
             GMapz también soporta diferentes <b>estilos de color</b> como los generados por <a href="https://snazzymaps.com/" target="_blank">Snazzy Maps</a>, deben pasarse en la inicialización del mapa con el resto de parámetros.
           pre.prettyprint
-            | // Map sample 2
-            | map_sample_2 = new GMapz.map(
-            |   $('#map-sample-2'),
-            |   { // Google Maps options
-            |     center: [48.860, 2.340],
-            |     zoom: 9,
-            |     styles: [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
-            |   }
-            | );
+            +escape()
+              | // Map sample 2
+              | map_sample_2 = new GMapz.map(
+              |   $('#map-sample-2'),
+              |   { // Google Maps options
+              |     center: [48.860, 2.340],
+              |     zoom: 9,
+              |     styles: [{"featureType":"landscape.natural","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#e0efef"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"hue":"#1900ff"},{"color":"#c0e8e8"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"visibility":"on"},{"lightness":700}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#7dcdcd"}]}]
+              |   }
+              | );
 
 #sample-3.mb32
   .row
@@ -70,48 +73,48 @@
             La opción <code>iw:</code> determina el contenido del <code>infowindow</code> que se abre cuando pulsamos en uno de los marcadores. Y el <code>pin:</code> el puntero que se le asignará a este marcador, si no asignamos ninguno se empleará el pin definido como <code>'default'</code> en el fichero <code>gmapz.pins.js</code>.
         .col-lg-6
           pre.prettyprint
-            | // Group of markers
-            | var morocco = {
-            |   'FEZ' : { // Key must be unique!
-            |     pin: 'green',
-            |     lat: 34.033884,
-            |     lng: -5.000206,
-            |     // Contenido para el `infowindow` (opcional)
-            |     // Se abre cuando se pulsa el marcador
-            |     iw: 'Fez en Marruecos',
-            |     // El marcador es `draggable` (opcional)
-            |     draggable: true,
-            |     // El marcador inicialmente estará oculto (opcional)
-            |     hidden: true
-            |   },
-            |    168: { // Numeric marker
-            |    // ...
+            +escape()
+              | // Group of markers
+              | var morocco = {
+              |   'FEZ' : { // Key must be unique!
+              |     pin: 'green',
+              |     lat: 34.033884,
+              |     lng: -5.000206,
+              |     // Contenido para el `infowindow` (opcional)
+              |     // Se abre cuando se pulsa el marcador
+              |     iw: 'Fez en Marruecos',
+              |     // El marcador es `draggable` (opcional)
+              |     draggable: true,
+              |     // El marcador inicialmente estará oculto (opcional)
+              |     hidden: true
+              |   },
+              |    168: { // Numeric marker
+              |    // ...
       .row
         .col-lg-6
           #map-sample-3.map
             p.
               map goes here
-          .actions.mt16.mb32
-            a.btn.btn-primary Show location
         .col-lg-6
           p.
             Para añadir los marcadores debemos pasar un objeto JSON a la instancia de GMapz en su momento de creación o bien asignárselos depués de que esté listo empleando el método <code>addLocations</code>.
           p.
             Cuando el mapa esté listo (<code>onReady</code>) podemos llamar al método <code>.fitBounds()</code>, si no le pasamos ningún parámetro ajustará la vista a todos los marcadores visibles en el mapa.
           pre.prettyprint
-            | // Map sample 3
-            | map_sample_3 = new GMapz.map(
-            |   $('#map-sample-3'),
-            |   {}, // Empty options
-            |   france_cities // gmapz.locations.js
-            | );
-            | &nbsp;
-            | map_sample_3.onReady = function(){
-            |   // this is google.maps instance
-            |   // También podríamos hacer:
-            |   // this.addLocations(france_cities);
-            |   this.fitBounds();
-            | }
+            +escape()
+              | // Map sample 3
+              | map_sample_3 = new GMapz.map(
+              |   $('#map-sample-3'),
+              |   {}, // Empty options
+              |   france_cities // gmapz.locations.js
+              | );
+              | 
+              | map_sample_3.onReady = function(){
+              |   // this is google.maps instance
+              |   // También podríamos hacer:
+              |   // this.addLocations(france_cities);
+              |   this.fitBounds();
+              | }
 #sample-4.mb32
   .row
     .container
@@ -122,18 +125,56 @@
           #map-sample-4.map
             p.
               map goes here
-          .actions.mt16.mb32
-            a.btn.btn-primary Show location
+          p.mt8.
+            Haz <b>zoom sobre este mapa</b> para ver la agrupación de marcadores...
+          p.
+            Para agrupar los marcadores empleamos <code>markerclusterer.js</code> una vez el mapa de <code>GMapz</code> está inicializado.
+          p.
+            El procedimiento es bastante sencillo, preparamos las <a href="https://github.com/googlemaps/js-marker-clusterer" target="_blank">opciones de markerclusterer</a>, inicializamos nuestro mapa normalmente, y en el <code>onReady()</code> de nuestro mapa pasamos los marcadores a <code>markerclusterer</code> que se encargará automáticamente de su agrupación según el nivel de zoom que hayamos definido.
+          p
+            mark.
+              Presta atención a que <code>markercluster</code> emplea un <b>array</b> de marcadores, así que tenemos que convertir el <b>objeto</b> que se usa dentro de <code>gmap</code> (ver código del ejemplo a la derecha).
         .col-lg-6
-          p.
-            Lorem ipsum dolor sit amet, consectetur adipisicing <code>elit. Incidunt, qui facere tenetur alias vel aspernatur veritatis autem perferendis nesciunt ea iure, nam voluptas magnam!</code> Temporibus suscipit adipisci nesciunt illum ut culpa quae sapiente enim maiores, repellendus, magni a, facere impedit praesentium voluptatum numquam illo.
-          p.
-            Assumenda voluptatem modi ratione commodi aliquid! Nam magnam, incidunt quidem accusantium ut error, deserunt odio qui illo, porro sunt. Possimus obcaecati vero exercitationem voluptatibus, quod iusto voluptas magni facere dolore, similique ut consequuntur repellat, non numquam modi repudiandae adipisci mollitia. Numquam at nobis dolorem nam eius, debitis ratione eum beatae quo! Eos, commodi. Minima nobis tenetur accusantium voluptatibus adipisci velit laborum enim distinctio placeat temporibus, excepturi odio molestias voluptatem consequuntur, assumenda sit quia ad eos vel.
           pre.prettyprint
-            | function isSafe(number) {
-            |    return /^\d+(\.\d+)?(e\d+)?$/i.test(number);
-            | }
-            | typeof number === 'string' &amp;&amp; isSafe(number) &amp;&amp; typeof eval(number) !== 'number'
+            +escape()
+              | var map_sample_4_options = {
+              |   // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
+              |   mapTypeId: 'ROADMAP',
+              |   center: [48, 2],
+              |   zoom: 5
+              | };
+              | 
+              | map_sample_4 = new GMapz.map(
+              |   $('#map-sample-4'),
+              |   map_sample_4_options,
+              |   france_cities
+              | );
+              | 
+              | // https://github.com/googlemaps/js-marker-clusterer
+              | var marker_cluster_style = [{
+              |   textColor: 'white',
+              |   url: 'img/gmapz/pin-cluster.png',
+              |   height: 48,
+              |   width: 48,
+              |   textSize: '17',
+              |   backgroundPosition: '0 0'
+              |   // anchorIcon: [-24.0, -48.0] // This propoerty its not supported actually
+              | }];
+              | 
+              | map_sample_4.onReady = function() {
+              |   // Conviert el objeto de marcadores en un array
+              |   markers_array = $.map(this.markers, function(val, idx){
+              |     return [val];
+              |   });
+              |   this.marker_cluster = new MarkerClusterer(
+              |     this.map,
+              |     markers_array, {
+              |       gridSize: 100,
+              |       maxZoom: 15,
+              |       styles: marker_cluster_style
+              |     }
+              |   );
+              | };
 
 #sample-3.mb32
   .row

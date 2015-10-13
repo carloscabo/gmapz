@@ -10,13 +10,20 @@ p {
   font-size: 16px;
   line-height: 1.5;
 
-  > a {
+  > a:not(.btn) {
     text-decoration: underline;
   }
 }
 
+.btn {
+  margin-bottom: 4px;
+}
+
 .mb0 {
   margin-bottom: 0;
+}
+.mb8 {
+  margin-bottom: 8px;
 }
 .mb16 {
   margin-bottom: 16px;
@@ -26,6 +33,9 @@ p {
 }
 .mt0 {
   margin-top: 0;
+}
+.mt8 {
+  margin-top: 8px;
 }
 .mt16 {
   margin-top: 16px;

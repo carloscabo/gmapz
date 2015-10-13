@@ -1,0 +1,5 @@
+mixin escape()
+  - var oldBuf = buf;
+  - buf = [];
+  block
+  - buf  = oldBuf.concat(buf.map(jade.escape));
