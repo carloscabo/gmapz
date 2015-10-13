@@ -396,6 +396,8 @@ GMapz.map = (function() {
         that = this,
         geocoder = new google.maps.Geocoder();
 
+      console.log(addr);
+
       // Convert location into longitude and latitude
       geocoder.geocode(
         {
@@ -420,14 +422,14 @@ GMapz.map = (function() {
         near_lat = null,
         near_lng = null;
 
+      // Coords from Navigator.geolocation
       if (pos.coords) {
-        // Coords from Navigator.geolocation
         lat = pos.coords.latitude;
         lng = pos.coords.longitude;
       } else {
-        // Coords from address
-        lat = pos.jb;
-        lng = pos.kb;
+        // Coords from address geocode
+        lat = pos.lat();
+        lng = pos.lng();
       }
 
       // Find nearest marker
@@ -435,7 +437,7 @@ GMapz.map = (function() {
       near_lat = this.markers[idx].position.lat();
       near_lng = this.markers[idx].position.lng();
 
-      // Add pegman / you are here
+      // Add user location
       this.addUserLocationMarker(lat, lng);
       this.map.setCenter(new google.maps.LatLng(lat, lng));
 
@@ -447,10 +449,6 @@ GMapz.map = (function() {
       bounds.extend(this.markers[idx].getPosition());
       bounds.extend(GMapz.getOppositeCorner(lat, lng, near_lat, near_lng));
       this.map.fitBounds(bounds);
-
-      // t.z.infowindow_current_idx = t.g.infowindows[idx];
-      // t.g.infowindows[idx].open(t.g.map, t.g.markers[idx]);
-      // t.zoomTo(near_lat, near_lng, 16);
     },
 
     addUserLocationMarker: function (lat, lng) {
@@ -577,7 +575,7 @@ GMapz.map = (function() {
         }
       }
 
-      // Find near location
+      // Find near address
       if (typeof data.gmapzFindNearAddress !== 'undefined') {
         var
           $input = $($el.data('gmapzInput'));

@@ -137,6 +137,20 @@ $(document).ready(function() {
     console.log('Was unable to find: '+addr);
   };
 
+  // Map sample 8 *************************************************************
+
+  var map_sample_8 = new GMapz.map(
+    $('#map-sample-8'),
+    {
+      center: [41.8919, 12.5113],
+      zoom: 12
+    }
+  );
+
+  map_sample_8.onReady = function() {
+    // this.fitBounds();
+  };
+
   // Attachear botones ********************************************************
 
   // Attach button with data-gmapz attribute
