@@ -1,0 +1,86 @@
+include ./includes/mixins.jade
+.main-content
+  .row
+    .container
+      h2.page-header Geolocalización
+      p.
+        <b>GMapz</b> también dispone de 3 helpers para trabajar con localizaciones y direcciones, para, por ejemplo localizar el marcador más cercano a la posición de un usuario.
+#sample-6.mb32
+  .row
+    .container
+      h2 Sample 6
+        small &nbsp;&nbsp;&nbsp;Marcador más cercano
+      .row
+        .col-lg-6
+          #map-sample-5.map(data-gmapz='gz-sample-6')
+            p.
+              map goes here
+        .col-lg-6
+          p.
+            <b>Mostar el marcador más cercano al usuario</b>
+          p.
+            <a href="#" class="btn btn-primary"  data-gmapz-target="gz-sample-6" data-gmapz-find-near >Encontrar marcador más cercano</a><br>
+          p.
+            Para esta funcionalidad basta crear un elemento html con un data-attribute <code>data-gmapz-target="..."</code> y otro <code>data-gmapz-find-near</code>.<br>
+          pre.prettyprint
+            +escape()
+              <a href="#" data-gmapz-target="gz-sample-6" data-gmapz-find-near >Encontrar marcador más cercano</a>
+          p.
+            El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
+          pre.prettyprint
+            +escape()
+              | // Start gmapz with default options
+              | var map_sample_6 = new GMapz.map(
+              |   $('[data-gmapz="gz-sample-6"]')
+              | );
+              | 
+              | // onReady add locations and fit bounds
+              | map_sample_6.onReady = function() {
+              |   this.addLocations(spain_locs).fitBounds();
+              | };
+              | 
+              | // Automatically attach button with data-gmapz attribute
+              | GMapz.attachActionButtons();
+#sample-7.mb32
+  .row
+    .container
+      h2 Sample 7
+        small &nbsp;&nbsp;&nbsp;Introducir la dirección en un input
+      .row
+        .col-lg-6
+          div.input-group.
+            <input id="my-address" type="text" class="form-control" placeholder="Cerca de dirección..." value ="Pedro Antonio Menéndez 1, 33004, Oviedo">
+            <span class="input-group-btn">
+              <button  type="button" class="btn btn-default" data-gmapz-target="gz-sample-7" data-gmapz-input="#my-address" data-gmapz-find-near-address>Buscar!</button>
+            </span>
+          #map-sample-7.map(data-gmapz='gz-sample-7')
+            p.
+              map goes here
+        .col-lg-6
+          p.
+            <b>Input para introducción de texto</b><br>
+            Para esta funcionalidad debemos crear un <code>input</code>code> donde el usuario pueda introducir la dirección a buscar, y un <code>button</code> con <b>3 data-attributes</b>:<br><br>
+            <b>1</b>. <code>data-gmapz-target="data_gmapz_del_mapa"</code> con el data-gmapz de destino donde se mostrará el resultado.<br><br>
+            <b>2</b>. <code>data-gmapz-input="selector_de_input"</code> selector que nos indica de que input se leerá la dirección que introducido el usuario.<br><br>
+            <b>3</b>.<code>data-gmapz-find-near-address</code> que activa la funcionalidad de búsqueda.
+          pre.prettyprint.lang-html
+            +escape()
+              | <input id="my-address" placeholder="Cerca de dirección...">
+              | 
+              | <button data-gmapz-target="gz-sample-7" data-gmapz-input="#my-address" data-gmapz-find-near-address>Buscar!</button>
+          p.
+            El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
+          pre.prettyprint.lang-javascript
+            +escape()
+              | var map_sample_7 = new GMapz.map(
+              |   $('#map-sample-7'),
+              |   {}, // default options
+              |   spain_locs
+              | );
+              | 
+              | map_sample_7.onReady = function() {
+              |   this.fitBounds();
+              | };
+              | 
+              | // Automatically attach button with data-gmapz attribute
+              | GMapz.attachActionButtons();

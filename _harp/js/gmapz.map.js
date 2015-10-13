@@ -391,6 +391,27 @@ GMapz.map = (function() {
       return nearidx;
     },
 
+    findNearestMarkerToAddress: function (addr) {
+      var
+        that = this,
+        geocoder = new google.maps.Geocoder();
+
+      // Convert location into longitude and latitude
+      geocoder.geocode(
+        {
+          address: addr
+        },
+        function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            var result = results[0].geometry.location;
+            that.geoShowPosition(result);
+          } else {
+            that.errorAddressNotFound(addr);
+          }
+        }
+      );
+    },
+
     geoShowPosition: function (pos){
       var
         lat = null,
@@ -508,10 +529,11 @@ GMapz.map = (function() {
     // Buttons and interaction
     //
 
-    btnAction: function (data) {
+    btnAction: function (data, $el) {
       // t.stopAllAnimations();
 
       console.log(data);
+      console.log($el);
       // console.log(data['gmapzShowGroup']);
 
       var zoom = false;
@@ -550,54 +572,25 @@ GMapz.map = (function() {
         if(n) {
           n.getCurrentPosition(this.geoShowPosition.bind(this), this.geoShowError.bind(this));
         } else {
-          alert('Su navegador no soporta Geolocalización.');
+          console.log('Su navegador no soporta Geolocalización.');
+          return false;
         }
       }
 
-      // Find near address
-      if (typeof data.gmapzFindNear !== 'undefined') {
-        this.centerToMarker(data.gmapzCenterIdx, zoom);
+      // Find near location
+      if (typeof data.gmapzFindNearAddress !== 'undefined') {
+        var
+          $input = $($el.data('gmapzInput'));
+        if ($input.length) {
+          var addr = $input.val();
+          // console.log(addr);
+          this.findNearestMarkerToAddress(addr);
+        } else {
+          console.log('No se ha encontrado el input!');
+        }
       }
 
-
-      /*switch (f) {
-      case 'zoom':
-        var idx = $t.data('idx');
-        t.closeAllInfoWindows();
-        if (idx) {
-          var
-            lat = t.g.markers[idx].position.lat(),
-            lng = t.g.markers[idx].position.lng(),
-            siw = $t.data('show-infowindow');
-
-          t.g.markers[idx].setVisible(true);
-          t.zoomTo(lat, lng, $t.data('zoom'));
-          t.z.infowindow_current_idx = idx;
-          t.g.infowindows[idx].open(t.g.map, t.g.markers[idx]);
-        } else {
-          t.zoomTo($t.data('lat'), $t.data('lng'), $t.data('zoom'));
-        }
-        break;
-      case 'find-near':
-        var
-          n = navigator.geolocation;
-        if(n) {
-          n.getCurrentPosition(t.geoShowPosition.bind(t), t.geoShowError.bind(t));
-        } else {
-          alert('Su navegador no soporta Geolocalización.');
-        }
-        break;
-      case 'find-near-address':
-        var
-          a = $t.siblings('input[type=text]').val();
-          if (a) {
-            t.findNearestMarkerToAddress(a);
-          }
-        break;
-      default:
-        return false;
-      }*/
-    },
+    }, // btnAction
 
     //
     // Eventos
@@ -606,6 +599,7 @@ GMapz.map = (function() {
       console.log(marker);
     },
     afterAddingMarkers: function() {},
+    errorAddressNotFound: function(addr) {},
 
     //
     // Test / debug

@@ -111,6 +111,34 @@ $(document).ready(function() {
     map_sample_5.addLocations(update);
   });
 
+  // Map sample 6 *************************************************************
+
+  var map_sample_6 = new GMapz.map(
+    $('[data-gmapz="gz-sample-6"]')
+  );
+
+  map_sample_6.onReady = function() {
+    this.addLocations(spain_locs).fitBounds();
+  };
+
+  // Map sample 7 *************************************************************
+
+  var map_sample_7 = new GMapz.map(
+    $('[data-gmapz="gz-sample-7"]'),
+    {}, // default options
+    spain_locs
+  );
+
+  map_sample_7.onReady = function() {
+    this.fitBounds();
+  };
+
+  map_sample_7.errorAddressNotFound = function(addr) {
+    console.log('Was unable to find: '+addr);
+  };
+
+  // Attachear botones ********************************************************
+
   // Attach button with data-gmapz attribute
   GMapz.attachActionButtons();
 
