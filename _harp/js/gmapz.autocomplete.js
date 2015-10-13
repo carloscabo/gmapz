@@ -5,6 +5,11 @@ GMapz.autocomplete = (function() {
 
   function Constructor($input, user_settings) {
 
+    if($input.length === 0) {
+      console.log('"'+$input.selector+'" input not found!');
+      return false;
+    }
+
     // Autocomplete
     this.$input = $input;   // JQuery selector
     this.input_id = null; // string ID
