@@ -1,7 +1,7 @@
 // You can include this data wherever you want
 
 // Data
-locs = {
+spain_locs = {
   1: { // LOCATION IDX MUST BE UNIQUE
     lat: 42.5868,
     lng: 0.9745,

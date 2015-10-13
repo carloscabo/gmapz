@@ -5,6 +5,11 @@ GMapz.map = (function() {
 
   function Constructor($map, user_settings, initial_locs) {
 
+    if($map.length === 0) {
+      console.log('"'+$map.selector+'" not found!');
+      return false;
+    }
+
     // map
     this.map = null;    // gm object
     this.$map = $map;   // JQuery selector
@@ -237,7 +242,7 @@ GMapz.map = (function() {
 
       }
 
-      return this; // Chainning
+      return this; // Chaining
     }, // addLocations
 
     // Info windows
