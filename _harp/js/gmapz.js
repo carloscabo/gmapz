@@ -21,6 +21,7 @@
   // Module general vars
   //
   var
+    debug = false,
     data = {
       map_api_requested: false,
       map_api_ready: false

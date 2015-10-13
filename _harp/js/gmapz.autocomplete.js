@@ -5,31 +5,36 @@ GMapz.autocomplete = (function() {
 
   function Constructor($input, user_settings) {
 
-    // map
-    this.map = null;    // gm object
+    // Autocomplete
     this.$input = $input;   // JQuery selector
     this.input_id = null; // string ID
+    this.instance = null;
+    this.listener = null;
+
+    // User settings
+    if(typeof user_setting === 'undefined') {
+      user_settings = {};
+    }
 
     // Data and internal config
     this.config = {
       is_initialized: false,
     };
 
-    // Autocomplete event listener
-    this.listener = null;
+    // ID único del mapa
+    if (this.$input.attr('data-gmapz-autocomplete')) {
+      this.input_id = this.$input.attr('data-gmapz-autocomplete');
+    } else {
+      this.input_id = GMapz.getUniqueId(8,'ac-');
+      this.$input.attr('data-gmapz-autocomplete', this.input_id);
+    }
 
     // Autocomplete settings on initialization
     this.autocomplete_settings = {
-
+      types: ['geocode'],
+      offset: 3 //,
+      // componentRestrictions: { 'country': 'es' }
     };
-
-    // ID único del mapa
-    if (this.$input.attr('data-gmapz-autocomplete')) {
-      this.input_id = this.$map.attr('data-gmapz-autocomplete');
-    } else {
-      this.input_id = GMapz.getUniqueId(8,'ac-');
-      this.$map.attr('data-gmapz-autocomplete', this.input_id);
-    }
 
     // Extend settings
     $.extend(this.autocomplete_settings, user_settings);
@@ -50,11 +55,18 @@ GMapz.autocomplete = (function() {
     instanceReady: function(e) {
       console.log(this.input_id+' instance is initialized');
 
-      //function code
+      var that = this;
+
       this.config.is_initialized = true;
 
-      // Calling the constructor, initializing the map
-      // this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
+      this.instance = new google.maps.places.Autocomplete(
+        this.$input[0],
+        this.autocomplete_settings
+      );
+
+      this.listener = google.maps.event.addListener(this.instance, 'place_changed', function(){
+        that.onChange(this);
+      });
 
       this.onReady();
     },
@@ -68,24 +80,25 @@ GMapz.autocomplete = (function() {
       console.log(this.input_id+' autocomplete instance is ready');
     },
 
-    onAutocompleteChanged: function () {
+    // Override from outside
+    onChange: function () {
       /*
-      GMapz.deleteAllMarkers();
+      map_5.deleteAllMarkers();
       var locs = {};
-      var place = GMapz.g.autocomplete.getPlace();
+      var place = this.instance.getPlace();
       locs['autocomplete'] = {
-        pin: 'coo',
         lat: place.geometry.location.A,
         lng: place.geometry.location.F,
         draggable:true,
         title:"Drag me!"
       };
-      GMapz.fitToPlace(place);
+      map_5.fitToPlace(place);
       */
+    },
+
+    afterChange: function() {
+
     }
-
-
-
 
   };
 

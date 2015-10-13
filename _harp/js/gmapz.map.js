@@ -251,6 +251,7 @@ GMapz.map = (function() {
       if (this.iws[idx]) {
         this.iws[idx].close();
       }
+      return this;
     },
 
     closeAllInfoWindows: function() {
@@ -258,6 +259,15 @@ GMapz.map = (function() {
         this.closeInfoWindow(idx);
       }
       this.iw_current_idx = false;
+      return this;
+    },
+
+    // Clicks on marker to show its infowindow
+    openInfoWindow: function(idx) {
+      if (this.iws[idx] && this.markers[idx]) {
+        google.maps.event.trigger(this.markers[idx], 'click');
+      }
+      return this;
     },
 
     // Recalculate bounds and fit view depending on markers
@@ -300,6 +310,24 @@ GMapz.map = (function() {
       return this; // Chainning
     },
 
+    // Used when passing place object from gmapz.autocomplete!
+    fitToPlace: function (place, zoom) {
+      place = ($.isArray(place)) ? place[0] : place;
+
+      /*google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+        searchOnMapBounds();
+      });*/
+
+      if (typeof place.geometry.viewport !== 'undefined') {
+        this.map.fitBounds(place.geometry.viewport);
+      }
+      this.map.setCenter(place.geometry.location);
+      if (typeof zoom !== 'undefined') {
+        this.map.setZoom(zoom);
+      }
+      return this;
+    },
+
     singleMarkerZoomAdjust: function (max, target) {
       // Single mark zoom adjust
       // When you have an only marker focused adjust the
@@ -321,6 +349,7 @@ GMapz.map = (function() {
       for (var key in this.markers) {
         this.markers[key].setAnimation(null);
       }
+      return this;
     },
 
     // Deletes a group os markers idxs (array)
@@ -334,16 +363,22 @@ GMapz.map = (function() {
           delete this.iws[idxArray[i]];
         }
       }
+      return this;
     },
 
     // Removes ALL markers in current map
     deleteAllMarkers: function () {
       if (this.markers) {
         for (var idx in this.markers) {
-          if (this.markers[idx]) delete this.markers[idx];
-          if (this.iws[idx]) delete this.iw[idx];
+          if (this.markers[idx]) {
+            delete this.markers[idx];
+          }
+          if (this.iws[idx]) {
+            delete this.iws[idx];
+          }
         }
       }
+      return this;
     },
 
     setMarkerVisibility: function (visible, idx) {
@@ -351,6 +386,7 @@ GMapz.map = (function() {
         this.closeInfoWindow(idx);
       }
       this.markers[idx].setVisible(visible);
+      return this;
     },
 
     setAllMarkersVisibility: function (visible) {
@@ -360,6 +396,7 @@ GMapz.map = (function() {
       if (visible) {
         this.fitBounds();
       }
+      return this;
     },
 
     //

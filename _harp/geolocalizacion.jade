@@ -4,7 +4,7 @@ include ./includes/mixins.jade
     .container
       h2.page-header Geolocalización
       p.
-        <b>GMapz</b> también dispone de 3 helpers para trabajar con localizaciones y direcciones, para, por ejemplo localizar el marcador más cercano a la posición de un usuario.
+        <b>GMapz</b> también dispone de 3 helpers para trabajar con localizaciones y direcciones, para, por ejemplo localizar el marcador más cercano a la posición de un usuario. El tercer ejemplo hace uso de la opción de <a href="autocompletado.html">autocompletado de Google</a>.
 #sample-6.mb32
   .row
     .container
@@ -72,49 +72,11 @@ include ./includes/mixins.jade
             El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint.lang-javascript
             +escape()
-              | var map_sample_7 = new GMapz.map(
-              |   $('#map-sample-7'),
-              |   {}, // default options
-              |   spain_locs
-              | );
+              | var map_sample_7 = new GMapz.map($('#map-sample-7'));
               | 
               | map_sample_7.onReady = function() {
-              |   this.fitBounds();
+              |   this.addLocations(spain_locs).fitBounds();
               | };
               | 
               | // Automatically attach button with data-gmapz attribute
               | GMapz.attachActionButtons();
-#sample-8.mb32
-  .row
-    .container
-      h2 Sample 8
-        small &nbsp;&nbsp;&nbsp;Autocomplete de direcciones de Google
-      .row
-        .col-lg-6
-          div.
-            <input id="my-autocomplete" type="text" class="form-control" placeholder="Cerca de dirección...">
-          #map-sample-8.map
-            p.
-              map goes here
-        .col-lg-6
-          p.
-            <b>Autocompletado de localizaciones de Google</b><br>
-            Para esta funcionalidad necesitamos incluír <code>gmapz.autocomplete.js</code> e inicializar un <code>input</code> de la página.
-          p.
-            El elemento <code>autocomplete</code> tiene sus propios eventos que podemos emplear para interactuar con los mapas, o para realizar otras funciones con ellos.
-          pre.prettyprint.lang-html
-            +escape()
-              | <input id="my-autocomplete" placeholder="Introduce una dirección...">
-          pre.prettyprint.lang-javascript
-            +escape()
-              | var map_sample_8 = new GMapz.map(
-              |   $('#map-sample-8'),
-              |   {
-              |     center: [41.8919, 12.5113],
-              |     zoom: 12
-              |   }
-              | );
-              | 
-              | map_sample_8.onReady = function() {
-              |   // (?)
-              | };

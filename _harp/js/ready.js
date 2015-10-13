@@ -1,6 +1,12 @@
 var
   map_sample_1,
-  map_sample_2;
+  map_sample_2,
+  map_sample_3,
+  map_sample_4,
+  map_sample_5,
+  map_sample_6,
+  map_sample_7,
+  map_sample_8;
 
 $(document).ready(function() {
   // La magia aquí
@@ -124,13 +130,11 @@ $(document).ready(function() {
   // Map sample 7 *************************************************************
 
   var map_sample_7 = new GMapz.map(
-    $('[data-gmapz="gz-sample-7"]'),
-    {}, // default options
-    spain_locs
+    $('[data-gmapz="gz-sample-7"]')
   );
 
   map_sample_7.onReady = function() {
-    this.fitBounds();
+    this.addLocations(spain_locs).fitBounds();
   };
 
   map_sample_7.errorAddressNotFound = function(addr) {
@@ -139,16 +143,65 @@ $(document).ready(function() {
 
   // Map sample 8 *************************************************************
 
-  var map_sample_8 = new GMapz.map(
-    $('#map-sample-8'),
-    {
+  map_sample_8 = new GMapz.map(
+    $('#map-sample-8'), {
       center: [41.8919, 12.5113],
       zoom: 12
     }
   );
 
-  map_sample_8.onReady = function() {
-    // this.fitBounds();
+  var autocomplete = new GMapz.autocomplete($('#my-autocomplete-1'));
+
+  autocomplete.onChange = function () {
+    // this = autocomplete
+    var
+      place = this.instance.getPlace(),
+      pos = {};
+
+    if(typeof place.location === 'undefined') {
+      alert('No encontrado');
+      return;
+    }
+
+    pos['autocomplete'] = {
+      pin: 'autocomplete',
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+      draggable: true,
+      iw : 'My infowindow'
+    };
+    map_sample_8.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
+  };
+
+  // Map sample 9 *************************************************************
+
+  map_sample_9 = new GMapz.map($('#map-sample-9'));
+
+  map_sample_9.onReady = function() {
+    this.addLocations(italy_cities).fitBounds();
+  }
+
+  var autocomplete = new GMapz.autocomplete($('#my-autocomplete-2'));
+
+  autocomplete.onChange = function () {
+    // this = autocomplete
+    var
+      place = this.instance.getPlace(),
+      pos = {};
+
+    if(typeof place.location === 'undefined') {
+      alert('No encontrado');
+      return;
+    }
+
+    pos['autocomplete'] = {
+      pin: 'autocomplete',
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+      draggable: true,
+      iw : 'My infowindow'
+    };
+    map_sample_9.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
   };
 
   // Attachear botones ********************************************************
