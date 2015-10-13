@@ -1,0 +1,87 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><link rel="stylesheet" href="scss/application.css"><script src="js/lib/MQBE.1.04.js"></script><script src="js/lib/markerclusterer.js"></script><script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script><script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script><script src="js/gmapz.js"></script><script src="js/gmapz.pins.js"></script><script src="js/gmapz.map.js"></script><script src="js/gmapz.locations.js"></script><script src="js/ready.js"></script></head><body><div class="navbar navbar-default mb0"><div class="container-fluid"><div class="container"><ul class="nav navbar-header left"><li><a href="index.html">Introducción</a></li><li><a href="marcadores.html">Marcadores</a></li><li><a href="botones_externos.html">Botones externos</a></li><li><a href="geolocalizacion.html">Geolocalización</a></li><li><a href="autocompletado.html">Autocompletado</a></li><li><a href="responsive.html">Responsive</a></li><li><a href="#">Métodos JS</a></li></ul></div></div></div><div class="bs-docs-header"><div class="container"><div class="row"><h1>GMapz<small>&nbsp;&nbsp;&nbsp;Yet another Google Maps library.</small></h1></div></div></div><div class="main-content"><div class="row"><div class="container"><h2 class="page-header">Marcadores y configuración</h2><p>A continuación dsipones de los ejemplos más habituales para configurar un mapa con <b>GMapz</b>, y diferentes opciones de configuración. También dispones de un ejemplo que incorpora <b>agrupación automática de markers</b>.</p></div></div></div><div id="sample-1" class="mb32"><div class="row"><div class="container"><h2>Sample 1<small>&nbsp;&nbsp;&nbsp;Basic setup, starting map and setting its center and bounds</small></h2><div class="row"><div class="col-lg-6"><div id="map-sample-1" class="map"><p>map goes here</p></div></div><div class="col-lg-6"><p>Solo se necesita crear una instancia de <code>GMapz</code> indicando las coordenadas de <code>center</code> y opcionalmente unos límites (<code>bounds</code>) con las esquinas de la zona de visualización en un array con la forma: <code>[nortwest_lat, nortwest_lng, southeast_lat, southwest_lng]</code>.</p><p>A continuación pueden verse varias opciones de inicialización de GMapz.</p><pre class="prettyprint">map_sample_1 = new GMapz.map(
+  $('#map-sample-1'),
+  { // Standard Google Maps options
+    scrollwheel: true, // Default
+    scaleControl: true, // Default
+    center: [48.860, 2.340],
+    bound: [4.1335, 49.7198, 0.5464, 47.9851],
+    // zoom: 9 You can set `zoom` instead of bounds
+    // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'
+    mapTypeId: 'ROADMAP', // Default
+  }
+);</pre></div></div></div></div></div><div id="sample-2" class="mb32"><div class="row"><div class="container"><h2>Sample 2<small>&nbsp;&nbsp;&nbsp;Estilos de color</small></h2><div class="row"><div class="col-lg-6"><div id="map-sample-2" class="map"><p>map goes here</p></div></div><div class="col-lg-6"><p>GMapz también soporta diferentes <b>estilos de color</b> como los generados por <a href="https://snazzymaps.com/" target="_blank">Snazzy Maps</a>, deben pasarse en la inicialización del mapa con el resto de parámetros.</p><pre class="prettyprint">// Map sample 2
+map_sample_2 = new GMapz.map(
+  $('#map-sample-2'),
+  { // Google Maps options
+    center: [48.860, 2.340],
+    zoom: 9,
+    styles: [{&quot;featureType&quot;:&quot;landscape.natural&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;color&quot;:&quot;#e0efef&quot;}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;hue&quot;:&quot;#1900ff&quot;},{&quot;color&quot;:&quot;#c0e8e8&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;lightness&quot;:100},{&quot;visibility&quot;:&quot;simplified&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;labels&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;transit.line&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;lightness&quot;:700}]},{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#7dcdcd&quot;}]}]
+  }
+);</pre></div></div></div></div></div><div id="sample-3" class="mb32"><div class="row"><div class="container"><h2>Sample 3<small>&nbsp;&nbsp;&nbsp;Añadiendo marcadores / punteros</small></h2><div class="row mb16"><div class="col-lg-6"><p>A la derecha puede verse la estructura de este objeto JSON. Los marcadores están identificados por una <code>key</code> esta puede ser numérica o alfanumérica, pero es <b>importante que se ÚNICA</b>. Échale un ojo al fichero <code>GMapz.locations.js</code> en el repositorio.</p><p>La opción <code>iw:</code> determina el contenido del <code>infowindow</code> que se abre cuando pulsamos en uno de los marcadores. Y el <code>pin:</code> el puntero que se le asignará a este marcador, si no asignamos ninguno se empleará el pin definido como <code>'default'</code> en el fichero <code>gmapz.pins.js</code>.</p></div><div class="col-lg-6"><pre class="prettyprint">// Group of markers
+var morocco = {
+  'FEZ' : { // Key must be unique!
+    pin: 'green',
+    lat: 34.033884,
+    lng: -5.000206,
+    // Contenido para el `infowindow` (opcional)
+    // Se abre cuando se pulsa el marcador
+    iw: 'Fez en Marruecos',
+    // El marcador es `draggable` (opcional)
+    draggable: true,
+    // El marcador inicialmente estará oculto (opcional)
+    hidden: true
+  },
+   168: { // Numeric marker
+   // ...</pre></div></div><div class="row"><div class="col-lg-6"><div id="map-sample-3" class="map"><p>map goes here</p></div></div><div class="col-lg-6"><p>Para añadir los marcadores debemos pasar un objeto JSON a la instancia de GMapz en su momento de creación o bien asignárselos depués de que esté listo empleando el método <code>addLocations</code>.</p><p>Cuando el mapa esté listo (<code>onReady</code>) podemos llamar al método <code>.fitBounds()</code>, si no le pasamos ningún parámetro ajustará la vista a todos los marcadores visibles en el mapa.</p><pre class="prettyprint">// Map sample 3
+map_sample_3 = new GMapz.map(
+  $('#map-sample-3'),
+  {}, // Empty options
+  france_cities // gmapz.locations.js
+);
+ 
+map_sample_3.onReady = function(){
+  // this is google.maps instance
+  // También podríamos hacer:
+  // this.addLocations(france_cities);
+  this.fitBounds();
+}</pre></div></div></div></div></div><div id="sample-4" class="mb32"><div class="row"><div class="container"><h2>Sample 4<small>&nbsp;&nbsp;&nbsp;Agrupado de markers según el zoom</small></h2><div class="row"><div class="col-lg-6 first"><div id="map-sample-4" class="map"><p>map goes here</p></div><p class="mt8">Haz <b>zoom sobre este mapa</b> para ver la agrupación de marcadores...</p><p>Para agrupar los marcadores empleamos <code>markerclusterer.js</code> una vez el mapa de <code>GMapz</code> está inicializado.</p><p>El procedimiento es bastante sencillo, preparamos las <a href="https://github.com/googlemaps/js-marker-clusterer" target="_blank">opciones de markerclusterer</a>, inicializamos nuestro mapa normalmente, y en el <code>onReady()</code> de nuestro mapa pasamos los marcadores a <code>markerclusterer</code> que se encargará automáticamente de su agrupación según el nivel de zoom que hayamos definido.</p><p><mark>Presta atención a que <code>markercluster</code> emplea un <b>array</b> de marcadores, así que tenemos que convertir el <b>objeto</b> que se usa dentro de <code>gmap</code> (ver código del ejemplo a la derecha).</mark></p></div><div class="col-lg-6"><pre class="prettyprint">var map_sample_4_options = {
+  // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
+  mapTypeId: 'ROADMAP',
+  center: [48, 2],
+  zoom: 5
+};
+ 
+map_sample_4 = new GMapz.map(
+  $('#map-sample-4'),
+  map_sample_4_options,
+  france_cities
+);
+ 
+// https://github.com/googlemaps/js-marker-clusterer
+var marker_cluster_style = [{
+  textColor: 'white',
+  url: 'img/gmapz/pin-cluster.png',
+  height: 48,
+  width: 48,
+  textSize: '17',
+  backgroundPosition: '0 0'
+  // anchorIcon: [-24.0, -48.0] // This propoerty its not supported actually
+}];
+ 
+map_sample_4.onReady = function() {
+  // Conviert el objeto de marcadores en un array
+  markers_array = $.map(this.markers, function(val, idx){
+    return [val];
+  });
+  this.marker_cluster = new MarkerClusterer(
+    this.map,
+    markers_array, {
+      gridSize: 100,
+      maxZoom: 15,
+      styles: marker_cluster_style
+    }
+  );
+};</pre></div></div></div></div></div><div id="sample-3" class="mb32"><div class="row"><div class="container"><h2>Sample 3<small>&nbsp;&nbsp;&nbsp;Subtitle</small></h2><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi quia, a iure tempora pariatur est, at adipisci quo illo repellat!</p><div class="row"><div class="col-lg-7 first"><div id="map-sample-3" class="map"><p>map goes here</p></div><div class="actions mt16 mb32"><a class="btn btn-primary">Show location</a></div></div><div class="col-lg-5"><p>Lorem ipsum dolor sit amet, consectetur adipisicing <code>elit. Incidunt, qui facere tenetur alias vel aspernatur veritatis autem perferendis nesciunt ea iure, nam voluptas magnam!</code> Temporibus suscipit adipisci nesciunt illum ut culpa quae sapiente enim maiores, repellendus, magni a, facere impedit praesentium voluptatum numquam illo.</p><p>Assumenda voluptatem modi ratione commodi aliquid! Nam magnam, incidunt quidem accusantium ut error, deserunt odio qui illo, porro sunt. Possimus obcaecati vero exercitationem voluptatibus, quod iusto voluptas magni facere dolore, similique ut consequuntur repellat, non numquam modi repudiandae adipisci mollitia. Numquam at nobis dolorem nam eius, debitis ratione eum beatae quo! Eos, commodi. Minima nobis tenetur accusantium voluptatibus adipisci velit laborum enim distinctio placeat temporibus, excepturi odio molestias voluptatem consequuntur, assumenda sit quia ad eos vel.</p><pre class="prettyprint">function isSafe(number) {
+   return /^\d+(\.\d+)?(e\d+)?$/i.test(number);
+}
+typeof number === 'string' &amp;&amp; isSafe(number) &amp;&amp; typeof eval(number) !== 'number'</pre></div></div></div></div></div></body></html>
