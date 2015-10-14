@@ -555,28 +555,33 @@ GMapz.map = (function() {
       var that = this;
       // Hack for execute only first time!
 
-      // Check if its first tile
+      // Its first time map is drawn, we need to wait until tiles are drawn or
+      // the map.setOption(...) will not work
       if (!this.gz_settings.tiles_loaded) {
         this.gz_settings.tiles_loaded = true;
         this.listeners['tilesloaded_responsive'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
-          that.map.setOptions({
-            draggable: false,
-            scrollwheel: false
-          });
           google.maps.event.removeListener(that.listeners['tilesloaded_responsive']);
+          that.lockScrollAction();
         });
       } else {
-        // Map already ready and drawn
-        that.map.setOptions({
-          draggable: false,
-          scrollwheel: false
-        });
+        // Not first time, nothing to wait for
+        this.lockScrollAction();
       }
       $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('disabled');
+    },
+
+    lockScrollAction: function() {
+      var that = this;
+      this.map.setOptions({
+        draggable: false,
+        scrollwheel: false
+      });
       this.listeners['zoom_on_scroll_lock'] = google.maps.event.addListener(this.map, 'zoom_changed', function() {
+        console.log('Zoom changed');
         that.resumeScroll();
       });
     },
+
     resumeScroll: function() {
       this.map.setOptions({
         draggable: true,
