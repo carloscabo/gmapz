@@ -18,6 +18,7 @@ GMapz.map = (function() {
     // Settings of object
     this.gz_settings = {
       is_initialized: false,
+      tiles_loaded: false,
       test_str: 'unitialized',
       zoom: {
         // If you have a single marker you'll get a high zoom
@@ -31,7 +32,8 @@ GMapz.map = (function() {
     // Google Maps event listener
     this.listeners = {
       'idle': null,
-      'zoom_on_scroll_lock': null
+      'zoom_on_scroll_lock': null,
+      'tilesloaded_responsive': null
     };
 
     // Google maps settings on initialization
@@ -551,10 +553,25 @@ GMapz.map = (function() {
 
     lockScroll: function() {
       var that = this;
-      this.map.setOptions({
-        draggable: false,
-        scrollwheel: false
-      });
+      // Hack for execute only first time!
+
+      // Check if its first tile
+      if (!this.gz_settings.tiles_loaded) {
+        this.gz_settings.tiles_loaded = true;
+        this.listeners['tilesloaded_responsive'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+          that.map.setOptions({
+            draggable: false,
+            scrollwheel: false
+          });
+          google.maps.event.removeListener(that.listeners['tilesloaded_responsive']);
+        });
+      } else {
+        // Map already ready and drawn
+        that.map.setOptions({
+          draggable: false,
+          scrollwheel: false
+        });
+      }
       $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('disabled');
       this.listeners['zoom_on_scroll_lock'] = google.maps.event.addListener(this.map, 'zoom_changed', function() {
         that.resumeScroll();
