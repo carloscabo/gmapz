@@ -13,7 +13,7 @@ include ./includes/mixins.jade
       .row
         .col-lg-6
           div.
-            <input id="my-autocomplete-1" type="text" class="form-control" placeholder="Cerca de dirección...">
+            <input id="my-autocomplete-1" type="text" class="form-control" placeholder="Encontrar dirección...">
           #map-sample-8.map
             p.
               map goes here
@@ -37,10 +37,10 @@ include ./includes/mixins.jade
               | );
               | 
               | // Creamos en autocomplete asignado a un elemento de la página
-              | var autocomplete = new GMapz.autocomplete($('#my-autocomplete'));
+              | autocomplete_1 = new GMapz.autocomplete($('#my-autocomplete'));
               | 
               | // Cuando el usuario selecciona una ubicación...
-              | autocomplete.onChange = function () {
+              | autocomplete_1.onChange = function () {
               |   // this = autocomplete
               |   var
               |     place = this.instance.getPlace(),
@@ -72,7 +72,7 @@ include ./includes/mixins.jade
       .row
         .col-lg-6
           div.
-            <input id="my-autocomplete-2" type="text" class="form-control" placeholder="Busca Venecia, Italia...">
+            <input id="my-autocomplete-2" type="text" class="form-control" placeholder="Busca por ejemplo: Venecia, Italia...">
           #map-sample-9.map
             p.
               map goes here
@@ -88,9 +88,9 @@ include ./includes/mixins.jade
               |   this.addLocations(italy_cities).fitBounds();
               | }
               | 
-              | var autocomplete = new GMapz.autocomplete($('#my-autocomplete-2'));
+              | autocomplete_2 = new GMapz.autocomplete($('#my-autocomplete-2'));
               | 
-              | autocomplete.onChange = function () {
+              | autocomplete_2.onChange = function () {
               |   // this = autocomplete
               |   var place = this.instance.getPlace();
               |   if(typeof place.geometry === 'undefined') {

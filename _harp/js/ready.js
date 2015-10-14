@@ -8,6 +8,8 @@ var
   map_sample_7,
   map_sample_8,
   map_sample_9,
+  autocomplete_1,
+  autocomplete_2,
   map_sample_10;
 
 $(document).ready(function() {
@@ -131,7 +133,7 @@ $(document).ready(function() {
 
   // Map sample 7 *************************************************************
 
-  var map_sample_7 = new GMapz.map(
+  map_sample_7 = new GMapz.map(
     $('[data-gmapz="gz-sample-7"]')
   );
 
@@ -152,9 +154,9 @@ $(document).ready(function() {
     }
   );
 
-  var autocomplete = new GMapz.autocomplete($('#my-autocomplete-1'));
+  autocomplete_1 = new GMapz.autocomplete($('#my-autocomplete-1'));
 
-  autocomplete.onChange = function () {
+  autocomplete_1.onChange = function () {
     // this = autocomplete
     var
       place = this.instance.getPlace(),
@@ -182,16 +184,16 @@ $(document).ready(function() {
 
   map_sample_9.onReady = function() {
     this.addLocations(italy_cities).fitBounds();
-  }
+  };
 
-  var autocomplete = new GMapz.autocomplete($('#my-autocomplete-2'));
+  autocomplete_2 = new GMapz.autocomplete($('#my-autocomplete-2'));
 
-  autocomplete.onChange = function () {
+  autocomplete_2.onChange = function () {
     // this = autocomplete
     var place = this.instance.getPlace();
     if(typeof place.geometry === 'undefined') {
       // No se ha encontrado el lugar
-      alert('No encontrado');
+      alert('Dirección no encontrada');
       return;
     }
     // Mostramos la ubicación y elpuntero más cercano
@@ -204,7 +206,7 @@ $(document).ready(function() {
 
   map_sample_10.onReady = function() {
     // Enables responsive control
-    this.addScrollControl(); 
+    this.addScrollControl();
     // Load Italy cities
     this.addLocations(italy_cities).fitBounds();
     // Responsive events
@@ -217,8 +219,6 @@ $(document).ready(function() {
   };
 
   // Attachear botones ********************************************************
-
-
 
   // Attach button with data-gmapz attribute
   GMapz.attachActionButtons();

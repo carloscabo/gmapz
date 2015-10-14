@@ -4,7 +4,7 @@ include ./includes/mixins.jade
     .container
       h2.page-header Geolocalización
       p.
-        <b>GMapz</b> también dispone de 3 helpers para trabajar con localizaciones y direcciones, para, por ejemplo localizar el marcador más cercano a la posición de un usuario. El tercer ejemplo hace uso de la opción de <a href="autocompletado.html">autocompletado de Google</a>.
+        <b>GMapz</b> también dispone de <em>helpers</em> para trabajar con localizaciones y direcciones, para, por ejemplo localizar el marcador más cercano a la posición de un usuario. El tercer ejemplo hace uso de la opción de <a href="autocompletado.html">autocompletado de Google</a>.
 #sample-6.mb32
   .row
     .container
@@ -72,11 +72,14 @@ include ./includes/mixins.jade
             El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint.lang-javascript
             +escape()
-              | var map_sample_7 = new GMapz.map($('#map-sample-7'));
+              | var map_sample_7 = new GMapz.map(
+              |   $('[data-gmapz="gz-sample-7"]')
+              | );
               | 
               | map_sample_7.onReady = function() {
               |   this.addLocations(spain_locs).fitBounds();
               | };
               | 
-              | // Automatically attach button with data-gmapz attribute
-              | GMapz.attachActionButtons();
+              | map_sample_7.errorAddressNotFound = function(addr) {
+              |   console.log('Was unable to find: '+addr);
+              | };
