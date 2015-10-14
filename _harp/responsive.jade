@@ -4,7 +4,7 @@ include ./includes/mixins.jade
     .container
       h2.page-header Responsive
       p.
-        Una de las funcionalidades más interesantes de <code>GMapz</code> es que está preparado para móbiles y tabletas. Cuando se encuentra en un dispositivo <em>mobile</em> el scroll y el zoom se bloquen <b>automáticamente</b> y el usuario decide cuando desbloquearlo con un control personlizado.
+        Una de las funcionalidades más interesantes de <code>GMapz</code> es que está preparado para móbiles y tabletas. Cuando se encuentra en un dispositivo <em>mobile</em> <b>el scroll y el zoom se bloquen automáticamente</b> y el usuario decide cuando desbloquearlo con un control personalizado.
       p.
         Para esta funcionalidad hace falta incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">Media Query Breakpoint Events</a>), y una hoja de estilo que defina los diferentes <em>breakpoints</em> y el estilo del control de bloqueo que se añade en el mapa, los estilos empleados en este ejemplos pueden encontrarse en <code>gmapz.responsive.css</code> ( <a href="#" target="_blank">ver</a> ).
 #sample-10.mb32
@@ -19,12 +19,9 @@ include ./includes/mixins.jade
               map goes here
         .col-lg-6
           p.
-            <b>Encoge el navgeador por debajo de 768 para ver esta funcionalidad.</b>
-          pre.prettyprint
-            +escape()
-              <a href="#" data-gmapz-target="gz-sample-6" data-gmapz-find-near >Encontrar marcador más cercano</a>
+            <b>Encoge el navegador por debajo de 768 para ver esta funcionalidad.</b>
           p.
-            El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
+            El estilo del control <b>"Scroll enabled / dosabled"</b> puede editarse en <code>gmapz.responsive.css</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint
             +escape()
               | // Start map with default options

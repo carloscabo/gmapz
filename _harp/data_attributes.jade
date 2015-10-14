@@ -23,6 +23,21 @@ include ./includes/mixins.jade
             | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo C</a>
             | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >Centrar vista en marcador</a>
             | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-all >Mostrar todos</a>
+            | 
+            | // Select con data-attributes
+            | <select name="" id="select-sample-5" data-gmapz-target="gz-sample-5">
+            |   <option value="0">Seleccionar grupo de marcadores</option>
+            |   <option data-gmapz-show-group='[1,289,38,3,6,7,9,10]'>Mostrar grupo A</option>
+            |   <option data-gmapz-show-group='[2,"garajonay","teide",12]' data-gmapz-hide-rest="true">Mostrar grupo B</option>
+            |   <option data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo B</option>
+            |   <option data-gmapz-center-idx="teide" data-gmapz-zoom="12">Centrar vista en marcador</option>
+            |   <option data-gmapz-show-all>Mostrar todos</option>
+            | </select>
+            | 
+            | // Enlaces con evento click de JQuery
+            | <a href="#" class="btn btn-danger" id="js-add-markers-5">Anadir nuevos marcadores</a>
+            | <a href="#" class="btn btn-danger" id="js-delete-markers-5">Borrar marcadores</a>
+            | <a href="#" class="btn btn-danger" id="js-update-marker-5">Actualizar un narcador</a>
         p
           mark.
             Para que se vinculen automáticamente los botones con el data-attribute <code>data-gmapz-target="..."</code> con el mapa correspondiente debemos llamar a la funcion de JS <code>GMapz.attachActionButtons();</code>
@@ -46,6 +61,9 @@ include ./includes/mixins.jade
             |   e.preventDefault();
             |   map_sample_5.addLocations(update);
             | });
+            | 
+            | // Atachear eventos a botones con data-attribute
+            | GMapz.attachActionButtons();
 #sample-5.mb32
   .row
     .container
