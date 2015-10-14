@@ -6,7 +6,9 @@ var
   map_sample_5,
   map_sample_6,
   map_sample_7,
-  map_sample_8;
+  map_sample_8,
+  map_sample_9,
+  map_sample_10;
 
 $(document).ready(function() {
   // La magia aquí
@@ -195,30 +197,28 @@ $(document).ready(function() {
     // Mostramos la ubicación y elpuntero más cercano
     map_sample_9.geoShowPosition(place);
   };
-  
+
   // Map sample 10 *************************************************************
 
-  map_sample_9 = new GMapz.map($('#map-sample-9'));
+  map_sample_10 = new GMapz.map($('#map-sample-10'));
 
-  map_sample_9.onReady = function() {
+  map_sample_10.onReady = function() {
+    // Enables responsive control
+    this.addScrollControl(); 
+    // Load Italy cities
     this.addLocations(italy_cities).fitBounds();
-  }
-
-  var autocomplete = new GMapz.autocomplete($('#my-autocomplete-2'));
-
-  autocomplete.onChange = function () {
-    // this = autocomplete
-    var place = this.instance.getPlace();
-    if(typeof place.geometry === 'undefined') {
-      // No se ha encontrado el lugar
-      alert('No encontrado');
-      return;
-    }
-    // Mostramos la ubicación y elpuntero más cercano
-    map_sample_9.geoShowPosition(place);
+    // Responsive events
+    MQBE.on('enter', 'mobile', function() {
+      console.log('Scroll lock');
+      map_sample_10.lockScroll();
+    }).on('leave', 'mobile', function() {
+      map_sample_10.resumeScroll();
+    });
   };
 
   // Attachear botones ********************************************************
+
+
 
   // Attach button with data-gmapz attribute
   GMapz.attachActionButtons();

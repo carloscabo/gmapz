@@ -21,6 +21,7 @@
   // Module general vars
   //
   var
+    v = '2.00 beta',
     debug = false,
     data = {
       map_api_requested: false,
@@ -86,7 +87,7 @@
     // Create pins
     for (var key in _p) {
       // Pins
-      if (_p[key].pin.img) {
+      if (_p.hasOwnProperty(key) && _p[key].pin.img) {
         this.pins[key] = {};
         this.pins[key].pin = new google.maps.MarkerImage(_p[key].pin.img,
           // width / height

@@ -1,0 +1,95 @@
+/* MQBE.js CSS rules */
+
+/* DESKTOP */
+@media all and (min-width:1px) {
+  body {
+    background-color: white;
+  }
+  body:after {
+    content: 'desktop'; /* <- string that defines this state */
+    display:none;
+  }
+}
+
+/* TABLET */
+@media only screen and (max-width: 1024px) {
+  body {
+    background-color: lightgray;
+  }
+  /* To check from MQBE */
+  body:after {
+    content: 'tablet'; /* <- string that defines this state */
+    display:none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  body {
+    background-color: pink;
+  }
+  .gmapz-scroll-control {
+    display: block !important;
+  }
+  /* Hide map / satellite control */
+  .gm-style-mtc {
+    display: none !important;
+  }
+  /* To check from MQBE */
+  body:after {
+    content: 'mobile'; /* <- string that defines this state */
+    display:none;
+  }
+}
+
+/* Custom control */
+
+.gmapz-scroll-control {
+  display: none;
+  margin: 10px;
+  left: 0 !important;
+  background: #fff;
+  border: 2px solid #fff;
+  border-radius: 3px;
+
+  -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.3);
+          box-shadow: 0 2px 6px rgba(0,0,0,.3);
+
+  cursor: pointer;
+  text-align: center;
+}
+
+.gmapz-scroll-control .content {
+  font-family: Roboto, Arial, sans-serif;
+  color: rgb(25,25,25);
+  font-size: 11px;
+  line-height: 150%;
+  padding: 8px 8px 8px 4px;
+}
+
+.gmapz-scroll-control .content:after {
+  content: 'Scroll enabled';
+}
+
+.gmapz-scroll-control .content:before {
+  content: ' ';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: -2px 3px 0 0;
+  vertical-align: middle;
+  background: #fff url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>') center center no-repeat;
+  /*background: #fff url(../img/gmapz/scroll_enabled.svg) center center no-repeat;*/
+  -webkit-background-size: cover;
+       -o-background-size: cover;
+          background-size: cover;
+}
+
+.gmapz-scroll-control.disabled .content:after {
+  content: 'Scroll disabled';
+}
+
+.gmapz-scroll-control.disabled .content:before {
+  content: '';
+  background-image: url('data:image/svg+xml;utf8,<svg fill="#E00" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z"/></svg>');
+  /*background-image: url(../img/gmapz/scroll_disabled.svg);*/
+}

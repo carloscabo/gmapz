@@ -4,7 +4,7 @@ include ./includes/mixins.jade
     .container
       h2.page-header Introducción
       p.
-        <b>GMapz</b> es una librería creada con la finalidad de simplificar la creación de mapas con Google Maps API V3, es <b>responsive</b>, soporta <b>múltiples instancias en la misma página</b> y settings personalizados para cada instancia. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.
+        <b>GMapz</b> simplifica creación de mapas con Google Maps API V3, es <b>responsive</b>, soporta <b>múltiples instancias en la misma página</b> y settings personalizados para cada instancia. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.
 #intro-1.mb32
   .row
     .container
@@ -16,14 +16,13 @@ include ./includes/mixins.jade
             GMpaz está dividido en varias librerías lo que permite que se se incluyan únicamente las partes de la librería necesarias para la funcionalidada que se necesita.
           p.
             Para un proyecto con la funcionalidad básica necesitaremos incluir:<br><br>
-            <code>JQuery (1.8+)</code><br>
+            <code>JQuery (1.9.1+)</code><br>
             <code>GMapz.js</code> (el <em>core</em> de la librería y funciones comunes)<br>
             <code>GMapz.pins.js</code> (definición de los pins)<br>
             <code>GMapz.maps.js</code> (funcionalidades necesarias para la creación de mapas)<br>
           p.
             Si necesitamos un input para emplear las funcionalidades de autocompletado y búsqueda de localizaciones de Google (ver <a href="/autocompletado.html">ejemplos de geolocalización</a>), necesitaremos añadir además:<br>
             <code>GMapz.autocomplete.js</code>
-
         .col-lg-6
           h2 Librerías de terceros
             small &nbsp;&nbsp;&nbsp;para funcionalidad extendida
@@ -32,7 +31,7 @@ include ./includes/mixins.jade
           h3.
             Mapas responsive
           p.
-            Para la funcionalidad del mapa responsive es necesario incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">https://github.com/carloscabo/MQBE</a>). Puedes ver un ejemplo de su funcionamiento en la sección correspondiente de esta ayuda ( <a href="/responsive.html">GMapz responsive</a>).
+            Para la funcionalidad del <a href="responsive.html">mapa responsive</a> es necesario incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">https://github.com/carloscabo/MQBE</a>). Puedes ver un ejemplo de su funcionamiento en la sección correspondiente de esta ayuda ( <a href="/responsive.html">GMapz responsive</a>).
           h3.
             Agrupación de marcadores
           p.
@@ -46,6 +45,7 @@ include ./includes/mixins.jade
         +escape()
           | // JQuery
           | <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
+          | 
           | // Librer&#237;as de terceros, opcionales
           | <script src="js/lib/MQBE.1.04.js"></script>
           | <script src="js/lib/markerclusterer.js"></script>
@@ -54,6 +54,7 @@ include ./includes/mixins.jade
           | <script src="js/gmapz.js"></script>
           | <script src="js/gmapz.pins.js"></script> // JSON de "pins" para los mapas
           | <script src="js/gmapz.map.js"></script>
+          | <script src="js/gmapz.autocomplete.js"></script>
           | <script src="js/gmapz.locations.js"></script> // JSON de localizaciones
           | 
           | // Ready de tu aplicaci&#243;n
@@ -65,16 +66,16 @@ include ./includes/mixins.jade
         .col-lg-6
           h2 Fichero de "pins"
           p.
-            Cuando hablamos de "pins" nos referimos a las imagenes que emplea Google Maps para señalar las localicaciones en los mapas. Para personalizar estos gráficos en tu aplicación basta con definir un fichero <code>JSON</code> con sus nombres y propiedades que después podrás emplear en el correspondiente fichero de ubicaciones / posiciones / coordenadas (ver a la derecha).
+            Cuando hablamos de "pins" nos referimos a las <b>imagenes</b> que emplea Google Maps para señalar las localicaciones en los mapas. Para personalizar estos gráficos en tu aplicación basta con definir un fichero <code>JSON</code> con sus nombres y propiedades que después podrás emplear en el correspondiente fichero de ubicaciones / posiciones / coordenadas (ver a la derecha).
           p
             mark.
               Siempre debes definir los pins <b>ANTES</b> de inicializar ningún mapa, en caso contrario se emplearán los "pins" por defecto de google maps.
           p.
-            A continuación tienes el fichero <code>gmapz.pins.js</code> que se ha empleado en todas las demos de esta documentación, empléalo como base para personalicar los <em>pins</em> de tu aplicación. Los pins <b>deben tener una clave única</b> que permita referenciarlos más tarde en el fichero de coordenadas.
+            Puedes echar un ojo al fichero <code>gmapz.pins.js</code> que se ha empleado en todas las demos de esta documentación, empléalo como base para personalizar los <em>pins</em> de tu proyecto. Los pins <mark>deben tener una clave única</mark> que permita referenciarlos más tarde en el fichero de coordenadas.
           h3.
             Hay 2 <b>casos especiales</b> de pins:
           p.
-            <b>1.</b> El pin <code>'default'</code> que es el <b>pin que se usará por defecto cuando no se indique ningún otro.</b>
+            <b>1.</b> El pin <code>'default'</code> que es el <b>pin que se usará <em>por defecto</em> cuando no se indique ningún otro.</b>
           p.
             <b>2.</b> El pin <code>user_location</code> que es el indica la posición del usuario en el mapa cuando se usan las funciones de <a href="geolocalizacion.html">geolocalización</a>, o las funcionalidades de encontrar la <a href="geolocalizacion.html#sample-6">ubicación más cercana</a> a la del usuario.
           pre.prettyprint
@@ -121,7 +122,7 @@ include ./includes/mixins.jade
         .col-lg-6
           h2 Fichero localizaciones / marcadores
           p.
-            Este fichero define las <code>coordenadas</code> de cada marcador en el mapa (en formato <code>latitud</code>, <code>longitud</code>), así como el <code>pin</code> que se dibujará, y el contenido del <code>infowindow</code> (la ventanita que se muestra cuando pulsamos sobre un marcador).
+            Este fichero define las <code>coordenadas</code> de cada marcador en el mapa (en formato <code>latitud</code>, <code>longitud</code>), así como el <code>pin</code> que se dibujará, y el contenido del <code>infowindow</code> <em>(la ventanita que se muestra cuando pulsamos sobre un marcador).</em>
           p
             mark.
               Cada marcador comienza con una <code>clave / key / index</code> que <b>debe ser única</b>, esta clave puede ser numérica o alfanumérica y solo debe emplear caracteres dentro del rango: <b>[a-zA-z0-9_]</b>.
@@ -153,7 +154,7 @@ include ./includes/mixins.jade
               | };
               | 
               | // France main cities
-              | france_cities = {
+              | var france_cities = {
               |   paris: {
               |     lat: 48.8601,
               |     lng: 2.3402,

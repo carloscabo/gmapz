@@ -6,7 +6,7 @@ GMapz.map = (function() {
   function Constructor($map, user_settings, initial_locs) {
 
     if($map.length === 0) {
-      console.log('"'+$map.selector+'" not found!');
+      console.log("'"+$map.selector+"' not found!");
       return false;
     }
 
@@ -29,8 +29,10 @@ GMapz.map = (function() {
     };
 
     // Google Maps event listener
-    this.listener = null;
-    this.listener_zoom_on_scroll_lock = null;
+    this.listeners = {
+      'idle': null,
+      'zoom_on_scroll_lock': null
+    };
 
     // Google maps settings on initialization
     this.map_settings = {
@@ -174,7 +176,7 @@ GMapz.map = (function() {
         this.setAllMarkersVisibility(false);
       }
       for (var i in group) {
-        if (this.markers && this.markers[group[i]]) {
+        if (group.hasOwnProperty(i) && this.markers && this.markers[group[i]]) {
           this.markers[group[i]].setVisible(true);
         }
       }
@@ -256,7 +258,9 @@ GMapz.map = (function() {
 
     closeAllInfoWindows: function() {
       for (var idx in this.iws) {
-        this.closeInfoWindow(idx);
+        if (this.iws.hasOwnProperty(idx)) {
+          this.closeInfoWindow(idx);
+        }
       }
       this.iw_current_idx = false;
       return this;
@@ -279,7 +283,7 @@ GMapz.map = (function() {
       // Calculate all visible
       if (!idxArray) {
         for (var idx in this.markers) {
-          if (this.markers[idx].getVisible()) {
+          if (this.markers.hasOwnProperty(idx) && this.markers[idx].getVisible()) {
             bounds.extend(this.markers[idx].getPosition());
             visible_count++;
           }
@@ -337,11 +341,11 @@ GMapz.map = (function() {
       if (!target) target = 9;
       var
         that = this;
-      this.listener = google.maps.event.addListener(this.map, 'idle', function() {
+      this.listeners['idle'] = google.maps.event.addListener(this.map, 'idle', function() {
         if (that.map.getZoom() > max) {
           that.map.setZoom(target);
         };
-        google.maps.event.removeListener(this.listener);
+        google.maps.event.removeListener(this.listeners['idle']);
       });
     },
 
@@ -370,7 +374,7 @@ GMapz.map = (function() {
     deleteAllMarkers: function () {
       if (this.markers) {
         for (var idx in this.markers) {
-          if (this.markers[idx]) {
+          if (this.markers.hasOwnProperty(idx) && this.markers[idx]) {
             delete this.markers[idx];
           }
           if (this.iws[idx]) {
@@ -542,6 +546,7 @@ GMapz.map = (function() {
           that.lockScroll();
         }
       });
+      return this;
     },
 
     lockScroll: function() {
@@ -551,7 +556,7 @@ GMapz.map = (function() {
         scrollwheel: false
       });
       $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('disabled');
-      this.listener_zoom_on_scroll_lock = google.maps.event.addListener(this.map, 'zoom_changed', function() {
+      this.listeners['zoom_on_scroll_lock'] = google.maps.event.addListener(this.map, 'zoom_changed', function() {
         that.resumeScroll();
       });
     },
@@ -561,7 +566,7 @@ GMapz.map = (function() {
         scrollwheel: true
       });
       $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').removeClass('disabled');
-      google.maps.event.removeListener(this.listener_zoom_on_scroll_lock);
+      google.maps.event.removeListener(this.listeners['zoom_on_scroll_lock']);
     },
 
     //
@@ -569,11 +574,8 @@ GMapz.map = (function() {
     //
 
     btnAction: function (data, $el) {
-      // t.stopAllAnimations();
-
-      console.log(data);
-      console.log($el);
-      // console.log(data['gmapzShowGroup']);
+      // console.log(data);
+      // console.log($el);
 
       var zoom = false;
       if (typeof data.gmapzZoom !== 'undefined') {
@@ -637,17 +639,12 @@ GMapz.map = (function() {
     onMarkerDragEnd: function(marker) {
       console.log(marker);
     },
-    afterAddingMarkers: function() {},
-    errorAddressNotFound: function(addr) {},
+    afterAddingMarkers: function() {
 
-    //
-    // Test / debug
-    //
-    testMethod: function(msg) {
-      console.log(msg);
+    },
+    errorAddressNotFound: function(addr) {
+      console.log('"'+addr+'! address not found!');
     }
-
-    //
 
   };
 

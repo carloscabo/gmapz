@@ -4,9 +4,9 @@ include ./includes/mixins.jade
     .container
       h2.page-header Responsive
       p.
-        Una de las funcionalidades más interesantes de <code>GMapz</code> es que está preparado para móbiles y tabletas. Cunado se encuntra en un dispositivo <em>mobile</em> el scroll y el zoom se bloquen <b>automáticamente</b> y el usuario decide cuando desbloquearlo.
+        Una de las funcionalidades más interesantes de <code>GMapz</code> es que está preparado para móbiles y tabletas. Cuando se encuentra en un dispositivo <em>mobile</em> el scroll y el zoom se bloquen <b>automáticamente</b> y el usuario decide cuando desbloquearlo con un control personlizado.
       p.
-        Para esta funcionalidad hace falta incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">Media Query Breakpoint Events</a>), y una hoja de estilo que defina los diferentes <em>breakpoints</em>.
+        Para esta funcionalidad hace falta incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">Media Query Breakpoint Events</a>), y una hoja de estilo que defina los diferentes <em>breakpoints</em> y el estilo del control de bloqueo que se añade en el mapa, los estilos empleados en este ejemplos pueden encontrarse en <code>gmapz.responsive.css</code> ( <a href="#" target="_blank">ver</a> ).
 #sample-10.mb32
   .row
     .container
@@ -27,92 +27,24 @@ include ./includes/mixins.jade
             El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint
             +escape()
-              | // Start gmapz with default options
-              | var map_sample_6 = new GMapz.map(
-              |   $('[data-gmapz="gz-sample-6"]')
-              | );
+              | // Start map with default options
+              | map_sample_10 = new GMapz.map($('#map-sample-10'));
               | 
-              | // onReady add locations and fit bounds
-              | map_sample_6.onReady = function() {
-              |   this.addLocations(spain_locs).fitBounds();
-              | };
+              | map_sample_10.onReady = function() {
               | 
-              | // Automatically attach button with data-gmapz attribute
-              | GMapz.attachActionButtons();
-#sample-7.mb32
-  .row
-    .container
-      h2 Sample 7
-        small &nbsp;&nbsp;&nbsp;Introducir la dirección en un input
-      .row
-        .col-lg-6
-          div.input-group.
-            <input id="my-address" type="text" class="form-control" placeholder="Cerca de dirección..." value ="Pedro Antonio Menéndez 1, 33004, Oviedo">
-            <span class="input-group-btn">
-              <button  type="button" class="btn btn-default" data-gmapz-target="gz-sample-7" data-gmapz-input="#my-address" data-gmapz-find-near-address>Buscar!</button>
-            </span>
-          #map-sample-7.map(data-gmapz='gz-sample-7')
-            p.
-              map goes here
-        .col-lg-6
-          p.
-            <b>Input para introducción de texto</b><br>
-            Para esta funcionalidad debemos crear un <code>input</code>code> donde el usuario pueda introducir la dirección a buscar, y un <code>button</code> con <b>3 data-attributes</b>:<br><br>
-            <b>1</b>. <code>data-gmapz-target="data_gmapz_del_mapa"</code> con el data-gmapz de destino donde se mostrará el resultado.<br><br>
-            <b>2</b>. <code>data-gmapz-input="selector_de_input"</code> selector que nos indica de que input se leerá la dirección que introducido el usuario.<br><br>
-            <b>3</b>.<code>data-gmapz-find-near-address</code> que activa la funcionalidad de búsqueda.
-          pre.prettyprint.lang-html
-            +escape()
-              | <input id="my-address" placeholder="Cerca de dirección...">
+              |   // Enables responsive control and events
+              |   this.addScrollControl();
               | 
-              | <button data-gmapz-target="gz-sample-7" data-gmapz-input="#my-address" data-gmapz-find-near-address>Buscar!</button>
-          p.
-            El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
-          pre.prettyprint.lang-javascript
-            +escape()
-              | var map_sample_7 = new GMapz.map(
-              |   $('#map-sample-7'),
-              |   {}, // default options
-              |   spain_locs
-              | );
+              |   // Load Italy cities
+              |   this.addLocations(italy_cities).fitBounds();
               | 
-              | map_sample_7.onReady = function() {
-              |   this.fitBounds();
-              | };
+              |   // Responsive events
+              |   MQBE.on('enter', 'mobile', function() {
+              |     // Lock map on mobile
+              |     map_sample_10.lockScroll();
+              |   }).on('leave', 'mobile', function() {
+              |     // Restore scroll on desktop
+              |     map_sample_10.resumeScroll();
+              |   });
               | 
-              | // Automatically attach button with data-gmapz attribute
-              | GMapz.attachActionButtons();
-#sample-8.mb32
-  .row
-    .container
-      h2 Sample 8
-        small &nbsp;&nbsp;&nbsp;Autocomplete de direcciones de Google
-      .row
-        .col-lg-6
-          div.
-            <input id="my-autocomplete" type="text" class="form-control" placeholder="Cerca de dirección..." value ="Pedro Antonio Menéndez 1, 33004, Oviedo">
-          #map-sample-8.map
-            p.
-              map goes here
-        .col-lg-6
-          p.
-            <b>Autocompletado de localizaciones de Google</b><br>
-            Para esta funcionalidad necesitamos incluír <code>gmapz.autocomplete.js</code> e inicializar un <code>input</code> de la página.
-          p.
-            El elemento <code>autocomplete</code> tiene sus propios eventos que podemos emplear para interactuar con los mapas, o para realizar otras funciones con ellos.
-          pre.prettyprint.lang-html
-            +escape()
-              | <input id="my-autocomplete" placeholder="Introduce una dirección...">
-          pre.prettyprint.lang-javascript
-            +escape()
-              | var map_sample_8 = new GMapz.map(
-              |   $('#map-sample-8'),
-              |   {
-              |     center: [41.8919, 12.5113],
-              |     zoom: 12
-              |   }
-              | );
-              | 
-              | map_sample_8.onReady = function() {
-              |   // (?)
               | };
