@@ -1,6 +1,16 @@
 var
   map_sample_1,
-  map_sample_2;
+  map_sample_2,
+  map_sample_3,
+  map_sample_4,
+  map_sample_5,
+  map_sample_6,
+  map_sample_7,
+  map_sample_8,
+  map_sample_9,
+  autocomplete_1,
+  autocomplete_2,
+  map_sample_10;
 
 $(document).ready(function() {
   // La magia aquí
@@ -123,18 +133,89 @@ $(document).ready(function() {
 
   // Map sample 7 *************************************************************
 
-  var map_sample_7 = new GMapz.map(
-    $('[data-gmapz="gz-sample-7"]'),
-    {}, // default options
-    spain_locs
+  map_sample_7 = new GMapz.map(
+    $('[data-gmapz="gz-sample-7"]')
   );
 
   map_sample_7.onReady = function() {
-    this.fitBounds();
+    this.addLocations(spain_locs).fitBounds();
   };
 
   map_sample_7.errorAddressNotFound = function(addr) {
     console.log('Was unable to find: '+addr);
+  };
+
+  // Map sample 8 *************************************************************
+
+  map_sample_8 = new GMapz.map(
+    $('#map-sample-8'), {
+      center: [41.8919, 12.5113],
+      zoom: 12
+    }
+  );
+
+  autocomplete_1 = new GMapz.autocomplete($('#my-autocomplete-1'));
+
+  autocomplete_1.onChange = function () {
+    // this = autocomplete
+    var
+      place = this.instance.getPlace(),
+      pos = {};
+
+    if(typeof place.geometry === 'undefined') {
+      // No se ha encontrado el lugar
+      alert('No encontrado');
+      return;
+    }
+    // Creamos un nuevo marcador
+    pos['autocomplete'] = {
+      pin: 'autocomplete',
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+      draggable: true,
+      iw : 'My infowindow 1'
+    };
+    map_sample_8.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
+  };
+
+  // Map sample 9 *************************************************************
+
+  map_sample_9 = new GMapz.map($('#map-sample-9'));
+
+  map_sample_9.onReady = function() {
+    this.addLocations(italy_cities).fitBounds();
+  };
+
+  autocomplete_2 = new GMapz.autocomplete($('#my-autocomplete-2'));
+
+  autocomplete_2.onChange = function () {
+    // this = autocomplete
+    var place = this.instance.getPlace();
+    if(typeof place.geometry === 'undefined') {
+      // No se ha encontrado el lugar
+      alert('Dirección no encontrada');
+      return;
+    }
+    // Mostramos la ubicación y elpuntero más cercano
+    map_sample_9.geoShowPosition(place);
+  };
+
+  // Map sample 10 *************************************************************
+
+  map_sample_10 = new GMapz.map($('#map-sample-10'));
+
+  map_sample_10.onReady = function() {
+    // Enables responsive control
+    this.addScrollControl();
+    // Load Italy cities
+    this.addLocations(italy_cities).fitBounds();
+    // Responsive events
+    MQBE.on('enter', 'mobile', function() {
+      console.log('Scroll lock');
+      map_sample_10.lockScroll();
+    }).on('leave', 'mobile', function() {
+      map_sample_10.resumeScroll();
+    });
   };
 
   // Attachear botones ********************************************************
