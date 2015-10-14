@@ -41,23 +41,23 @@ include ./includes/mixins.jade
     .container
       p.
         A continuación dispones de un ejemplo de el orden típico necesario para incluir las liberías en tu proyecto
-      pre.prettyprint
+      pre.prettyprint.lang-html
         +escape()
-          | // JQuery
+          | <!-- JQuery -->
           | <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
           | 
           | // Librer&#237;as de terceros, opcionales
           | <script src="js/lib/MQBE.1.04.js"></script>
           | <script src="js/lib/markerclusterer.js"></script>
           | 
-          | // GMapz y sus módulos
+          | <!-- GMapz y sus módulos -->
           | <script src="js/gmapz.js"></script>
-          | <script src="js/gmapz.pins.js"></script> // JSON de "pins" para los mapas
+          | <script src="js/gmapz.pins.js"></script> <!-- JSON de "pins" para los mapas -->
           | <script src="js/gmapz.map.js"></script>
           | <script src="js/gmapz.autocomplete.js"></script>
-          | <script src="js/gmapz.locations.js"></script> // JSON de localizaciones
+          | <script src="js/gmapz.locations.js"></script> <!-- JSON de localizaciones -->
           | 
-          | // Ready de tu aplicaci&#243;n
+          | <!-- Ready de tu aplicación -->
           | <script src="js/ready.js"></script>
 #pins-and-locations
   .row

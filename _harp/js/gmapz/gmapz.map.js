@@ -29,11 +29,15 @@ GMapz.map = (function() {
       }
     };
 
+    // Overlays
+    this.overlays = null;
+
     // Google Maps event listener
     this.listeners = {
       'idle': null,
       'zoom_on_scroll_lock': null,
-      'tilesloaded_responsive': null
+      'tilesloaded_responsive': null,
+      'on_draw': null
     };
 
     // Google maps settings on initialization
@@ -94,7 +98,9 @@ GMapz.map = (function() {
     //
 
     instanceReady: function(e) {
-
+      
+      var that = this;
+      
       console.log(this.map_id+' instance is initialized');
 
       //function code
@@ -134,11 +140,21 @@ GMapz.map = (function() {
       }
 
       this.onReady();
+
+      this.listeners['on_draw'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+        google.maps.event.removeListener(that.listeners['on_draw']);
+        that.onDraw();
+      });
     },
 
     // Override from outside
     onReady: function() {
       console.log(this.map_id+' instance is ready');
+    },
+
+    // Override from outside
+    onDraw: function() {
+      console.log(this.map_id+' is draw');
     },
 
     // Map
@@ -232,6 +248,8 @@ GMapz.map = (function() {
         // Create standard infowindows
         // TO-DO create custom infowindows GMapz.infowindow?
         if (locs[idx].iw) {
+          // We store the iinfowindow content in the marker also
+          this.markers[idx].iw = locs[idx].iw;
           // Infowindows array
           this.iws[idx] = new google.maps.InfoWindow({
             content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw)
@@ -654,6 +672,30 @@ GMapz.map = (function() {
       }
 
     }, // btnAction
+
+    //
+    // Extra
+    //
+
+    // Converts latitude longitude to pixels on screen
+    convertLatLngToPixels: function (lat_lng) {
+      var
+        scale  = Math.pow(2, this.map.getZoom()),
+        proj   = this.map.getProjection(),
+        bounds = this.map.getBounds(),
+        nw = proj.fromLatLngToPoint(
+          new google.maps.LatLng(
+            bounds.getNorthEast().lat(),
+            bounds.getSouthWest().lng()
+          )
+        ),
+        point = proj.fromLatLngToPoint(lat_lng);
+
+      return new google.maps.Point(
+        Math.floor((point.x - nw.x) * scale),
+        Math.floor((point.y - nw.y) * scale)
+      );
+    },
 
     //
     // Eventos

@@ -218,9 +218,22 @@ $(document).ready(function() {
     });
   };
 
+  map_sample_10.onDraw = function() {
+    console.log(this.convertLatLngToPixels(
+      new google.maps.LatLng(41.890, 12.500)
+    ));
+  };
+
   // Attachear botones ********************************************************
+
+  // Custom infowindow classes
+  var $iw = $('.gm-style .gm-style-iw');
+  $iw.prev('div').remove();
+  // $iw.next('div').addClass('gm-style-close');
+  // $iw.parent().find('*').removeAttr('style');
 
   // Attach button with data-gmapz attribute
   GMapz.attachActionButtons();
 
 });
+
