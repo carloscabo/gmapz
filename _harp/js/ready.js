@@ -227,18 +227,17 @@ $(document).ready(function() {
 
   // Map sample 11 *************************************************************
 
-  /*var boxText = document.createElement("div");
-        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
-        boxText.innerHTML = "City Hall, Sechelt<br>British Columbia<br>Canada";*/
-
   GMapz.onGoogleMapsReady = function () {
+    // Enable infobox library
     infoBoxLoader(true);
   };
 
+  // Start map with default options
   map_sample_11 = new GMapz.map($('#map-sample-11'));
 
   map_sample_11.onReady = function() {
-    // Define and create infobox
+
+    // Define custom infobox style
     var
       ib_box = $('<div class="gmapz-infobox">')[0],
       ib_options = {
@@ -259,9 +258,11 @@ $(document).ready(function() {
         pane: "floatPane",
         enableEventPropagation: false
       };
+
     // Add custom infobox to the map
-    this.ibx = new InfoBox(ib_options);
-    // Load Italy cities
+    this.defineInfoBox( ib_options );
+
+    // Load Italy cities AFTER define infobox
     this.addLocations(italy_cities).fitBounds();
   };
 

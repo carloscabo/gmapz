@@ -602,6 +602,13 @@ GMapz.map = (function() {
     },
 
     //
+    // Custom InfoBox infobox.js
+    //
+    defineInfoBox: function(ib_options) {
+      this.ibx = new InfoBox(ib_options);
+    },
+
+    //
     // Buttons and interaction
     //
 
