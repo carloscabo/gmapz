@@ -4,7 +4,7 @@ include ./includes/mixins.jade
     .container
       h2.page-header Personalización de InfoWindows
       p.
-        Algunos proyectos pueden requerir de <code>infowindows</code> personalizadas <b><em>(las ventanitas que se abren en el mapa cuando pulsamos sobre un marker)</em></b>. Para esta funcionalidad hace falta incluir la librería <code>infobox.js</code>, y una hoja de estilo que defina el estilo de nuestros <em>infoboxes</em>, para ver el estilo empleado en esta demo puedes echar un ojo a <code>gmapz.infobox.css</code> ( <a href="#" target="_blank">ver</a> ).
+        Algunos proyectos pueden requerir de <code>infowindows</code> personalizadas <b><em>(las ventanitas que se abren en el mapa cuando pulsamos sobre un marker)</em></b>. Para esta funcionalidad hace falta incluir la librería <code>infobox.modified.js</code>, y una hoja de estilo que defina el estilo de nuestros <em>infoboxes</em>, para ver el estilo empleado en esta demo puedes echar un ojo a <code>gmapz.infobox.css</code> ( <a href="#" target="_blank">ver</a> ).
       div.alert.alert-danger
         <b>ATENCIÓN!:</b> Para poder integrar <code>infobox.js</code> de forma sencilla en el assets pipeline (y en la filosofía de funcionamiento de GMapz) ha habido que modificarla (no ha habido otra solución <em>elegante</em>). <b>Si actualizas la librería, deberás aplicar las mismas modificaciones :(</b>
 .main-content
@@ -12,7 +12,6 @@ include ./includes/mixins.jade
     .container
       h2.page-header Opciones de inicialización de infobox
       p.
-        <b>Comentarios sobre algunas opciones:</b><br><br>
         <code>content: '...'</code> Este el el código que se insertará en el infobox cuando se crea, cuando el usuario pulse sobre un marcador automáticamente se reemplazará <code>{{__REPLACE__}}</code> por el contenido de la clave: <code>iw:</code> del marker que hayamos definido en el JSON de marcadores / localizaciones.
         <br><br>
         <code>pixelOffset:</code> Desplazamiento del infobox en pixels desde la posición del pin / marker.
