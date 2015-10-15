@@ -76,10 +76,8 @@ GMapz.map = (function() {
     this.iw_current_idx = false;
     this.iw_template = '<div class="gmapz-infowindow">{{__REPLACE__}}</div>';
 
-    // Eventos
-    eOnBeforeAddLocations = function() {
-
-    };
+    // Infobox / infowindows personlizados
+    this.ibx = null;
 
     // Extend settings
     $.extend(this.map_settings, user_settings);

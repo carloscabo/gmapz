@@ -10,7 +10,8 @@ var
   map_sample_9,
   autocomplete_1,
   autocomplete_2,
-  map_sample_10;
+  map_sample_10,
+  map_sample_11;
 
 $(document).ready(function() {
   // La magia aquí
@@ -226,15 +227,46 @@ $(document).ready(function() {
 
   // Map sample 11 *************************************************************
 
-  map_sample_11 = new GMapz.map($('#map-sample-10'));
+  /*var boxText = document.createElement("div");
+        boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
+        boxText.innerHTML = "City Hall, Sechelt<br>British Columbia<br>Canada";*/
+
+  GMapz.onGoogleMapsReady = function () {
+    infoBoxLoader(true);
+  };
+
+  map_sample_11 = new GMapz.map($('#map-sample-11'));
 
   map_sample_11.onReady = function() {
+    // Define and create infobox
+    var
+      ib_box = $('<div class="gmapz-infobox">')[0],
+      ib_options = {
+        content: ib_box,
+        disableAutoPan: false,
+        maxWidth: 0,
+        pixelOffset: new google.maps.Size(-140, 0),
+        zIndex: null,
+        boxStyle: {
+          background: "url('tipbox.gif') no-repeat",
+          opacity: 0.75,
+          width: "280px"
+        },
+        closeBoxMargin: "10px 2px 2px 2px",
+        closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+        infoBoxClearance: new google.maps.Size(1, 1),
+        isHidden: false,
+        pane: "floatPane",
+        enableEventPropagation: false
+      };
+    // Add custom infobox to the map
+    this.ibx = new InfoBox(ib_options);
     // Load Italy cities
     this.addLocations(italy_cities).fitBounds();
   };
 
   map_sample_11.onDraw = function() {
-
+    this.ibx.open(this.map, this.markers['roma']);
   };
 
   // Attachear botones ********************************************************

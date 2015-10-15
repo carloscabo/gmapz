@@ -65,9 +65,16 @@
     document.body.appendChild(script);
   }
 
+  // Override from outside
+  function onGoogleMapsReady() {
+    // Do nothing
+  }
+
   function onApiReady() {
     data.map_api_ready = true;
-    console.log('Google maps api is ready');
+    console.log('Google maps api ready -> call gmapz.maps instances');
+
+    GMapz.onGoogleMapsReady();
 
     // Prepare custom if any pins (we need google.maps)
     if(GMapz.pins) {
@@ -80,6 +87,7 @@
     });
   }
 
+  // Pin creation
   function createCustomPins() {
     var _p = $.extend(true, {}, this.pins); // Clone
     this.pins = {}; // Erase
@@ -138,14 +146,11 @@
 
   }
 
-  function launchAction (target, action, params) {
-
-  }
-
   //
   // Public methods / properties
   //
   window.GMapz = {
+    onGoogleMapsReady: onGoogleMapsReady,
     attachActionButtons: attachActionButtons,
     getOppositeCorner: getOppositeCorner,
     createCustomPins: createCustomPins,
