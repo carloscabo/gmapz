@@ -32,7 +32,7 @@ spain_locs = {
     pin: 'blue',
     lat: 28.1262,
     lng: -17.2372,
-    iw: 'idx: 4<br>Garajonay<br>Islas Canarias<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_de_Garajonay">Wikipedia</a>'
+    iw: 'idx: garajonay<br>Garajonay<br>Islas Canarias<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_de_Garajonay">Wikipedia</a>'
   },
   5: {
     pin: 'orange',
@@ -54,7 +54,7 @@ spain_locs = {
     pin: 'orange',
     lat: 43.1833,
     lng: -4.8333,
-    iw: 'Picos de Europa<br>Asturias<br><a href="http://es.wikipedia.org/wiki/Picos_de_Europa">Wikipedia</a>'
+    iw: 'idx: picos_de_europa<br>Picos de Europa<br>Asturias<br><a href="http://es.wikipedia.org/wiki/Picos_de_Europa">Wikipedia</a>'
   },
   9: {
     lat: 37.2,
@@ -66,18 +66,18 @@ spain_locs = {
     lng: -3.7202,
     iw: 'idx: 10<br>Tablas de Daimiel<br>Ciudad Real<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_de_las_Tablas_de_Daimiel">Wikipedia</a>'
   },
-  'teide': {
-    pin: 'blue',
-    lat: 28.2713,
-    lng: -16.6436,
-    iw: 'idx: 11<br>Parque nacional del Teide<br>Islas Canarias<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_del_Teide">Wikipedia</a>',
-    hidden: true
-  },
   12: {
     pin: 'blue',
     lat: 29.0111,
     lng: -13.7333,
     iw: 'idx: 12<br>Parque nacional de Timanfaya<br>Islas Canarias<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_de_Timanfaya">Wikipedia</a>'
+  },
+  'teide': {
+    pin: 'blue',
+    lat: 28.2713,
+    lng: -16.6436,
+    iw: 'idx: teide<br>Parque nacional del Teide<br>Islas Canarias<br><a href="http://es.wikipedia.org/wiki/Parque_nacional_del_Teide">Wikipedia</a>',
+    visible: false
   }
 };
 
@@ -110,7 +110,8 @@ update = {
   289: {
     lat: 42.1541,
     lng: 9.0884,
-    iw: 'idx: 289<br><b>Ahora está en Córcega ;)</b>'
+    iw: 'idx: 289<br><b>Ahora está en Córcega ;)</b><br>y el usuario puede <em>arrastrarlo</em>',
+    draggable: true
   }
 };
 

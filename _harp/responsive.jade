@@ -18,7 +18,7 @@ include ./includes/mixins.jade
             p.
               map goes here
         .col-lg-6
-          p.
+          div.alert.alert-info.
             <b>Encoge el navegador por debajo de 768 para ver esta funcionalidad.</b>
           p.
             El estilo del control <b>"Scroll enabled / disabled"</b> puede editarse en <code>gmapz.responsive.css</code>. A continuación el <code>js</code> necesario para esta demo...
@@ -45,3 +45,6 @@ include ./includes/mixins.jade
               |   });
               | 
               | };
+          p.
+            También podemos activar y desactivar el <code>scroll-lock</code> desde un boton.
+            <a href="#" id="js-btn-scroll-lock" class="btn btn-danger">Bloquear el mapa</a> <a href="#" id="js-btn-scroll-resume" class="btn btn-success">Desbloquear el mapa</a>

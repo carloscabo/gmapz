@@ -4,7 +4,7 @@ include ./includes/mixins.jade
     .container
       h2.page-header Introducción
       p.
-        <b>GMapz</b> simplifica creación de mapas con Google Maps API V3, es <b>responsive</b>, soporta <b>múltiples instancias en la misma página</b> y settings personalizados para cada instancia. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.
+        <b>GMapz</b> simplifica creación de mapas con Google Maps API V3, es <b>responsive</b>, soporta <b>múltiples instancias en la misma página</b>, <b>infowindows personalizados</b> y opciones diferentes para cada instancia del mapa. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.
 #intro-1.mb32
   .row
     .container
@@ -35,12 +35,16 @@ include ./includes/mixins.jade
           h3.
             Agrupación de marcadores
           p.
-            Para agrupar marcadores automáticamente cuando se hace <em>zoom</em> en la página se emplea la librería <code>MarkerClusterer.js</code>, de la cual puede encontrarse más información y ejemplos en: <a href="https://github.com/googlemaps/js-marker-clusterer" target="_blank">https://github.com/googlemaps/js-marker-clusterer</a>.
+            Para agrupar marcadores automáticamente cuando se hace <em>zoom</em> en la página se emplea la librería <code>MarkerClusterer.js</code>. Información y ejemplos en: <a href="https://github.com/googlemaps/js-marker-clusterer" target="_blank">https://github.com/googlemaps/js-marker-clusterer</a>.
+          h3.
+            Infowindows personalizados
+          p.
+            Para crear infowindows persononalizados se emplea la librería <code>infobox.js</code>. Información y ejemplos en: <a href="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/docs/examples.html" target="_blank">http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/docs/examples.html</a>.
 #includes-header.mb16
   .row
     .container
       p.
-        A continuación dispones de un ejemplo de el orden típico necesario para incluir las liberías en tu proyecto
+        A continuación dispones de un ejemplo de el orden recomendado para incluir las liberías en tu proyecto
       pre.prettyprint.lang-html
         +escape()
           | <!-- JQuery -->
@@ -49,7 +53,7 @@ include ./includes/mixins.jade
           | // Librer&#237;as de terceros, opcionales
           | <script src="js/lib/MQBE.1.04.js"></script>
           | <script src="js/lib/markerclusterer.js"></script>
-          | <script src="js/lib/infobox.js"></script>
+          | <script src="js/lib/infobox.customized.js"></script>
           | 
           | <!-- GMapz y sus módulos -->
           | <script src="js/gmapz.js"></script>
@@ -79,7 +83,7 @@ include ./includes/mixins.jade
             <b>1.</b> El pin <code>'default'</code> que es el <b>pin que se usará <em>por defecto</em> cuando no se indique ningún otro.</b>
           p.
             <b>2.</b> El pin <code>user_location</code> que es el indica la posición del usuario en el mapa cuando se usan las funciones de <a href="geolocalizacion.html">geolocalización</a>, o las funcionalidades de encontrar la <a href="geolocalizacion.html#sample-6">ubicación más cercana</a> a la del usuario.
-          pre.prettyprint
+          pre.prettyprint.lang-javascript
             +escape()
               | // Pins must be defined BEFORE map initialization
               | var base_path = 'img/gmapz/';
@@ -128,10 +132,10 @@ include ./includes/mixins.jade
             mark.
               Cada marcador comienza con una <code>clave / key / index</code> que <b>debe ser única</b>, esta clave puede ser numérica o alfanumérica y solo debe emplear caracteres dentro del rango: <b>[a-zA-z0-9_]</b>.
           p.
-            Los marcadores pueden tener dos propiedades adicionales: <code>draggable</code>, que indica que usuario podrá mover el marcador y <code>hidden</code> que indica que el marcador se añadirá al mapa, pero inicialmente estará <b>oculto</b>.
+            Los marcadores pueden tener dos propiedades adicionales: <code>draggable</code>, que indica que usuario podrá mover el marcador y <code>visible</code> que si es <code>false</code> hará que el marcador se añada al mapa <b>oculto inicialmente</b>.
           p.
             Es útil agrupar los marcadores en diferentes objetos, así podremos tener los marcadores organizados.
-          pre.prettyprint
+          pre.prettyprint.lang-javascript
             +escape()
               | // Grupo de en Marruecos
               | var morocco = {
@@ -141,7 +145,7 @@ include ./includes/mixins.jade
               |     lng: -5.0002,
               |     iw: 'Fez en Marruecos', // Infowindow
               |     draggable: true, // Por defecto es false
-              |     hidden: // Por defecto es false
+              |     visible: false // Por defecto es true
               |   },
               |   'ORAN' : {
               |     lat: 35.6980,

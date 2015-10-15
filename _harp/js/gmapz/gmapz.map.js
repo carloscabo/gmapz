@@ -18,7 +18,7 @@ GMapz.map = (function() {
     // Settings of object
     this.gz_settings = {
       is_initialized: false,
-      tiles_loaded: false,
+      is_drawn: false,
       test_str: 'unitialized',
       zoom: {
         // If you have a single marker you'll get a high zoom
@@ -136,6 +136,7 @@ GMapz.map = (function() {
 
       // Will draw event when map is painted
       this.listeners['on_draw'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+        that.gz_settings.is_drawn = true;
         google.maps.event.removeListener(that.listeners['on_draw']);
         that.onDraw();
       });
@@ -238,9 +239,9 @@ GMapz.map = (function() {
         // Add custom click
         this.markers[idx].click = function() {
           google.maps.event.trigger(this, 'click');
-        }
+        };
         // If set 'hidden'
-        if (locs[idx].hidden) {
+        if (locs[idx].visible === false) {
           this.markers[idx].setVisible(false);
         }
         // Create standard infowindows
@@ -584,12 +585,11 @@ GMapz.map = (function() {
     lockScroll: function() {
       var that = this;
       // Hack for execute only first time!
-
       // Its first time map is drawn, we need to wait until tiles are drawn or
       // the map.setOption(...) will not work
-      if (!this.gz_settings.tiles_loaded) {
-        this.gz_settings.tiles_loaded = true;
+      if (!this.gz_settings.is_drawn) {
         this.listeners['tilesloaded_responsive'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+          that.gz_settings.is_drawn = true;
           google.maps.event.removeListener(that.listeners['tilesloaded_responsive']);
           that.lockScrollAction();
         });

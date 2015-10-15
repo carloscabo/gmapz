@@ -6,64 +6,7 @@ include ./includes/mixins.jade
       p.
         <b>GMapz</b> dispone de varias funcionalidades autómáticas que permiten enlazar elementos de la página con varias funcionalidades relacionadas con el mapa de forma automática. Para emplear esta funcionalidad es un requisito indispensable que asisnemos un <code>data-attribute</code> a nuestro mapa que permita vincularlo de forma sencilla los botones. El attributo <code>data-gmapz</code> <mark>debe ser <b>único para cada mapa</b></mark>.
       p.
-        A continuación el código del ejemplo inferior.
-#sample-5-code
-  .row
-    .container
-        h3.
-          HTML
-        pre.prettyprint.lang-html
-          +escape()
-            | // Ejemplo de contenedor del mapa con data-attribute
-            | <div id="map-sample-5" data-gmapz="gz-sample-5" class="map"><p>map goes here</p></div>
-            | 
-            | // Botones vinculados
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest="true">Mostrar grupo A</a>
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[2,"garajonay","teide",12]'>Mostrar grupo B</a>
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo C</a>
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >Centrar vista en marcador</a>
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-all >Mostrar todos</a>
-            | 
-            | // Select con data-attributes
-            | <select name="" id="select-sample-5" data-gmapz-target="gz-sample-5">
-            |   <option value="0">Seleccionar grupo de marcadores</option>
-            |   <option data-gmapz-show-group='[1,289,38,3,6,7,9,10]'>Mostrar grupo A</option>
-            |   <option data-gmapz-show-group='[2,"garajonay","teide",12]' data-gmapz-hide-rest="true">Mostrar grupo B</option>
-            |   <option data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo B</option>
-            |   <option data-gmapz-center-idx="teide" data-gmapz-zoom="12">Centrar vista en marcador</option>
-            |   <option data-gmapz-show-all>Mostrar todos</option>
-            | </select>
-            | 
-            | // Enlaces con evento click de JQuery
-            | <a href="#" class="btn btn-danger" id="js-add-markers-5">Anadir nuevos marcadores</a>
-            | <a href="#" class="btn btn-danger" id="js-delete-markers-5">Borrar marcadores</a>
-            | <a href="#" class="btn btn-danger" id="js-update-marker-5">Actualizar un narcador</a>
-        p
-          mark.
-            Para que se vinculen automáticamente los botones con el data-attribute <code>data-gmapz-target="..."</code> con el mapa correspondiente debemos llamar a la funcion de JS <code>GMapz.attachActionButtons();</code>
-
-      .container
-        h3.
-          Javascript
-        p.
-          Las funcionalidades de añadir y eliminar marcadores se vinculan empleando <code>Javascript</code>
-        pre.prettyprint.lang-js
-          +escape()
-            | $('#js-add-markers-5').on('click', function(e) {
-            |   e.preventDefault();
-            |   map_sample_5.addLocations(morocco);
-            | });
-            | $('#js-delete-markers-5').on('click', function(e) {
-            |   e.preventDefault();
-            |   map_sample_5.deleteMarkers(['FEZ','ORAN',12]);
-            | });
-            | $('#js-update-marker-5').on('click', function(e) {
-            |   e.preventDefault();
-            |   map_sample_5.addLocations(update);
-            | });
-            | 
-            | // Atachear eventos a botones con data-attribute
-            | GMapz.attachActionButtons();
+        Puedes consultar <b>toda la lista</b> de <code>data-attributes</code> y su función en la sección <a href="medtodos.html#data-attributes">Métodos JS</a>.
 #sample-5.mb32
   .row
     .container
@@ -97,33 +40,67 @@ include ./includes/mixins.jade
             <a href="#" class="btn btn-danger" id="js-add-markers-5">Anadir nuevos marcadores</a>
             <a href="#" class="btn btn-danger" id="js-delete-markers-5">Borrar marcadores</a>
             <a href="#" class="btn btn-danger" id="js-update-marker-5">Actualizar un narcador</a>
-          p.
-            A continuación pueden verse varias opciones de inicialización de GMapz.
-          pre.prettyprint
-            +escape()
-              | // Start gmapz with default options
-              | var map_sample_5 = new GMapz.map(
-              |   $('[data-gmapz="gz-sample-5"]')
-              | );
-              | 
-              | // onReady add locations and fit bounds
-              | map_sample_5.onReady = function() {
-              |   this.addLocations(spain_locs).fitBounds();
-              | };
-              | 
-              | // Events attached to buttons
-              | $('#js-add-markers-5').on('click', function(e) {
-              |   e.preventDefault();
-              |   map_sample_5.addLocations(morocco);
-              | });
-              | $('#js-delete-markers-5').on('click', function(e) {
-              |   e.preventDefault();
-              |   map_sample_5.deleteMarkers(['FEZ','ORAN',12]);
-              | });
-              | $('#js-update-marker-5').on('click', function(e) {
-              |   e.preventDefault();
-              |   map_sample_5.addLocations(update);
-              | });
-              | 
-              | // Automatically attach button with data-gmapz attribute
-              | GMapz.attachActionButtons();
+#sample-5-code
+  .row
+    .container
+        h3.
+          HTML
+        pre.prettyprint.lang-html
+          +escape()
+            | // Ejemplo de contenedor del mapa con data-attribute
+            | <div id="map-sample-5" data-gmapz="gz-sample-5" class="map"><p>map goes here</p></div>
+            | 
+            | // Botones vinculados
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest="true">Mostrar grupo A</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[2,"garajonay","teide",12]'>Mostrar grupo B</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo C</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >Centrar vista en marcador</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-all >Mostrar todos</a>
+            | 
+            | // Select con data-attributes
+            | <select name="" id="select-sample-5" data-gmapz-target="gz-sample-5">
+            |   <option value="0">Seleccionar grupo de marcadores</option>
+            |   <option data-gmapz-show-group='[1,289,38,3,6,7,9,10]'>Mostrar grupo A</option>
+            |   <option data-gmapz-show-group='[2,"garajonay","teide",12]' data-gmapz-hide-rest="true">Mostrar grupo B</option>
+            |   <option data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo B</option>
+            |   <option data-gmapz-center-idx="teide" data-gmapz-zoom="12">Centrar vista en marcador</option>
+            |   <option data-gmapz-show-all>Mostrar todos</option>
+            | </select>
+            | 
+            | // Enlaces con evento click de JQuery
+            | <a href="#" class="btn btn-danger" id="js-add-markers-5">Anadir nuevos marcadores</a>
+            | <a href="#" class="btn btn-danger" id="js-delete-markers-5">Borrar marcadores</a>
+            | <a href="#" class="btn btn-danger" id="js-update-marker-5">Actualizar un narcador</a>
+      .container
+        h3.
+          Javascript
+        p.
+          Las funcionalidades de añadir y eliminar marcadores se vinculan empleando <code>Javascript</code>. <mark>Para que se vinculen automáticamente los botones con el data-attribute <code>data-gmapz-target="..."</code> con el mapa correspondiente debemos llamar a la funcion de JS <code>GMapz.attachActionButtons();</code></mark>
+        pre.prettyprint
+          +escape()
+            | // Start gmapz with default options
+            | var map_sample_5 = new GMapz.map(
+            |   $('[data-gmapz="gz-sample-5"]')
+            | );
+            | 
+            | // onReady add locations and fit bounds
+            | map_sample_5.onReady = function() {
+            |   this.addLocations(spain_locs).fitBounds();
+            | };
+            | 
+            | // Events attached to buttons
+            | $('#js-add-markers-5').on('click', function(e) {
+            |   e.preventDefault();
+            |   map_sample_5.addLocations(morocco);
+            | });
+            | $('#js-delete-markers-5').on('click', function(e) {
+            |   e.preventDefault();
+            |   map_sample_5.deleteMarkers(['FEZ','ORAN',12]);
+            | });
+            | $('#js-update-marker-5').on('click', function(e) {
+            |   e.preventDefault();
+            |   map_sample_5.addLocations(update);
+            | });
+            | 
+            | // Automatically attach button with data-gmapz attribute
+            | GMapz.attachActionButtons();

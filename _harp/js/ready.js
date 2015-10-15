@@ -212,7 +212,6 @@ $(document).ready(function() {
     this.addLocations(italy_cities).fitBounds();
     // Responsive events
     MQBE.on('enter', 'mobile', function() {
-      console.log('Scroll lock');
       map_sample_10.lockScroll();
     }).on('leave', 'mobile', function() {
       map_sample_10.resumeScroll();
@@ -224,6 +223,18 @@ $(document).ready(function() {
       new google.maps.LatLng(41.890, 12.500)
     ));
   };
+
+  $(document).on('click touchstart', '#js-btn-scroll-lock', function(e) {
+    e.preventDefault();
+    $('body').addClass('force-show-scroll-control');
+    map_sample_10.lockScroll();
+  });
+
+  $(document).on('click touchstart', '#js-btn-scroll-resume', function(e) {
+    e.preventDefault();
+    $('body').removeClass('force-show-scroll-control');
+    map_sample_10.resumeScroll();
+  });
 
   // Map sample 11 *************************************************************
 
@@ -240,8 +251,8 @@ $(document).ready(function() {
     // Define custom infobox style
     var
       ib_options = {
-        content: '<div class="gmapz-ibx"><div class="gmapz-ibx-content">{{__REPLACE__}}</div><div class="gmapz-ibx-close"></div></div>',
-        pixelOffset: new google.maps.Size(-140, 0),
+        content: '<div class="gmapz-ibx"><div class="gmapz-ibx-close"></div><div class="gmapz-ibx-content">{{__REPLACE__}}</div></div>',
+        pixelOffset: new google.maps.Size(-130, -96), // x, y
         closeBoxURL: '',
         enableEventPropagation: true
         /* disableAutoPan: false,
@@ -268,8 +279,8 @@ $(document).ready(function() {
   };
 
   map_sample_11.onDraw = function() {
+    // Open Rome marker / infobox
     this.markers['roma'].click();
-    // this.ibx.open(this.map, this.markers['roma']);
   };
 
   // Attachear botones ********************************************************
