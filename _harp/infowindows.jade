@@ -2,24 +2,26 @@ include ./includes/mixins.jade
 .main-content
   .row
     .container
-      h2.page-header Responsive
+      h2.page-header Personalización de InfoWindows
       p.
-        Una de las funcionalidades más interesantes de <code>GMapz</code> es que está preparado para móbiles y tabletas. Cuando se encuentra en un dispositivo <em>mobile</em> <b>el scroll y el zoom se bloquen automáticamente</b> y el usuario decide cuando desbloquearlo con un control personalizado.
+        Algunos proyectos puede requerir de <code>infowindows</code> personalizadas <em>(las ventanitas que se abren en el mapa cuando pulsamos sobre un marker).
       p.
-        Para esta funcionalidad hace falta incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">Media Query Breakpoint Events</a>), y una hoja de estilo que defina los diferentes <em>breakpoints</em> y el estilo del control de bloqueo que se añade en el mapa, los estilos empleados en este ejemplos pueden encontrarse en <code>gmapz.responsive.css</code> ( <a href="#" target="_blank">ver</a> ).
+        Para esta funcionalidad hace falta incluir la librería <code>infobox.js</code> ( <a href="https://github.com/kangaroo5383/google-maps-utility-library-v3/tree/master/infobox" target="_blank">infobox</a> ), y una hoja de estilo que defina el estilo de nuestros <em>infowindows</em>, para ver el estilo empleado en esta demo puedes echar un ojo a <code>gmapz.infobox.css</code> ( <a href="#" target="_blank">ver</a> ).
+      p.
+        <code>infowindows.js</code> dispone de algunos ejemplos de integración en <a href="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/docs/examples.html" target="_blank">infobox</a>
 #sample-10.mb32
   .row
     .container
-      h2 Sample 10
-        small &nbsp;&nbsp;&nbsp;Bloqueo automático en responsive
+      h2 Sample 11
+        small &nbsp;&nbsp;&nbsp;Infowindows personalizados
       .row
         .col-lg-6
-          #map-sample-10.map
+          #map-sample-11.map
             p.
               map goes here
         .col-lg-6
           p.
-            <b>Encoge el navegador por debajo de 768 para ver esta funcionalidad.</b>
+            <b>Inforwindows personalizados.</b>
           p.
             El estilo del control <b>"Scroll enabled / disabled"</b> puede editarse en <code>gmapz.responsive.css</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint

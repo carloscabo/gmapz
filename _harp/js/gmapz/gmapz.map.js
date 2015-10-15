@@ -98,9 +98,9 @@ GMapz.map = (function() {
     //
 
     instanceReady: function(e) {
-      
+
       var that = this;
-      
+
       console.log(this.map_id+' instance is initialized');
 
       //function code
@@ -129,18 +129,14 @@ GMapz.map = (function() {
       // Calling the constructor, initializing the map
       this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
 
-      // Si hubiese algúna location la pintamos
-      // if (!jQuery.isEmptyObject(this.initial_locs)) {
-      //   console.log('Add locations');
-      //   this.addLocations(this.initial_locs);
-      // }
-
+      // If locations passed in start add them
       if(!jQuery.isEmptyObject(this.initial_locs)) {
         this.addLocations(this.initial_locs);
       }
 
       this.onReady();
 
+      // Will draw event when map is painted
       this.listeners['on_draw'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
         google.maps.event.removeListener(that.listeners['on_draw']);
         that.onDraw();
@@ -457,8 +453,6 @@ GMapz.map = (function() {
         that = this,
         geocoder = new google.maps.Geocoder();
 
-      console.log(addr);
-
       // Convert location into longitude and latitude
       geocoder.geocode(
         {
@@ -674,10 +668,10 @@ GMapz.map = (function() {
     }, // btnAction
 
     //
-    // Extra
+    // Extra / helpers
     //
 
-    // Converts latitude longitude to pixels on screen
+    // Converts latitude longitude to pixels on map
     convertLatLngToPixels: function (lat_lng) {
       var
         scale  = Math.pow(2, this.map.getZoom()),

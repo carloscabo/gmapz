@@ -224,13 +224,20 @@ $(document).ready(function() {
     ));
   };
 
-  // Attachear botones ********************************************************
+  // Map sample 11 *************************************************************
 
-  // Custom infowindow classes
-  var $iw = $('.gm-style .gm-style-iw');
-  $iw.prev('div').remove();
-  // $iw.next('div').addClass('gm-style-close');
-  // $iw.parent().find('*').removeAttr('style');
+  map_sample_11 = new GMapz.map($('#map-sample-10'));
+
+  map_sample_11.onReady = function() {
+    // Load Italy cities
+    this.addLocations(italy_cities).fitBounds();
+  };
+
+  map_sample_11.onDraw = function() {
+
+  };
+
+  // Attachear botones ********************************************************
 
   // Attach button with data-gmapz attribute
   GMapz.attachActionButtons();
