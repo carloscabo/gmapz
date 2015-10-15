@@ -1,6 +1,20 @@
-.gmapz-infobox {
+.gmapz-ibx {
+  width: 280px;
+  position: relative;
   border: 1px solid black;
   margin-top: 8px;
   background: yellow;
   padding: 5px;
+}
+
+.gmapz-ibx-content {
+
+}
+
+.gmapz-ibx-close {
+  float: right;
+  width: 16px;
+  height: 16px;
+  background-color: red;
+  cursor: pointer;
 }

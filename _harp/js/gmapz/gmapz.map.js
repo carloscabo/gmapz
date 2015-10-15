@@ -235,6 +235,10 @@ GMapz.map = (function() {
               that.onMarkerDragEnd(this);
           });
         }
+        // Add custom click
+        this.markers[idx].click = function() {
+          google.maps.event.trigger(this, 'click');
+        }
         // If set 'hidden'
         if (locs[idx].hidden) {
           this.markers[idx].setVisible(false);
@@ -242,18 +246,31 @@ GMapz.map = (function() {
         // Create standard infowindows
         // TO-DO create custom infowindows GMapz.infowindow?
         if (locs[idx].iw) {
-          // We store the iinfowindow content in the marker also
+          // We store the infowindow content in the marker also
           this.markers[idx].iw = locs[idx].iw;
-          // Infowindows array
-          this.iws[idx] = new google.maps.InfoWindow({
-            content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw)
-          });
-          // Click on marker event open Infowindow
-          google.maps.event.addListener(this.markers[idx], 'click', function() {
-            that.closeAllInfoWindows();
-            that.iw_current_idx = this.idx;
-            that.iws[this.idx].open(that.map, that.markers[this.idx]);
-          });
+          // Infowindows / Infoboxes array
+          if (!this.ibx) {
+            // There is NOT an infoBox defined
+            // We create standard infowindow
+            this.iws[idx] = new google.maps.InfoWindow({
+              content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw)
+            });
+            // Click on marker event open Infowindow
+            google.maps.event.addListener(this.markers[idx], 'click', function() {
+              that.closeAllInfoWindows();
+              that.iw_current_idx = this.idx;
+              that.iws[this.idx].open(that.map, that.markers[this.idx]);
+            });
+          } else {
+            // We create infobox!
+            google.maps.event.addListener(this.markers[idx], 'click', function() {
+              // this -> marker
+              that.ibx.close();
+              var content = that.ibx.gmapz_template.replace('{{__REPLACE__}}',this.iw);
+              that.ibx.setContent(content);
+              that.ibx.open(that.map, this);
+            });
+          }
         }
 
       }
@@ -271,6 +288,9 @@ GMapz.map = (function() {
     },
 
     closeAllInfoWindows: function() {
+      if (this.ibx) {
+        this.ibx.close();
+      }
       for (var idx in this.iws) {
         if (this.iws.hasOwnProperty(idx)) {
           this.closeInfoWindow(idx);
@@ -283,7 +303,7 @@ GMapz.map = (function() {
     // Clicks on marker to show its infowindow
     openInfoWindow: function(idx) {
       if (this.iws[idx] && this.markers[idx]) {
-        google.maps.event.trigger(this.markers[idx], 'click');
+        this.markers[idx].click();
       }
       return this;
     },
@@ -605,7 +625,17 @@ GMapz.map = (function() {
     // Custom InfoBox infobox.js
     //
     defineInfoBox: function(ib_options) {
+      var that = this;
       this.ibx = new InfoBox(ib_options);
+      this.ibx.gmapz_template = ib_options.content;
+      // Clean replace
+      this.ibx.setContent(this.ibx.gmapz_template.replace('{{__REPLACE__}}',''));
+
+      // Add close event for infobox
+      $(document).on('click touchstart', '.gmapz-ibx-close', function(e) {
+        e.preventDefault();
+        that.ibx.close();
+      });
     },
 
     //

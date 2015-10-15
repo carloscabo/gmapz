@@ -239,12 +239,13 @@ $(document).ready(function() {
 
     // Define custom infobox style
     var
-      ib_box = $('<div class="gmapz-infobox">')[0],
       ib_options = {
-        content: ib_box,
-        disableAutoPan: false,
-        maxWidth: 0,
+        content: '<div class="gmapz-ibx"><div class="gmapz-ibx-content">{{__REPLACE__}}</div><div class="gmapz-ibx-close"></div></div>',
         pixelOffset: new google.maps.Size(-140, 0),
+        closeBoxURL: '',
+        enableEventPropagation: true
+        /* disableAutoPan: false,
+        maxWidth: 0,
         zIndex: null,
         boxStyle: {
           background: "url('tipbox.gif') no-repeat",
@@ -256,7 +257,7 @@ $(document).ready(function() {
         infoBoxClearance: new google.maps.Size(1, 1),
         isHidden: false,
         pane: "floatPane",
-        enableEventPropagation: false
+        enableEventPropagation: false*/
       };
 
     // Add custom infobox to the map
@@ -267,7 +268,8 @@ $(document).ready(function() {
   };
 
   map_sample_11.onDraw = function() {
-    this.ibx.open(this.map, this.markers['roma']);
+    this.markers['roma'].click();
+    // this.ibx.open(this.map, this.markers['roma']);
   };
 
   // Attachear botones ********************************************************
