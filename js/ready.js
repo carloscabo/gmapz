@@ -10,7 +10,8 @@ var
   map_sample_9,
   autocomplete_1,
   autocomplete_2,
-  map_sample_10;
+  map_sample_10,
+  map_sample_11;
 
 $(document).ready(function() {
   // La magia aquí
@@ -211,11 +212,75 @@ $(document).ready(function() {
     this.addLocations(italy_cities).fitBounds();
     // Responsive events
     MQBE.on('enter', 'mobile', function() {
-      console.log('Scroll lock');
       map_sample_10.lockScroll();
     }).on('leave', 'mobile', function() {
       map_sample_10.resumeScroll();
     });
+  };
+
+  map_sample_10.onDraw = function() {
+    console.log(this.convertLatLngToPixels(
+      new google.maps.LatLng(41.890, 12.500)
+    ));
+  };
+
+  $(document).on('click touchstart', '#js-btn-scroll-lock', function(e) {
+    e.preventDefault();
+    $('body').addClass('force-show-scroll-control');
+    map_sample_10.lockScroll();
+  });
+
+  $(document).on('click touchstart', '#js-btn-scroll-resume', function(e) {
+    e.preventDefault();
+    $('body').removeClass('force-show-scroll-control');
+    map_sample_10.resumeScroll();
+  });
+
+  // Map sample 11 *************************************************************
+
+  GMapz.onGoogleMapsReady = function () {
+    // Enable infobox library
+    infoBoxLoader(true);
+  };
+
+  // Start map with default options
+  map_sample_11 = new GMapz.map($('#map-sample-11'));
+
+  map_sample_11.onReady = function() {
+
+    // Define custom infobox style
+    var
+      ib_options = {
+        content: '<div class="gmapz-ibx"><div class="gmapz-ibx-close"></div><div class="gmapz-ibx-content">{{__REPLACE__}}</div></div>',
+        pixelOffset: new google.maps.Size(-130, -96), // x, y
+        closeBoxURL: '',
+        enableEventPropagation: true
+        /* disableAutoPan: false,
+        maxWidth: 0,
+        zIndex: null,
+        boxStyle: {
+          background: "url('tipbox.gif') no-repeat",
+          opacity: 0.75,
+          width: "280px"
+        },
+        closeBoxMargin: "10px 2px 2px 2px",
+        closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+        infoBoxClearance: new google.maps.Size(1, 1),
+        isHidden: false,
+        pane: "floatPane",
+        enableEventPropagation: false*/
+      };
+
+    // Add custom infobox to the map
+    this.defineInfoBox( ib_options );
+
+    // Load Italy cities AFTER define infobox
+    this.addLocations(italy_cities).fitBounds();
+  };
+
+  map_sample_11.onDraw = function() {
+    // Open Rome marker / infobox
+    this.markers['roma'].click();
   };
 
   // Attachear botones ********************************************************
@@ -224,3 +289,4 @@ $(document).ready(function() {
   GMapz.attachActionButtons();
 
 });
+

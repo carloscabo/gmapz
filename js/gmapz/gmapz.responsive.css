@@ -43,6 +43,13 @@
 
 /* Custom control */
 
+body.force-show-scroll-control .gmapz-scroll-control {
+  display: block !important;
+}
+body.force-show-scroll-control .gm-style-mtc {
+  display: none !important;
+}
+
 .gmapz-scroll-control {
   display: none;
   margin: 10px;

@@ -18,7 +18,7 @@ GMapz.map = (function() {
     // Settings of object
     this.gz_settings = {
       is_initialized: false,
-      tiles_loaded: false,
+      is_drawn: false,
       test_str: 'unitialized',
       zoom: {
         // If you have a single marker you'll get a high zoom
@@ -29,11 +29,15 @@ GMapz.map = (function() {
       }
     };
 
+    // Overlays
+    this.overlays = null;
+
     // Google Maps event listener
     this.listeners = {
       'idle': null,
       'zoom_on_scroll_lock': null,
-      'tilesloaded_responsive': null
+      'tilesloaded_responsive': null,
+      'on_draw': null
     };
 
     // Google maps settings on initialization
@@ -72,10 +76,8 @@ GMapz.map = (function() {
     this.iw_current_idx = false;
     this.iw_template = '<div class="gmapz-infowindow">{{__REPLACE__}}</div>';
 
-    // Eventos
-    eOnBeforeAddLocations = function() {
-
-    };
+    // Infobox / infowindows personlizados
+    this.ibx = null;
 
     // Extend settings
     $.extend(this.map_settings, user_settings);
@@ -94,6 +96,8 @@ GMapz.map = (function() {
     //
 
     instanceReady: function(e) {
+
+      var that = this;
 
       console.log(this.map_id+' instance is initialized');
 
@@ -123,22 +127,29 @@ GMapz.map = (function() {
       // Calling the constructor, initializing the map
       this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
 
-      // Si hubiese algúna location la pintamos
-      // if (!jQuery.isEmptyObject(this.initial_locs)) {
-      //   console.log('Add locations');
-      //   this.addLocations(this.initial_locs);
-      // }
-
+      // If locations passed in start add them
       if(!jQuery.isEmptyObject(this.initial_locs)) {
         this.addLocations(this.initial_locs);
       }
 
       this.onReady();
+
+      // Will draw event when map is painted
+      this.listeners['on_draw'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+        that.gz_settings.is_drawn = true;
+        google.maps.event.removeListener(that.listeners['on_draw']);
+        that.onDraw();
+      });
     },
 
     // Override from outside
     onReady: function() {
       console.log(this.map_id+' instance is ready');
+    },
+
+    // Override from outside
+    onDraw: function() {
+      console.log(this.map_id+' is draw');
     },
 
     // Map
@@ -225,23 +236,42 @@ GMapz.map = (function() {
               that.onMarkerDragEnd(this);
           });
         }
+        // Add custom click
+        this.markers[idx].click = function() {
+          google.maps.event.trigger(this, 'click');
+        };
         // If set 'hidden'
-        if (locs[idx].hidden) {
+        if (locs[idx].visible === false) {
           this.markers[idx].setVisible(false);
         }
         // Create standard infowindows
         // TO-DO create custom infowindows GMapz.infowindow?
         if (locs[idx].iw) {
-          // Infowindows array
-          this.iws[idx] = new google.maps.InfoWindow({
-            content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw)
-          });
-          // Click on marker event open Infowindow
-          google.maps.event.addListener(this.markers[idx], 'click', function() {
-            that.closeAllInfoWindows();
-            that.iw_current_idx = this.idx;
-            that.iws[this.idx].open(that.map, that.markers[this.idx]);
-          });
+          // We store the infowindow content in the marker also
+          this.markers[idx].iw = locs[idx].iw;
+          // Infowindows / Infoboxes array
+          if (!this.ibx) {
+            // There is NOT an infoBox defined
+            // We create standard infowindow
+            this.iws[idx] = new google.maps.InfoWindow({
+              content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw)
+            });
+            // Click on marker event open Infowindow
+            google.maps.event.addListener(this.markers[idx], 'click', function() {
+              that.closeAllInfoWindows();
+              that.iw_current_idx = this.idx;
+              that.iws[this.idx].open(that.map, that.markers[this.idx]);
+            });
+          } else {
+            // We create infobox!
+            google.maps.event.addListener(this.markers[idx], 'click', function() {
+              // this -> marker
+              that.ibx.close();
+              var content = that.ibx.gmapz_template.replace('{{__REPLACE__}}',this.iw);
+              that.ibx.setContent(content);
+              that.ibx.open(that.map, this);
+            });
+          }
         }
 
       }
@@ -259,6 +289,9 @@ GMapz.map = (function() {
     },
 
     closeAllInfoWindows: function() {
+      if (this.ibx) {
+        this.ibx.close();
+      }
       for (var idx in this.iws) {
         if (this.iws.hasOwnProperty(idx)) {
           this.closeInfoWindow(idx);
@@ -271,7 +304,7 @@ GMapz.map = (function() {
     // Clicks on marker to show its infowindow
     openInfoWindow: function(idx) {
       if (this.iws[idx] && this.markers[idx]) {
-        google.maps.event.trigger(this.markers[idx], 'click');
+        this.markers[idx].click();
       }
       return this;
     },
@@ -439,8 +472,6 @@ GMapz.map = (function() {
         that = this,
         geocoder = new google.maps.Geocoder();
 
-      console.log(addr);
-
       // Convert location into longitude and latitude
       geocoder.geocode(
         {
@@ -554,12 +585,11 @@ GMapz.map = (function() {
     lockScroll: function() {
       var that = this;
       // Hack for execute only first time!
-
       // Its first time map is drawn, we need to wait until tiles are drawn or
       // the map.setOption(...) will not work
-      if (!this.gz_settings.tiles_loaded) {
-        this.gz_settings.tiles_loaded = true;
+      if (!this.gz_settings.is_drawn) {
         this.listeners['tilesloaded_responsive'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+          that.gz_settings.is_drawn = true;
           google.maps.event.removeListener(that.listeners['tilesloaded_responsive']);
           that.lockScrollAction();
         });
@@ -589,6 +619,23 @@ GMapz.map = (function() {
       });
       $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').removeClass('disabled');
       google.maps.event.removeListener(this.listeners['zoom_on_scroll_lock']);
+    },
+
+    //
+    // Custom InfoBox infobox.js
+    //
+    defineInfoBox: function(ib_options) {
+      var that = this;
+      this.ibx = new InfoBox(ib_options);
+      this.ibx.gmapz_template = ib_options.content;
+      // Clean replace
+      this.ibx.setContent(this.ibx.gmapz_template.replace('{{__REPLACE__}}',''));
+
+      // Add close event for infobox
+      $(document).on('click touchstart', '.gmapz-ibx-close', function(e) {
+        e.preventDefault();
+        that.ibx.close();
+      });
     },
 
     //
@@ -654,6 +701,30 @@ GMapz.map = (function() {
       }
 
     }, // btnAction
+
+    //
+    // Extra / helpers
+    //
+
+    // Converts latitude longitude to pixels on map
+    convertLatLngToPixels: function (lat_lng) {
+      var
+        scale  = Math.pow(2, this.map.getZoom()),
+        proj   = this.map.getProjection(),
+        bounds = this.map.getBounds(),
+        nw = proj.fromLatLngToPoint(
+          new google.maps.LatLng(
+            bounds.getNorthEast().lat(),
+            bounds.getSouthWest().lng()
+          )
+        ),
+        point = proj.fromLatLngToPoint(lat_lng);
+
+      return new google.maps.Point(
+        Math.floor((point.x - nw.x) * scale),
+        Math.floor((point.y - nw.y) * scale)
+      );
+    },
 
     //
     // Eventos
