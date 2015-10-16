@@ -6,7 +6,7 @@ GMapz.autocomplete = (function() {
   function Constructor($input, user_settings) {
 
     if($input.length === 0) {
-      if (Gmapz.debug) console.error("<input> '"+$input.selector+"' not found!");
+      if (GMapz.debug) console.error("<input> '"+$input.selector+"' not found!");
       return false;
     }
 
@@ -58,7 +58,7 @@ GMapz.autocomplete = (function() {
     //
 
     instanceReady: function(e) {
-      if (Gmapz.debug) console.info("'"+this.input_id+"' instance initialized");
+      if (GMapz.debug) console.info("'"+this.input_id+"' instance initialized");
 
       var that = this;
 
@@ -82,7 +82,7 @@ GMapz.autocomplete = (function() {
 
     // Override from outside
     onReady: function() {
-      if (Gmapz.debug) console.info("'"+this.input_id+"' autocomplete instance is ready");
+      if (GMapz.debug) console.info("'"+this.input_id+"' autocomplete instance is ready");
     },
 
     // Override from outside

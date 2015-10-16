@@ -6,7 +6,7 @@ GMapz.map = (function() {
   function Constructor($map, user_settings, initial_locs) {
 
     if($map.length === 0) {
-      if (Gmapz.debug) console.error("'"+$map.selector+"' not found!");
+      if (GMapz.debug) console.error("'"+$map.selector+"' not found!");
       return false;
     }
 
@@ -99,7 +99,7 @@ GMapz.map = (function() {
 
       var that = this;
 
-      if (Gmapz.debug) console.info(this.map_id+' instanceReady();');
+      if (GMapz.debug) console.info(this.map_id+' instanceReady();');
 
       //function code
       this.gz_settings.is_initialized = true;
@@ -144,12 +144,12 @@ GMapz.map = (function() {
 
     // Override from outside
     onReady: function() {
-      if (Gmapz.debug) console.info(this.map_id+' instance onReady();');
+      if (GMapz.debug) console.info(this.map_id+' instance onReady();');
     },
 
     // Override from outside
     onDraw: function() {
-      if (Gmapz.debug) console.info(this.map_id+' onDraw();');
+      if (GMapz.debug) console.info(this.map_id+' onDraw();');
     },
 
     // Map
@@ -371,7 +371,7 @@ GMapz.map = (function() {
       // Single mark zoom adjust
       // When you have an only marker focused adjust the
       // map's zoom to a better adjustment
-      if (Gmapz.debug) console.info('Automatic zoom for single marker attached.');
+      if (GMapz.debug) console.info('Automatic zoom for single marker attached.');
       if (!max) max = 18; //
       if (!target) target = 9;
       var
@@ -546,16 +546,16 @@ GMapz.map = (function() {
     geoShowError: function (error) {
       switch(error.code) {
         case error.PERMISSION_DENIED:
-          if (Gmapz.debug) console.error('User denied the request for Geolocation.');
+          if (GMapz.debug) console.error('User denied the request for Geolocation.');
           break;
         case error.POSITION_UNAVAILABLE:
-          if (Gmapz.debug) console.error('Location information is unavailable.');
+          if (GMapz.debug) console.error('Location information is unavailable.');
           break;
         case error.TIMEOUT:
-          if (Gmapz.debug) console.error('The request to get user location timed out.');
+          if (GMapz.debug) console.error('The request to get user location timed out.');
           break;
         case error.UNKNOWN_ERROR:
-          if (Gmapz.debug) console.error('An unknown error occurred.');
+          if (GMapz.debug) console.error('An unknown error occurred.');
           break;
       }
     },
@@ -607,7 +607,7 @@ GMapz.map = (function() {
         scrollwheel: false
       });
       this.listeners['zoom_on_scroll_lock'] = google.maps.event.addListener(this.map, 'zoom_changed', function() {
-        if (Gmapz.debug) console.info('Zoom changed');
+        if (GMapz.debug) console.info('Zoom changed');
         that.resumeScroll();
       });
     },
@@ -682,7 +682,7 @@ GMapz.map = (function() {
         if(n) {
           n.getCurrentPosition(this.geoShowPosition.bind(this), this.geoShowError.bind(this));
         } else {
-          if (Gmapz.debug) console.error('Your web browser doesn\'t support geolocation.');
+          if (GMapz.debug) console.error('Your web browser doesn\'t support geolocation.');
           return false;
         }
       }
@@ -696,7 +696,7 @@ GMapz.map = (function() {
           // console.log(addr);
           this.findNearestMarkerToAddress(addr);
         } else {
-          if (Gmapz.debug) console.error("<input> element '"+$el.data('gmapzInput')+"' not found!");
+          if (GMapz.debug) console.error("<input> element '"+$el.data('gmapzInput')+"' not found!");
         }
       }
 
@@ -730,13 +730,13 @@ GMapz.map = (function() {
     // Eventos
     //
     onMarkerDragEnd: function(marker) {
-      if (Gmapz.debug) console.log(marker);
+      if (GMapz.debug) console.log(marker);
     },
     afterAddingMarkers: function() {
 
     },
     errorAddressNotFound: function(addr) {
-      if (Gmapz.debug) console.error("'"+addr+"' address not found!");
+      if (GMapz.debug) console.error("'"+addr+"' address not found!");
     }
 
   };

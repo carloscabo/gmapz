@@ -76,7 +76,7 @@
   function onApiReady() {
     data.map_api_ready = true;
 
-    if (Gmapz.debug) console.info('Google maps api ready -> call gmapz.maps instances');
+    if (this.debug) console.info('google.maps api loaded -> call gmapz.maps / autocomplete instances');
 
     GMapz.onGoogleMapsReady();
 
