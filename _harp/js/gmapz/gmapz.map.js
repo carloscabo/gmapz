@@ -6,7 +6,7 @@ GMapz.map = (function() {
   function Constructor($map, user_settings, initial_locs) {
 
     if($map.length === 0) {
-      if (GMapz.debug) console.error("'"+$map.selector+"' not found!");
+      if (GMapz.debug) console.warn("'"+$map.selector+"' not found!");
       return false;
     }
 
@@ -28,9 +28,6 @@ GMapz.map = (function() {
         auto: 7
       }
     };
-
-    // Overlays
-    this.overlays = null;
 
     // Google Maps event listener
     this.listeners = {
@@ -156,6 +153,10 @@ GMapz.map = (function() {
     setZoom: function (zoom) {
       this.map.setZoom(zoom);
       return this;
+    },
+
+    getZoom: function () {
+      return this.map.getZoom();
     },
 
     centerTo: function (lat, lng, zoom) {
@@ -696,7 +697,7 @@ GMapz.map = (function() {
           // console.log(addr);
           this.findNearestMarkerToAddress(addr);
         } else {
-          if (GMapz.debug) console.error("<input> element '"+$el.data('gmapzInput')+"' not found!");
+          if (GMapz.debug) console.warn("<input> element '"+$el.data('gmapzInput')+"' not found!");
         }
       }
 
@@ -736,7 +737,7 @@ GMapz.map = (function() {
 
     },
     errorAddressNotFound: function(addr) {
-      if (GMapz.debug) console.error("'"+addr+"' address not found!");
+      if (GMapz.debug) console.warn("'"+addr+"' address not found!");
     }
 
   };

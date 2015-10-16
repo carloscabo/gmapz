@@ -6,7 +6,7 @@ GMapz.autocomplete = (function() {
   function Constructor($input, user_settings) {
 
     if($input.length === 0) {
-      if (GMapz.debug) console.error("<input> '"+$input.selector+"' not found!");
+      if (GMapz.debug) console.warn("<input> '"+$input.selector+"' not found!");
       return false;
     }
 
