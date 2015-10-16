@@ -6,7 +6,7 @@ GMapz.map = (function() {
   function Constructor($map, user_settings, initial_locs) {
 
     if($map.length === 0) {
-      console.log("'"+$map.selector+"' not found!");
+      if (Gmapz.debug) console.error("'"+$map.selector+"' not found!");
       return false;
     }
 
@@ -99,7 +99,7 @@ GMapz.map = (function() {
 
       var that = this;
 
-      console.log(this.map_id+' instance is initialized');
+      if (Gmapz.debug) console.info(this.map_id+' instanceReady();');
 
       //function code
       this.gz_settings.is_initialized = true;
@@ -144,12 +144,12 @@ GMapz.map = (function() {
 
     // Override from outside
     onReady: function() {
-      console.log(this.map_id+' instance is ready');
+      if (Gmapz.debug) console.info(this.map_id+' instance onReady();');
     },
 
     // Override from outside
     onDraw: function() {
-      console.log(this.map_id+' is draw');
+      if (Gmapz.debug) console.info(this.map_id+' onDraw();');
     },
 
     // Map
@@ -371,7 +371,7 @@ GMapz.map = (function() {
       // Single mark zoom adjust
       // When you have an only marker focused adjust the
       // map's zoom to a better adjustment
-      console.log('Attach single marker');
+      if (Gmapz.debug) console.info('Automatic zoom for single marker attached.');
       if (!max) max = 18; //
       if (!target) target = 9;
       var
@@ -546,16 +546,16 @@ GMapz.map = (function() {
     geoShowError: function (error) {
       switch(error.code) {
         case error.PERMISSION_DENIED:
-          console.log('User denied the request for Geolocation.');
+          if (Gmapz.debug) console.error('User denied the request for Geolocation.');
           break;
         case error.POSITION_UNAVAILABLE:
-          console.log('Location information is unavailable.');
+          if (Gmapz.debug) console.error('Location information is unavailable.');
           break;
         case error.TIMEOUT:
-          console.log('The request to get user location timed out.');
+          if (Gmapz.debug) console.error('The request to get user location timed out.');
           break;
         case error.UNKNOWN_ERROR:
-          console.log('An unknown error occurred.');
+          if (Gmapz.debug) console.error('An unknown error occurred.');
           break;
       }
     },
@@ -607,7 +607,7 @@ GMapz.map = (function() {
         scrollwheel: false
       });
       this.listeners['zoom_on_scroll_lock'] = google.maps.event.addListener(this.map, 'zoom_changed', function() {
-        console.log('Zoom changed');
+        if (Gmapz.debug) console.info('Zoom changed');
         that.resumeScroll();
       });
     },
@@ -682,7 +682,7 @@ GMapz.map = (function() {
         if(n) {
           n.getCurrentPosition(this.geoShowPosition.bind(this), this.geoShowError.bind(this));
         } else {
-          console.log('Su navegador no soporta Geolocalización.');
+          if (Gmapz.debug) console.error('Your web browser doesn\'t support geolocation.');
           return false;
         }
       }
@@ -696,7 +696,7 @@ GMapz.map = (function() {
           // console.log(addr);
           this.findNearestMarkerToAddress(addr);
         } else {
-          console.log('No se ha encontrado el input!');
+          if (Gmapz.debug) console.error("<input> element '"+$el.data('gmapzInput')+"' not found!");
         }
       }
 
@@ -730,13 +730,13 @@ GMapz.map = (function() {
     // Eventos
     //
     onMarkerDragEnd: function(marker) {
-      console.log(marker);
+      if (Gmapz.debug) console.log(marker);
     },
     afterAddingMarkers: function() {
 
     },
     errorAddressNotFound: function(addr) {
-      console.log('"'+addr+'! address not found!');
+      if (Gmapz.debug) console.error("'"+addr+"' address not found!");
     }
 
   };
