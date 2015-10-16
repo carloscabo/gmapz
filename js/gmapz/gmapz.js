@@ -135,7 +135,7 @@
       e.preventDefault();
       var
         target  = $(this).attr('data-gmapz-target');
-      // Get all data attributes ans send them to gmpaz handler and the element
+      // Get all data attributes ans send them to gmapz handler and the element
       $('[data-gmapz="'+target+'"]')[0].gmapz.btnAction($(this).data(), $(this));
     }).on('change', 'select[data-gmapz-target]', function (e) {
       // <select>
