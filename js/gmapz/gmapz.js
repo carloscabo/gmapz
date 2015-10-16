@@ -50,10 +50,13 @@
   }
 
   // Request API
-  function requestAPI () {
+  function requestAPI (callback_fn) {
     if (!data.map_api_requested) {
+      if (typeof callback_fn === 'undefined') {
+        callback_fn = 'GMapz.onApiReady';
+      }
       data.map_api_requested = true;
-      loadScript('GMapz.onApiReady');
+      loadScript( callback_fn );
     }
   }
 
@@ -72,7 +75,8 @@
 
   function onApiReady() {
     data.map_api_ready = true;
-    console.log('Google maps api ready -> call gmapz.maps instances');
+
+    if (this.debug) console.info('google.maps api loaded -> call gmapz.maps / autocomplete instances');
 
     GMapz.onGoogleMapsReady();
 
@@ -157,6 +161,7 @@
     onApiReady: onApiReady,
     requestAPI: requestAPI,
     getUniqueId: getUniqueId,
+    debug: debug,
     data: data,
     pins: pins // Custom pins
   };

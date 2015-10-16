@@ -6,7 +6,7 @@ GMapz.map = (function() {
   function Constructor($map, user_settings, initial_locs) {
 
     if($map.length === 0) {
-      console.log("'"+$map.selector+"' not found!");
+      if (GMapz.debug) console.warn("'"+$map.selector+"' not found!");
       return false;
     }
 
@@ -28,9 +28,6 @@ GMapz.map = (function() {
         auto: 7
       }
     };
-
-    // Overlays
-    this.overlays = null;
 
     // Google Maps event listener
     this.listeners = {
@@ -99,7 +96,7 @@ GMapz.map = (function() {
 
       var that = this;
 
-      console.log(this.map_id+' instance is initialized');
+      if (GMapz.debug) console.info(this.map_id+' instanceReady();');
 
       //function code
       this.gz_settings.is_initialized = true;
@@ -144,18 +141,22 @@ GMapz.map = (function() {
 
     // Override from outside
     onReady: function() {
-      console.log(this.map_id+' instance is ready');
+      if (GMapz.debug) console.info(this.map_id+' instance onReady();');
     },
 
     // Override from outside
     onDraw: function() {
-      console.log(this.map_id+' is draw');
+      if (GMapz.debug) console.info(this.map_id+' onDraw();');
     },
 
     // Map
     setZoom: function (zoom) {
       this.map.setZoom(zoom);
       return this;
+    },
+
+    getZoom: function () {
+      return this.map.getZoom();
     },
 
     centerTo: function (lat, lng, zoom) {
@@ -371,7 +372,7 @@ GMapz.map = (function() {
       // Single mark zoom adjust
       // When you have an only marker focused adjust the
       // map's zoom to a better adjustment
-      console.log('Attach single marker');
+      if (GMapz.debug) console.info('Automatic zoom for single marker attached.');
       if (!max) max = 18; //
       if (!target) target = 9;
       var
@@ -546,16 +547,16 @@ GMapz.map = (function() {
     geoShowError: function (error) {
       switch(error.code) {
         case error.PERMISSION_DENIED:
-          console.log('User denied the request for Geolocation.');
+          if (GMapz.debug) console.error('User denied the request for Geolocation.');
           break;
         case error.POSITION_UNAVAILABLE:
-          console.log('Location information is unavailable.');
+          if (GMapz.debug) console.error('Location information is unavailable.');
           break;
         case error.TIMEOUT:
-          console.log('The request to get user location timed out.');
+          if (GMapz.debug) console.error('The request to get user location timed out.');
           break;
         case error.UNKNOWN_ERROR:
-          console.log('An unknown error occurred.');
+          if (GMapz.debug) console.error('An unknown error occurred.');
           break;
       }
     },
@@ -607,7 +608,7 @@ GMapz.map = (function() {
         scrollwheel: false
       });
       this.listeners['zoom_on_scroll_lock'] = google.maps.event.addListener(this.map, 'zoom_changed', function() {
-        console.log('Zoom changed');
+        if (GMapz.debug) console.info('Zoom changed');
         that.resumeScroll();
       });
     },
@@ -682,7 +683,7 @@ GMapz.map = (function() {
         if(n) {
           n.getCurrentPosition(this.geoShowPosition.bind(this), this.geoShowError.bind(this));
         } else {
-          console.log('Su navegador no soporta Geolocalización.');
+          if (GMapz.debug) console.error('Your web browser doesn\'t support geolocation.');
           return false;
         }
       }
@@ -696,7 +697,7 @@ GMapz.map = (function() {
           // console.log(addr);
           this.findNearestMarkerToAddress(addr);
         } else {
-          console.log('No se ha encontrado el input!');
+          if (GMapz.debug) console.warn("<input> element '"+$el.data('gmapzInput')+"' not found!");
         }
       }
 
@@ -730,13 +731,13 @@ GMapz.map = (function() {
     // Eventos
     //
     onMarkerDragEnd: function(marker) {
-      console.log(marker);
+      if (GMapz.debug) console.log(marker);
     },
     afterAddingMarkers: function() {
 
     },
     errorAddressNotFound: function(addr) {
-      console.log('"'+addr+'! address not found!');
+      if (GMapz.debug) console.warn("'"+addr+"' address not found!");
     }
 
   };

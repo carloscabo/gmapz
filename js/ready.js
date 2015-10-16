@@ -16,6 +16,9 @@ var
 $(document).ready(function() {
   // La magia aquí
 
+  // Activate console log messages
+  GMapz.debug = true;
+
   // Map sample 1 *************************************************************
 
   map_sample_1 = new GMapz.map(
@@ -51,7 +54,7 @@ $(document).ready(function() {
   map_sample_3 = new GMapz.map(
     $('#map-sample-3'),
     map_sample_3_options,
-    france_cities // demo_locations.js
+    france_cities // gmapz.locations.js
   );
 
   map_sample_3.onReady = function(){
@@ -176,6 +179,7 @@ $(document).ready(function() {
       draggable: true,
       iw : 'My infowindow 1'
     };
+    // Chainning methods
     map_sample_8.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
   };
 
@@ -190,14 +194,14 @@ $(document).ready(function() {
   autocomplete_2 = new GMapz.autocomplete($('#my-autocomplete-2'));
 
   autocomplete_2.onChange = function () {
-    // this = autocomplete
+    // this = autocomplete obj
     var place = this.instance.getPlace();
     if(typeof place.geometry === 'undefined') {
-      // No se ha encontrado el lugar
+      // Place not found
       alert('Dirección no encontrada');
       return;
     }
-    // Mostramos la ubicación y elpuntero más cercano
+    // We show place and closest marker
     map_sample_9.geoShowPosition(place);
   };
 
