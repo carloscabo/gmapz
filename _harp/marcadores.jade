@@ -133,7 +133,7 @@ include ./includes/mixins.jade
             El procedimiento es bastante sencillo, preparamos las <a href="https://github.com/googlemaps/js-marker-clusterer" target="_blank">opciones de markerclusterer</a>, inicializamos nuestro mapa normalmente, y en el <code>onReady()</code> de nuestro mapa pasamos los marcadores a <code>markerclusterer</code> que se encargará automáticamente de su agrupación según el nivel de zoom que hayamos definido.
           p
             mark.
-              Presta atención a que <code>markercluster</code> emplea un <b>array</b> de marcadores, así que tenemos que convertir el <b>objeto</b> que se usa dentro de <code>gmap</code> (ver código del ejemplo a la derecha).
+              <b>ATENCIÓN:</b> <code>markercluster</code> emplea un <b>array</b> de marcadores, así que tenemos que convertir el <b>objeto</b> que se usa dentro de <code>gmap</code> (ver código del ejemplo a la derecha).
         .col-lg-6
           pre.prettyprint
             +escape()

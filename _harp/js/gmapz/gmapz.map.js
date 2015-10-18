@@ -173,7 +173,7 @@ GMapz.map = (function() {
         zoom = false;
       }
       if (this.markers[idx]) {
-        this.setMarkerVisibility(true, idx);
+        this.setMarkerVisibility(idx, true);
         this.centerTo(
           this.markers[idx].position.lat(),
           this.markers[idx].position.lng(),
@@ -354,10 +354,6 @@ GMapz.map = (function() {
     fitToPlace: function (place, zoom) {
       place = ($.isArray(place)) ? place[0] : place;
 
-      /*google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
-        searchOnMapBounds();
-      });*/
-
       if (typeof place.geometry.viewport !== 'undefined') {
         this.map.fitBounds(place.geometry.viewport);
       }
@@ -383,13 +379,6 @@ GMapz.map = (function() {
         };
         google.maps.event.removeListener(this.listeners['idle']);
       });
-    },
-
-    stopAllAnimations: function (idx) {
-      for (var key in this.markers) {
-        this.markers[key].setAnimation(null);
-      }
-      return this;
     },
 
     // Deletes a group os markers idxs (array)
@@ -421,7 +410,7 @@ GMapz.map = (function() {
       return this;
     },
 
-    setMarkerVisibility: function (visible, idx) {
+    setMarkerVisibility: function (idx, visible) {
       if (!visible) {
         this.closeInfoWindow(idx);
       }
@@ -431,7 +420,7 @@ GMapz.map = (function() {
 
     setAllMarkersVisibility: function (visible) {
       for (var idx in this.markers) {
-        this.setMarkerVisibility(visible, idx);
+        this.setMarkerVisibility(idx, visible);
       }
       if (visible) {
         this.fitBounds();
@@ -732,9 +721,6 @@ GMapz.map = (function() {
     //
     onMarkerDragEnd: function(marker) {
       if (GMapz.debug) console.log(marker);
-    },
-    afterAddingMarkers: function() {
-
     },
     errorAddressNotFound: function(addr) {
       if (GMapz.debug) console.warn("'"+addr+"' address not found!");
