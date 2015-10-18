@@ -99,10 +99,6 @@ GMapz.autocomplete = (function() {
       };
       map_5.fitToPlace(place);
       */
-    },
-
-    afterChange: function() {
-
     }
 
   };
