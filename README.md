@@ -9,3 +9,6 @@ You can view the full documentation (WIP) and working samples at:
 There is Rails Gem version available ( thx! [@dreamingechoes](https://github.com/dreamingechoes) ):
 <h3><a href="https://rubygems.org/gems/gmapz_rails" target="_blank">https://rubygems.org/gems/gmapz_rails</a></h3><br>
 
+TO-DO
+=====
+1. Add static maps support
