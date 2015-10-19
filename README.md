@@ -6,6 +6,6 @@ GMapz is yet another Google Maps JS library. It eases the creation of Google Map
 You can view the full documentation (WIP) and working samples at:
 <h3><a href="http://carloscabo.github.io/gmapz" target="_blank">http://carloscabo.github.io/gmapz</a></h3>
 <br><br>
-There is Rails Gem version available at:<br>
+There is Rails Gem version available (thx! [@dreamingechoes](https://github.com/dreamingechoes)):
 <h3><a href="https://rubygems.org/gems/gmapz_rails" target="_blank">https://rubygems.org/gems/gmapz_rails</a></h3><br>
-(thx! [@dreamingechoes](https://github.com/dreamingechoes))
+
