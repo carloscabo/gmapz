@@ -14,7 +14,7 @@
 /* TABLET */
 @media only screen and (max-width: 1024px) {
   body {
-    background-color: lightgray;
+    /*background-color: lightgray;*/ /* DEBUG */
   }
   /* To check from MQBE */
   body:after {
@@ -25,7 +25,7 @@
 
 @media only screen and (max-width: 768px) {
   body {
-    background-color: pink;
+    /*background-color: pink;*/ /* DEBUG */
   }
   .gmapz-scroll-control {
     display: block !important;
