@@ -1,20 +1,20 @@
-.navbar.navbar-default.mb0
+.navbar.navbar-inverse.mb0
   .container-fluid
     .container
-      ul.nav.navbar-header.left
-        li
+      ul.nav.navbar-nav.left
+        li(class = (is_active === 1 ? "active" : ""))
           a(href="index.html") Introducción
-        li
+        li(class = (is_active === 2 ? "active" : ""))
           a(href="marcadores.html") Marcadores
-        li
+        li(class = (is_active === 3 ? "active" : ""))
           a(href="data_attributes.html") Data-attributes
-        li
+        li(class = (is_active === 4 ? "active" : ""))
           a(href="geolocalizacion.html") Geolocalización
-        li
+        li(class = (is_active === 5 ? "active" : ""))
           a(href="autocompletado.html") Autocompletado
-        li
+        li(class = (is_active === 6 ? "active" : ""))
           a(href="responsive.html") Responsive
-        li
+        li(class = (is_active === 7 ? "active" : ""))
           a(href="infowindows.html") Infowindows
-        li
+        li(class = (is_active === 8 ? "active" : ""))
           a(href="metodos.html") Métodos JS
