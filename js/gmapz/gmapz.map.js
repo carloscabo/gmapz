@@ -25,7 +25,7 @@ GMapz.map = (function() {
         // This value is the threshold that will trigger the
         // automatic zoom level
         threshold: 20,
-        auto: 7
+        target: 7 // Set to false to disable
       }
     };
 
@@ -129,6 +129,7 @@ GMapz.map = (function() {
         this.addLocations(this.initial_locs);
       }
 
+      // Call ready handler
       this.onReady();
 
       // Will draw event when map is painted
@@ -152,6 +153,15 @@ GMapz.map = (function() {
     // Map
     setZoom: function (zoom) {
       this.map.setZoom(zoom);
+      return this;
+    },
+
+    // Map
+    setSingleMarkerZoom: function (target, threshold) {
+      this.gz_settings.zoom.target = target;
+      if (threshold) {
+        this.gz_settings.zoom.threshold = threshold;
+      }
       return this;
     },
 
@@ -335,8 +345,8 @@ GMapz.map = (function() {
       }
 
       // Only one marker auto zoom
-      if (visible_count == 1) {
-        this.singleMarkerZoomAdjust(this.gz_settings.zoom.threshold, this.gz_settings.zoom.auto);
+      if (this.gz_settings.zoom.target !== false && visible_count == 1) {
+        this.singleMarkerZoomAdjust(this.gz_settings.zoom.threshold, this.gz_settings.zoom.target);
       }
 
       // More than one marker fit Bounds
@@ -373,11 +383,10 @@ GMapz.map = (function() {
       if (!target) target = 9;
       var
         that = this;
-      this.listeners['idle'] = google.maps.event.addListener(this.map, 'idle', function() {
+      google.maps.event.addListenerOnce(this.map, 'idle', function() {
         if (that.map.getZoom() > max) {
           that.map.setZoom(target);
-        };
-        google.maps.event.removeListener(this.listeners['idle']);
+        }
       });
     },
 

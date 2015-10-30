@@ -1,4 +1,4 @@
-GMapz v2.00 beta
+GMapz v2.01 beta
 ================
 
 GMapz is yet another Google Maps JS library. It eases the creation of Google Maps, it's **responsive**, supports the creation of **multiple instances in the same page** (each one with it's own settings), the creation of **custom styled infowindows**, and other useful helpers.
@@ -11,4 +11,14 @@ There is Rails Gem version available ( thx! [@dreamingechoes](https://github.com
 
 TO-DO
 =====
-1. Add static maps support
+1. Add sample with default Google Maps pins
+2. Add static maps support
+
+Changelog
+=========
+
+- 2.01
+  + Fixed small bug with on 'idle' event
+  + Now SingleMarkerZoom event applies once
+  + Added setSingleMarkerZoom method
+  + Changed names of the samples
