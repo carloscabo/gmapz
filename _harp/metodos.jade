@@ -112,6 +112,8 @@ include ./includes/bs_header.jade
       .row.container
         p <code><b>my_map.centerTo( lat, lng, zoom );</b></code><br>Centra el mapa en las coordenadas <b>lat, lng</b>, el parámetro <b>zoom es opcional</b>.
       .row.container
+        p <code><b>my_map.setSingleMarkerZoom( target, threshold );</b></code><br>Cuando el mapa tiene un solo puntero y hacemos zoom sobre él, Google Maps aplica el zoom máximo, para fijar un <em>zoom máximo</em> propio empleamos este método. <code>target</code> fija el zoom deseado, y <code>threshold</code> el umbral a partir del cual se aplica (por defecto es 20). Si querenos desactivar completamente esta funcionalidad podemos hacerlo llamando a <code>my_map.setSingleMarkerZoom( false );</code>. Ver <a href="marcadores.html#sample-1C">Sample 1C</a>.
+      .row.container
         p <code><b>my_map.fitToPlace( place, zoom );</b></code><br>Ajusta la vista del mapa al <code>place</code> indicado aplicando el <code>zoom</code> correspondiente a la vista. El objeto <code>place</code> es del tipo devuelto por un <code>gmapz.autocomplete</code>. <a href="autocompletado.html">Consulta los ejemplos de autocomplete</a>.
       .row.container
         p <code><b>my_map.fitBounds( marker_group_array );</b></code><br>Ajusta la vista del mapa al grupo de marcadores en <code>marker_group_array</code>. Si no se pasa ningún marcador <b>ajustará la vista de forma que se vean todos los marcadores disponibles en el mapa</b> (que estén visibles).

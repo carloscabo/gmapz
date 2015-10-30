@@ -1,5 +1,9 @@
 var
-  map_sample_1,
+  map_sample_1A,
+  map_sample_1B,
+  map_sample_1C,
+  map_sample_1D,
+  map_sample_1E,
   map_sample_2,
   map_sample_3,
   map_sample_4,
@@ -19,10 +23,10 @@ $(document).ready(function() {
   // Activate console log messages
   GMapz.debug = true;
 
-  // Map sample 1 *************************************************************
+  // Map sample 1A *************************************************************
 
-  map_sample_1 = new GMapz.map(
-    $('#map-sample-1'),
+  map_sample_1A = new GMapz.map(
+    $('#map-sample-1A'),
     { // Google Maps options
       scrollwheel: true, // Default
       scaleControl: true, // Default
@@ -34,10 +38,10 @@ $(document).ready(function() {
     }
   );
 
-  // Map sample 2 *************************************************************
+  // Map sample 1B *************************************************************
 
-  map_sample_2 = new GMapz.map(
-    $('#map-sample-2'),
+  map_sample_1B = new GMapz.map(
+    $('#map-sample-1B'),
     { // Google Maps options
       center: [43.2486, -5.7767],
       zoom: 9,
@@ -45,35 +49,59 @@ $(document).ready(function() {
     }
   );
 
-  // Map sample 3 *************************************************************
+  // Map sample 1C *************************************************************
 
-  var map_sample_3_options = {
+  map_sample_1C = new GMapz.map(
+    $('#map-sample-1C'),
+    {
+      // Empty Google Maps options
+    },
+    // One single marker / location
+    {
+      bolera_de_mieres: {
+        lat: 43.239175,
+        lng: -5.779116,
+        iw: 'Puede que los mejores callos del mundo ;)'
+      }
+    }
+  );
+
+  map_sample_1C.onReady = function(){
+    // this = google.maps instance
+    // this.setSingleMarkerZoom(false); // Disable singleMarkerZoom
+    this.setSingleMarkerZoom(16); // Set custom value
+    this.fitBounds();
+  };
+
+  // Map sample 1E *************************************************************
+
+  var map_sample_1E_options = {
       center: [43.2486, -5.7767]
   };
 
-  map_sample_3 = new GMapz.map(
-    $('#map-sample-3'),
-    map_sample_3_options,
+  map_sample_1E = new GMapz.map(
+    $('#map-sample-1E'),
+    map_sample_1E_options,
     france_cities // gmapz.locations.js
   );
 
-  map_sample_3.onReady = function(){
+  map_sample_1E.onReady = function(){
     // this = google.maps instance
     this.fitBounds();
-  }
+  };
 
-  // Map sample 4 *************************************************************
+  // Map sample 1F *************************************************************
 
-  var map_sample_4_options = {
+  var map_sample_1F_options = {
     // Options here
     mapTypeId: 'ROADMAP', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'... caps
     center: [48, 2],
     zoom: 5
   };
 
-  map_sample_4 = new GMapz.map(
-    $('#map-sample-4'),
-    map_sample_4_options,
+  map_sample_1F = new GMapz.map(
+    $('#map-sample-1F'),
+    map_sample_1F_options,
     france_cities
   );
 
@@ -87,7 +115,7 @@ $(document).ready(function() {
     // anchorIcon: [-24.0, -48.0] // This propoerty its not supported actually
   }];
 
-  map_sample_4.onReady = function() {
+  map_sample_1F.onReady = function() {
     // Convert markers object, into array
     markers_array = $.map(this.markers, function(val, idx){
       return [val];
