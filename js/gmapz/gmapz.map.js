@@ -235,6 +235,7 @@ GMapz.map = (function() {
           position: new google.maps.LatLng(locs[idx].lat,locs[idx].lng),
           map: this.map,
           icon: current_pin
+          // ,optimized: false
         };
         // Draggable marker?
         if (locs[idx].draggable) { marker_options.draggable = true; }
@@ -495,6 +496,9 @@ GMapz.map = (function() {
         near_lat = null,
         near_lng = null;
 
+      // Delete userl_location marker if exists
+      this.deleteUserLocationMarker();
+
       // Coords from autocomplete (place)
       if (pos_or_place.geometry) {
         lat = pos_or_place.geometry.location.lat();
@@ -511,6 +515,7 @@ GMapz.map = (function() {
 
       // Find nearest marker
       idx = this.findNearestMarkerToPos(lat, lng);
+
       near_lat = this.markers[idx].position.lat();
       near_lng = this.markers[idx].position.lng();
 
@@ -539,6 +544,13 @@ GMapz.map = (function() {
         });
       } else {
         this.markers.user_location.setPosition(pos);
+      }
+    },
+
+    deleteUserLocationMarker: function () {
+      if (this.markers.user_location) {
+        this.markers.user_location.setMap(null);
+        delete this.markers.user_location;
       }
     },
 
@@ -740,4 +752,3 @@ GMapz.map = (function() {
   return Constructor;
 
 })();
-

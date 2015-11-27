@@ -1,7 +1,7 @@
 /*
  ====================================
  GMapz. Yet another gmaps manager
- by carlos Cabo 2015. V.2.01 beta
+ by carlos Cabo 2015. V.2.02 beta
  https://github.com/carloscabo/gmapz
  ====================================
 */
@@ -21,7 +21,7 @@
   // Module general vars
   //
   var
-    v = '2.00 beta',
+    v = '2.02 beta',
     debug = false,
     data = {
       map_api_requested: false,
@@ -64,7 +64,7 @@
   function loadScript (callback_fn) {
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&signed_in=true&libraries=places&language=en&callback='+callback_fn;
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language=en&callback='+callback_fn;
     document.body.appendChild(script);
   }
 

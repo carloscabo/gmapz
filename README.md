@@ -1,4 +1,4 @@
-GMapz v2.01 beta
+GMapz v2.02 beta
 ================
 
 GMapz is yet another Google Maps JS library. It eases the creation of Google Maps, it's **responsive**, supports the creation of **multiple instances in the same page** (each one with it's own settings), the creation of **custom styled infowindows**, and other useful helpers.
@@ -16,6 +16,10 @@ TO-DO
 
 Changelog
 =========
+
+- 2.02
+  * Removed deprecated sensor param in Google Maps API initialization
+  * Fixed bug when using "Nearest location", more than once
 
 - 2.01
   + Fixed small bug with on 'idle' event
