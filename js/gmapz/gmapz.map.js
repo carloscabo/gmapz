@@ -83,7 +83,11 @@ GMapz.map = (function() {
     $map[0].gmapz = this;
 
     // Request GM Api, instanceReady() will be called when done
-    GMapz.requestAPI();
+    if (GMapz.data.map_api_ready) {
+      this.instanceReady();
+    } else {
+      GMapz.requestAPI();
+    }
   }
 
   Constructor.prototype = {
