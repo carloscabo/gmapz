@@ -82,10 +82,11 @@ GMapz.map = (function() {
     // Attach objecto DOM element
     $map[0].gmapz = this;
 
-    // Request GM Api, instanceReady() will be called when done
     if (GMapz.data.map_api_ready) {
+      // GM Api is already available
       this.instanceReady();
     } else {
+      // Request GM Api, instanceReady() will be called when done
       GMapz.requestAPI();
     }
   }
