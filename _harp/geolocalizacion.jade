@@ -5,58 +5,162 @@ include ./includes/bs_header.jade
 .main-content
   .row
     .container
-      h2.page-header Geolocalización
+      h2.page-header Geolocalización con autocompletado
       p.
-        <b>GMapz</b> también dispone de <em>helpers</em> para trabajar con localizaciones y direcciones, para, por ejemplo localizar el marcador más cercano a la posición de un usuario. El tercer ejemplo hace uso de la opción de <a href="autocompletado.html">autocompletado de Google</a>.
-#sample-6.mb32
+        Para esta funcionalidad necesitamos incluír <code>gmapz.autocomplete.js</code> e inicializar un <code>input</code> de la página.
+#sample-4A.mb32
   .row
     .container
-      h2 Sample 6
+      h2 Sample 4A
+        small &nbsp;&nbsp;&nbsp;Encontrar marcador más cercano al autocompletado
+      .row
+        .col-lg-6
+          div.
+            <input id="my-autocomplete-4A" type="text" class="form-control" placeholder="Busca por ejemplo: Venecia, Italia...">
+          #map-sample-4A.map
+            p.
+              map goes here
+        .col-lg-6
+          pre.prettyprint.lang-html
+            +escape()
+              | <input id="my-autocomplete-4A" placeholder="Introduce una dirección...">
+          pre.prettyprint.lang-javascript
+            +escape()
+              | map_sample_4A = new GMapz.map($('#map-sample-4A'));
+              | 
+              | map_sample_4A.onReady = function() {
+              |   this.addLocations(italy_cities).fitBounds();
+              | }
+              | 
+              | autocomplete_4A = new GMapz.autocomplete($('#my-autocomplete-4A'));
+              | 
+              | autocomplete_4A.onChange = function () {
+              |   // this = autocomplete
+              |   var place = this.instance.getPlace();
+              |   if(typeof place.geometry === 'undefined') {
+              |     // No se ha encontrado el lugar
+              |     alert('No encontrado');
+              |     return;
+              |   }
+              |   // Mostramos la ubicación y elpuntero más cercano
+              |   map_sample_4A.geoShowPosition(place);
+              | };
+
+#sample-4B.mb32
+  .row
+    .container
+      h2 Sample 4B
+        small &nbsp;&nbsp;&nbsp;Añadir un marcador en ubicación
+      .row
+        .col-lg-6
+          div.
+            <input id="my-autocomplete-4B" type="text" class="form-control" placeholder="Encontrar dirección...">
+          #map-sample-4B.map
+            p.
+              map goes here
+        .col-lg-6
+          p.
+            <b>Autocompletado de localizaciones de Google</b><br>
+            Para esta funcionalidad necesitamos incluír <code>gmapz.autocomplete.js</code> e inicializar un <code>input</code> de la página.
+          p.
+            El elemento <code>autocomplete</code> tiene sus propios eventos que podemos emplear para interactuar con los mapas, o para realizar otras funciones con ellos.
+          pre.prettyprint.lang-html
+            +escape()
+              | <input id="my-autocomplete-4B" placeholder="Introduce una dirección...">
+          pre.prettyprint.lang-javascript
+            +escape()
+              | // Creamos un mapa con un centro y un zoom
+              | map_sample_4B = new GMapz.map(
+              |   $('#map-sample-4B'), {
+              |     center: [41.8919, 12.5113], // Roma
+              |     zoom: 12
+              |   }
+              | );
+              | 
+              | // Creamos en autocomplete asignado a un elemento de la página
+              | autocomplete_4B = new GMapz.autocomplete($('#my-autocomplete'));
+              | 
+              | // Cuando el usuario introduce una dirección...
+              | autocomplete_4B.onChange = function () {
+              |   // this = autocomplete
+              |   var
+              |     place = this.instance.getPlace(),
+              |     pos = {};
+              | 
+              |   if(typeof place.geometry === 'undefined') {
+              |     alert('No encontrado');
+              |     return;
+              |   }
+              | 
+              |   // Creamos un marker
+              |   pos['autocomplete'] = {
+              |     pin: 'autocomplete',
+              |     lat: place.geometry.location.lat(),
+              |     lng: place.geometry.location.lng(),
+              |     draggable: true,
+              |     iw : 'My infowindow 1'
+              |   };
+              |   // Añadimos la nueva localización
+              |   // Centramos la vista en la nueva localización
+              |   // Abrimos el infowindow de la misma
+              |   map_sample_4B.addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
+              | };
+
+.main-content
+  .row
+    .container
+      h2.page-header Otros ejemplos de geolocalización
+
+#sample-4C.mb32
+  .row
+    .container
+      h2 Sample 4C
         small &nbsp;&nbsp;&nbsp;Marcador más cercano
       .row
         .col-lg-6
-          #map-sample-5.map(data-gmapz='gz-sample-6')
+          #map-sample-5.map(data-gmapz='gz-sample-4C')
             p.
               map goes here
         .col-lg-6
           p.
             <b>Mostar el marcador más cercano al usuario</b>
           p.
-            <a href="#" class="btn btn-primary"  data-gmapz-target="gz-sample-6" data-gmapz-find-near >Encontrar marcador más cercano</a><br>
+            <a href="#" class="btn btn-primary"  data-gmapz-target="gz-sample-4C" data-gmapz-find-near >Encontrar marcador más cercano</a><br>
           p.
             Para esta funcionalidad basta crear un elemento html con un data-attribute <code>data-gmapz-target="..."</code> y otro <code>data-gmapz-find-near</code>.<br>
           pre.prettyprint
             +escape()
-              <a href="#" data-gmapz-target="gz-sample-6" data-gmapz-find-near >Encontrar marcador más cercano</a>
+              <a href="#" data-gmapz-target="gz-sample-4C" data-gmapz-find-near >Encontrar marcador más cercano</a>
           p.
             El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint
             +escape()
               | // Start gmapz with default options
-              | var map_sample_6 = new GMapz.map(
-              |   $('[data-gmapz="gz-sample-6"]')
+              | var map_sample_4C = new GMapz.map(
+              |   $('[data-gmapz="gz-sample-4C"]')
               | );
               | 
               | // onReady add locations and fit bounds
-              | map_sample_6.onReady = function() {
+              | map_sample_4C.onReady = function() {
               |   this.addLocations(spain_locs).fitBounds();
               | };
               | 
               | // Automatically attach button with data-gmapz attribute
               | GMapz.attachActionButtons();
-#sample-7.mb32
+
+#sample-4D.mb32
   .row
     .container
-      h2 Sample 7
+      h2 Sample 4D
         small &nbsp;&nbsp;&nbsp;Introducir la dirección en un input
       .row
         .col-lg-6
           div.input-group.
             <input id="my-address" type="text" class="form-control" placeholder="Cerca de dirección..." value ="Pedro Antonio Menéndez 1, 33004, Oviedo">
             <span class="input-group-btn">
-              <button  type="button" class="btn btn-default" data-gmapz-target="gz-sample-7" data-gmapz-input="#my-address" data-gmapz-find-near-address>Buscar!</button>
+              <button  type="button" class="btn btn-default" data-gmapz-target="gz-sample-4D" data-gmapz-input="#my-address" data-gmapz-find-near-address>Buscar!</button>
             </span>
-          #map-sample-7.map(data-gmapz='gz-sample-7')
+          #map-sample-4D.map(data-gmapz='gz-sample-4D')
             p.
               map goes here
         .col-lg-6
@@ -70,19 +174,19 @@ include ./includes/bs_header.jade
             +escape()
               | <input id="my-address" placeholder="Cerca de dirección...">
               | 
-              | <button data-gmapz-target="gz-sample-7" data-gmapz-input="#my-address" data-gmapz-find-near-address>Buscar!</button>
+              | <button data-gmapz-target="gz-sample-4D" data-gmapz-input="#my-address" data-gmapz-find-near-address>Buscar!</button>
           p.
             El pin que se emplea para definir la ubicación actual del usuario se define en <code>gmapz.pins.js</code> con la clave espacial: <code>user_location</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint.lang-javascript
             +escape()
-              | var map_sample_7 = new GMapz.map(
+              | var map_sample_4D = new GMapz.map(
               |   $('[data-gmapz="gz-sample-7"]')
               | );
               | 
-              | map_sample_7.onReady = function() {
+              | map_sample_4D.onReady = function() {
               |   this.addLocations(spain_locs).fitBounds();
               | };
               | 
-              | map_sample_7.errorAddressNotFound = function(addr) {
+              | map_sample_4D.errorAddressNotFound = function(addr) {
               |   console.log('Was unable to find: '+addr);
               | };

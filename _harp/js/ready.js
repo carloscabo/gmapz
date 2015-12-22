@@ -5,8 +5,11 @@ var
   map_sample_1D,
   map_sample_1E,
   map_sample_2A,
-  map_sample_3,
-  map_sample_4,
+  map_sample_4A,
+  map_sample_4B,
+  map_sample_4C,
+  map_sample_4D,
+  map_sample_4E,
   map_sample_5,
   map_sample_6,
   map_sample_7,
@@ -153,42 +156,40 @@ $(document).ready(function() {
     map_sample_2A.addLocations(update);
   });
 
-  // Map sample 6 *************************************************************
+  // Map sample 4A *************************************************************
 
-  var map_sample_6 = new GMapz.map(
-    $('[data-gmapz="gz-sample-6"]')
-  );
+  map_sample_4A = new GMapz.map($('#map-sample-4A'));
 
-  map_sample_6.onReady = function() {
-    this.addLocations(spain_locs).fitBounds();
+  map_sample_4A.onReady = function() {
+    this.addLocations(italy_cities).fitBounds();
   };
 
-  // Map sample 7 *************************************************************
+  autocomplete_4A = new GMapz.autocomplete($('#my-autocomplete-4A'));
 
-  map_sample_7 = new GMapz.map(
-    $('[data-gmapz="gz-sample-7"]')
-  );
-
-  map_sample_7.onReady = function() {
-    this.addLocations(spain_locs).fitBounds();
+  autocomplete_4A.onChange = function () {
+    // this = autocomplete obj
+    var place = this.instance.getPlace();
+    if(typeof place.geometry === 'undefined') {
+      // Place not found
+      alert('Dirección no encontrada');
+      return;
+    }
+    // We show place and closest marker
+    map_sample_4A.geoShowPosition(place);
   };
 
-  map_sample_7.errorAddressNotFound = function(addr) {
-    console.log('Was unable to find: '+addr);
-  };
+  // Map sample 4B *************************************************************
 
-  // Map sample 8 *************************************************************
-
-  map_sample_8 = new GMapz.map(
-    $('#map-sample-8'), {
+  map_sample_4B = new GMapz.map(
+    $('#map-sample-4B'), {
       center: [41.8919, 12.5113],
       zoom: 12
     }
   );
 
-  autocomplete_1 = new GMapz.autocomplete($('#my-autocomplete-1'));
+  autocomplete_4B = new GMapz.autocomplete($('#my-autocomplete-4B'));
 
-  autocomplete_1.onChange = function () {
+  autocomplete_4B.onChange = function () {
     // this = autocomplete
     var
       place = this.instance.getPlace(),
@@ -208,67 +209,74 @@ $(document).ready(function() {
       iw : 'My infowindow 1'
     };
     // Chainning methods
-    map_sample_8.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
+    map_sample_4B.setAllMarkersVisibility(false).addLocations(pos).fitToPlace(place,18).openInfoWindow('autocomplete');
   };
 
-  // Map sample 9 *************************************************************
+  // Map sample 4C *************************************************************
 
-  map_sample_9 = new GMapz.map($('#map-sample-9'));
+  // Start gmapz with default options
+  var map_sample_4C = new GMapz.map(
+    $('[data-gmapz="gz-sample-4C"]')
+  );
 
-  map_sample_9.onReady = function() {
-    this.addLocations(italy_cities).fitBounds();
+  // onReady add locations and fit bounds
+  map_sample_4C.onReady = function() {
+    this.addLocations(spain_locs).fitBounds();
   };
 
-  autocomplete_2 = new GMapz.autocomplete($('#my-autocomplete-2'));
+  // attachActionButtons is at the end of this file
+  // GMapz.attachActionButtons();
 
-  autocomplete_2.onChange = function () {
-    // this = autocomplete obj
-    var place = this.instance.getPlace();
-    if(typeof place.geometry === 'undefined') {
-      // Place not found
-      alert('Dirección no encontrada');
-      return;
-    }
-    // We show place and closest marker
-    map_sample_9.geoShowPosition(place);
+  // Map sample 4D *************************************************************
+
+  map_sample_4D = new GMapz.map(
+    $('[data-gmapz="gz-sample-4D"]')
+  );
+
+  map_sample_4D.onReady = function() {
+    this.addLocations(spain_locs).fitBounds();
   };
 
-  // Map sample 10 *************************************************************
+  map_sample_4D.errorAddressNotFound = function(addr) {
+    console.log('Was unable to find: '+addr);
+  };
 
-  map_sample_10 = new GMapz.map($('#map-sample-10'));
+  // Map sample 5A, responsive *************************************************************
 
-  map_sample_10.onReady = function() {
+  map_sample_5A = new GMapz.map($('#map-sample-5A'));
+
+  map_sample_5A.onReady = function() {
     // Enables responsive control
     this.addScrollControl();
     // Load Italy cities
     this.addLocations(italy_cities).fitBounds();
     // Responsive events
     MQBE.on('enter', 'mobile', function() {
-      map_sample_10.lockScroll();
+      map_sample_5A.lockScroll();
     }).on('leave', 'mobile', function() {
-      map_sample_10.resumeScroll();
+      map_sample_5A.resumeScroll();
     });
   };
 
-  map_sample_10.onDraw = function() {
+  map_sample_5A.onDraw = function() {
     console.log(this.convertLatLngToPixels(
       new google.maps.LatLng(41.890, 12.500)
     ));
   };
 
-  $(document).on('click touchstart', '#js-btn-scroll-lock', function(e) {
+  $(document).on('click touchstart', '#js-btn-scroll-lock-5A', function(e) {
     e.preventDefault();
     $('body').addClass('force-show-scroll-control');
-    map_sample_10.lockScroll();
+    map_sample_5A.lockScroll();
   });
 
-  $(document).on('click touchstart', '#js-btn-scroll-resume', function(e) {
+  $(document).on('click touchstart', '#js-btn-scroll-resume-5A', function(e) {
     e.preventDefault();
     $('body').removeClass('force-show-scroll-control');
-    map_sample_10.resumeScroll();
+    map_sample_5A.resumeScroll();
   });
 
-  // Map sample 11 *************************************************************
+  // Map sample 6B *************************************************************
 
   GMapz.onGoogleMapsReady = function () {
     // Enable infobox library
@@ -276,9 +284,9 @@ $(document).ready(function() {
   };
 
   // Start map with default options
-  map_sample_11 = new GMapz.map($('#map-sample-11'));
+  map_sample_6B = new GMapz.map($('#map-sample-6B'));
 
-  map_sample_11.onReady = function() {
+  map_sample_6B.onReady = function() {
 
     // Define custom infobox style
     var
@@ -310,14 +318,13 @@ $(document).ready(function() {
     this.addLocations(italy_cities).fitBounds();
   };
 
-  map_sample_11.onDraw = function() {
+  map_sample_6B.onDraw = function() {
     // Open Rome marker / infobox
     this.markers['roma'].click();
   };
 
-  // Attachear botones ********************************************************
-
-  // Attach button with data-gmapz attribute
+  // Attach button with data-gmapz attribute ********************************************************
+  
   GMapz.attachActionButtons();
 
 });

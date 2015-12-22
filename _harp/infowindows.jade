@@ -1,11 +1,11 @@
-- var is_active = 7
+- var is_active = 6
 include ./includes/mixins.jade
 include ./includes/nav_bar.jade
 include ./includes/bs_header.jade
 .main-content
   .row
     .container
-      h2.page-header Personalización de InfoWindows
+      h2.page-header Personalización de InfoWindows empleando <i>infobox.js</i>
       p.
         Algunos proyectos pueden requerir de <code>infowindows</code> personalizadas <b><em>(las ventanitas que se abren en el mapa cuando pulsamos sobre un marker)</em></b>. Para esta funcionalidad hace falta incluir la librería <code>infobox.modified.js</code>, y una hoja de estilo que defina el estilo de nuestros <em>infoboxes</em>, para ver el estilo empleado en esta demo puedes echar un ojo a <code>gmapz.infobox.css</code> ( <a href="https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.css" target="_blank">ver</a> ).
       div.alert.alert-danger
@@ -13,7 +13,7 @@ include ./includes/bs_header.jade
 .main-content
   .row
     .container
-      h2.page-header Opciones de inicialización de infobox
+      h2.page-header Inicialización de infobox
       p.
         <code>content: '...'</code> Este el el código que se insertará en el infobox cuando se crea, cuando el usuario pulse sobre un marcador automáticamente se reemplazará <code>{{__REPLACE__}}</code> por el contenido de la clave: <code>iw:</code> del marker que hayamos definido en el JSON de marcadores / localizaciones.
         <br><br>
@@ -25,18 +25,14 @@ include ./includes/bs_header.jade
 #sample-10.mb32
   .row
     .container
-      h2 Sample 11
+      h2 Sample 6B
         small &nbsp;&nbsp;&nbsp;Infowindows personalizados
       .row
         .col-lg-6
-          #map-sample-11.map
+          #map-sample-6B.map
             p.
               map goes here
         .col-lg-6
-          p.
-            <b>Infowindows personalizados <em>(infobox)</em>.</b>
-          p.
-            El estilo del control <b>"Scroll enabled / disabled"</b> puede editarse en <code>gmapz.responsive.css</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint
             +escape()
               | // Enable infobox.js when google.maps loaded
@@ -46,9 +42,9 @@ include ./includes/bs_header.jade
               | };
               | 
               | // Start map with default options
-              | map_sample_11 = new GMapz.map($('#map-sample-11'));
+              | map_sample_6B = new GMapz.map($('#map-sample-11'));
               | 
-              | map_sample_11.onReady = function() {
+              | map_sample_6B.onReady = function() {
               |   // Define custom infobox style
               |   var ib_options = {
               |     content: '<div class="gmapz-ibx"><div class="gmapz-ibx-close"></div><div class="gmapz-ibx-content">{{__REPLACE__}}</div><div>',
@@ -64,7 +60,7 @@ include ./includes/bs_header.jade
               |   this.addLocations(italy_cities).fitBounds();
               | };
               | 
-              | map_sample_11.onDraw = function() {
+              | map_sample_6B.onDraw = function() {
               |   // Open Rome marker / infobox
               |   this.markers['roma'].click();
               | };
