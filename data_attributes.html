@@ -1,10 +1,10 @@
-<!DOCTYPE html><html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><link rel="stylesheet" href="js/gmapz/gmapz.responsive.css"><link rel="stylesheet" href="js/gmapz/gmapz.infobox.css"><link rel="stylesheet" href="css/application.css"><script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script><script src="js/lib/MQBE.1.04.js"></script><script src="js/lib/markerclusterer.js"></script><script src="js/lib/infobox.modified.js"></script><script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script><script src="js/gmapz/gmapz.js"></script><script src="js/gmapz/gmapz.pins.js"></script><script src="js/gmapz/gmapz.map.js"></script><script src="js/gmapz/gmapz.autocomplete.js"></script><script src="js/gmapz/gmapz.locations.js"></script><script src="js/ready.js"></script></head><body><div class="navbar navbar-inverse mb0"><div class="container-fluid"><div class="container"><ul class="nav navbar-nav left"><li><a href="index.html">Introducción</a></li><li><a href="marcadores.html">Marcadores</a></li><li class="active"><a href="data_attributes.html">Data-attributes</a></li><li><a href="geolocalizacion.html">Geolocalización</a></li><li><a href="autocompletado.html">Autocompletado</a></li><li><a href="responsive.html">Responsive</a></li><li><a href="infowindows.html">Infowindows</a></li><li><a href="metodos.html">Métodos JS</a></li></ul></div></div></div><div class="bs-docs-header"><div class="container"><div class="row"><h1>GMapz<small>&nbsp;&nbsp;&nbsp;Yet another Google Maps library. https://github.com/carloscabo/gmapz</small></h1></div></div></div><div class="main-content"><div class="row"><div class="container"><h2 class="page-header">Acciones empleando <em>data-attributes</em></h2><p><b>GMapz</b> dispone de varias funcionalidades autómáticas que permiten enlazar elementos de la página con varias funcionalidades relacionadas con el mapa de forma automática. Para emplear esta funcionalidad es un requisito indispensable que asisnemos un <code>data-attribute</code> a nuestro mapa que permita vincularlo de forma sencilla los botones. El attributo <code>data-gmapz</code> <mark>debe ser <b>único para cada mapa</b></mark>.</p><p>Puedes consultar <b>toda la lista</b> de <code>data-attributes</code> y su función en la sección <a href="metodos.html#data-attributes">Métodos JS</a>.</p></div></div></div><div id="sample-5" class="mb32"><div class="row"><div class="container"><h2>Sample 5<small>&nbsp;&nbsp;&nbsp;Funciones automáticas para botones</small></h2><div class="row"><div class="col-lg-6"><div id="map-sample-5" data-gmapz="gz-sample-5" class="map"><p>map goes here</p></div></div><div class="col-lg-6"><p><b>Mostrar y ocultar grupos de marcadores</b><br>
-<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group="[1,289,38,3,6,7,9,10]" data-gmapz-hide-rest="true">Mostrar grupo A</a>
-<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group="[2,&quot;garajonay&quot;,&quot;teide&quot;,12]">Mostrar grupo B</a>
-<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group="[5,&quot;picos_de_europa&quot;]">Mostrar grupo C</a>
-<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-center-idx="teide" data-gmapz-zoom="12">Centrar vista en marcador</a>
-<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-all>Mostrar todos</a><br></p><p><b>Mostrar y ocultar desde un select</b><br>
-<select name="" id="select-sample-5" data-gmapz-target="gz-sample-5">
+<!DOCTYPE html><html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><link rel="stylesheet" href="js/gmapz/gmapz.responsive.css"><link rel="stylesheet" href="js/gmapz/gmapz.infobox.css"><link rel="stylesheet" href="css/application.css"><script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script><script src="js/lib/MQBE.1.04.js"></script><script src="js/lib/markerclusterer.js"></script><script src="js/lib/infobox.modified.js"></script><!-- - fancybox--><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"><script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script><script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script><script src="js/gmapz/gmapz.js"></script><script src="js/gmapz/gmapz.pins.js"></script><script src="js/gmapz/gmapz.map.js"></script><script src="js/gmapz/gmapz.autocomplete.js"></script><script src="js/gmapz/gmapz.locations.js"></script><script src="js/ready.js"></script></head><body><div class="navbar navbar-inverse mb0"><div class="container-fluid"><div class="container"><ul class="nav navbar-nav left"><li><a href="index.html">Introducción</a></li><li><a href="marcadores.html">Marcadores</a></li><li class="active"><a href="data_attributes.html">Data-attributes</a></li><li><a href="geolocalizacion.html">Geolocalización</a></li><li><a href="responsive.html">Responsive</a></li><li><a href="infowindows.html">Infowindows</a></li><li><a href="lightbox.html">Lightbox</a></li><li><a href="metodos.html">Métodos JS</a></li></ul></div></div></div><div class="bs-docs-header"><div class="container"><div class="row"><h1>GMapz<small>&nbsp;&nbsp;&nbsp;Yet another Google Maps library. <a href="https://github.com/carloscabo/gmapz" target="_blank">https://github.com/carloscabo/gmapz</a></small></h1></div></div></div><div class="main-content"><div class="row"><div class="container"><h2 class="page-header">Acciones empleando <em>data-attributes</em></h2><p><b>GMapz</b> dispone de varias funcionalidades autómáticas que permiten enlazar elementos de la página con varias funcionalidades relacionadas con el mapa de forma automática. Para emplear esta funcionalidad es un requisito indispensable que asisnemos un <code>data-attribute</code> a nuestro mapa que permita vincularlo de forma sencilla los botones. El attributo <code>data-gmapz</code> <mark>debe ser <b>único para cada mapa</b></mark>.</p><p>Puedes consultar <b>toda la lista</b> de <code>data-attributes</code> y su función en la sección <a href="metodos.html#data-attributes">Métodos JS</a>.</p></div></div></div><div id="sample-5" class="mb32"><div class="row"><div class="container"><h2>Sample 2A<small>&nbsp;&nbsp;&nbsp;Funciones automáticas para botones</small></h2><div class="row"><div class="col-lg-6"><div id="map-sample-2A" data-gmapz="gz-sample-2A" class="map"><p>map goes here</p></div></div><div class="col-lg-6"><p><b>Mostrar y ocultar grupos de marcadores</b><br>
+<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group="[1,289,38,3,6,7,9,10]" data-gmapz-hide-rest="true">Mostrar grupo A</a>
+<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group="[2,&quot;garajonay&quot;,&quot;teide&quot;,12]">Mostrar grupo B</a>
+<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group="[5,&quot;picos_de_europa&quot;]">Mostrar grupo C</a>
+<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-center-idx="teide" data-gmapz-zoom="12">Centrar vista en marcador</a>
+<a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-all>Mostrar todos</a><br></p><p><b>Mostrar y ocultar desde un select</b><br>
+<select name="" id="select-sample-2A" data-gmapz-target="gz-sample-2A">
   <option value="0">Seleccionar grupo de marcadores</option>
   <option data-gmapz-show-group="[1,289,38,3,6,7,9,10]">Mostrar grupo A</option>
   <option data-gmapz-show-group="[2,&quot;garajonay&quot;,&quot;teide&quot;,12]" data-gmapz-hide-rest="true">Mostrar grupo B</option>
@@ -12,20 +12,20 @@
   <option data-gmapz-center-idx="teide" data-gmapz-zoom="12">Centrar vista en marcador</option>
   <option data-gmapz-show-all>Mostrar todos</option>
 </select><br><br></p><p><b>Añadir, eliminar y actualizar</b><br>
-<a href="#" class="btn btn-danger" id="js-add-markers-5">Anadir nuevos marcadores</a>
-<a href="#" class="btn btn-danger" id="js-delete-markers-5">Borrar marcadores</a>
-<a href="#" class="btn btn-danger" id="js-update-marker-5">Actualizar un narcador</a></p></div></div></div></div></div><div id="sample-5-code"><div class="row"><div class="container"><h3>HTML</h3><pre class="prettyprint lang-html">// Ejemplo de contenedor del mapa con data-attribute
-&lt;div id=&quot;map-sample-5&quot; data-gmapz=&quot;gz-sample-5&quot; class=&quot;map&quot;&gt;&lt;p&gt;map goes here&lt;/p&gt;&lt;/div&gt;
+<a href="#" class="btn btn-danger" id="js-add-markers-2A">Anadir nuevos marcadores</a>
+<a href="#" class="btn btn-danger" id="js-delete-markers-2A">Borrar marcadores</a>
+<a href="#" class="btn btn-danger" id="js-update-marker-2A">Actualizar un narcador</a></p></div></div></div></div></div><div id="sample-5-code"><div class="row"><div class="container"><h3>HTML</h3><pre class="prettyprint lang-html">// Ejemplo de contenedor del mapa con data-attribute
+&lt;div id=&quot;map-sample-2A&quot; data-gmapz=&quot;gz-sample-2A&quot; class=&quot;map&quot;&gt;&lt;p&gt;map goes here&lt;/p&gt;&lt;/div&gt;
  
 // Botones vinculados
-&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-5&quot; data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest=&quot;true&quot;&gt;Mostrar grupo A&lt;/a&gt;
-&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-5&quot; data-gmapz-show-group='[2,&quot;garajonay&quot;,&quot;teide&quot;,12]'&gt;Mostrar grupo B&lt;/a&gt;
-&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-5&quot; data-gmapz-show-group='[5,&quot;picos_de_europa&quot;]'&gt;Mostrar grupo C&lt;/a&gt;
-&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-5&quot; data-gmapz-center-idx=&quot;teide&quot; data-gmapz-zoom=&quot;12&quot; &gt;Centrar vista en marcador&lt;/a&gt;
-&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-5&quot; data-gmapz-show-all &gt;Mostrar todos&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-2A&quot; data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest=&quot;true&quot;&gt;Mostrar grupo A&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-2A&quot; data-gmapz-show-group='[2,&quot;garajonay&quot;,&quot;teide&quot;,12]'&gt;Mostrar grupo B&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-2A&quot; data-gmapz-show-group='[5,&quot;picos_de_europa&quot;]'&gt;Mostrar grupo C&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-2A&quot; data-gmapz-center-idx=&quot;teide&quot; data-gmapz-zoom=&quot;12&quot; &gt;Centrar vista en marcador&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;btn btn-primary&quot; data-gmapz-target=&quot;gz-sample-2A&quot; data-gmapz-show-all &gt;Mostrar todos&lt;/a&gt;
  
 // Select con data-attributes
-&lt;select name=&quot;&quot; id=&quot;select-sample-5&quot; data-gmapz-target=&quot;gz-sample-5&quot;&gt;
+&lt;select name=&quot;&quot; id=&quot;select-sample-2A&quot; data-gmapz-target=&quot;gz-sample-2A&quot;&gt;
   &lt;option value=&quot;0&quot;&gt;Seleccionar grupo de marcadores&lt;/option&gt;
   &lt;option data-gmapz-show-group='[1,289,38,3,6,7,9,10]'&gt;Mostrar grupo A&lt;/option&gt;
   &lt;option data-gmapz-show-group='[2,&quot;garajonay&quot;,&quot;teide&quot;,12]' data-gmapz-hide-rest=&quot;true&quot;&gt;Mostrar grupo B&lt;/option&gt;
@@ -38,27 +38,27 @@
 &lt;a href=&quot;#&quot; class=&quot;btn btn-danger&quot; id=&quot;js-add-markers-5&quot;&gt;Anadir nuevos marcadores&lt;/a&gt;
 &lt;a href=&quot;#&quot; class=&quot;btn btn-danger&quot; id=&quot;js-delete-markers-5&quot;&gt;Borrar marcadores&lt;/a&gt;
 &lt;a href=&quot;#&quot; class=&quot;btn btn-danger&quot; id=&quot;js-update-marker-5&quot;&gt;Actualizar un narcador&lt;/a&gt;</pre></div><div class="container"><h3>Javascript</h3><p>Las funcionalidades de añadir y eliminar marcadores se vinculan empleando <code>Javascript</code>. <mark>Para que se vinculen automáticamente los botones con el data-attribute <code>data-gmapz-target="..."</code> con el mapa correspondiente debemos llamar a la funcion de JS <code>GMapz.attachActionButtons();</code></mark></p><pre class="prettyprint">// Start gmapz with default options
-var map_sample_5 = new GMapz.map(
-  $('[data-gmapz=&quot;gz-sample-5&quot;]')
+var map_sample_2A = new GMapz.map(
+  $('[data-gmapz=&quot;gz-sample-2A&quot;]')
 );
  
 // onReady add locations and fit bounds
-map_sample_5.onReady = function() {
+map_sample_2A.onReady = function() {
   this.addLocations(spain_locs).fitBounds();
 };
  
 // Events attached to buttons
-$('#js-add-markers-5').on('click', function(e) {
+$('#js-add-markers-2A').on('click', function(e) {
   e.preventDefault();
-  map_sample_5.addLocations(morocco);
+  map_sample_2A.addLocations(morocco);
 });
-$('#js-delete-markers-5').on('click', function(e) {
+$('#js-delete-markers-2A').on('click', function(e) {
   e.preventDefault();
-  map_sample_5.deleteMarkers(['FEZ','ORAN',12]);
+  map_sample_2A.deleteMarkers(['FEZ','ORAN',12]);
 });
-$('#js-update-marker-5').on('click', function(e) {
+$('#js-update-marker-2A').on('click', function(e) {
   e.preventDefault();
-  map_sample_5.addLocations(update);
+  map_sample_2A.addLocations(update);
 });
  
 // Automatically attach button with data-gmapz attribute

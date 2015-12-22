@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><link rel="stylesheet" href="js/gmapz/gmapz.responsive.css"><link rel="stylesheet" href="js/gmapz/gmapz.infobox.css"><link rel="stylesheet" href="css/application.css"><script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script><script src="js/lib/MQBE.1.04.js"></script><script src="js/lib/markerclusterer.js"></script><script src="js/lib/infobox.modified.js"></script><!-- - fancybox--><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"><script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script><script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script><script src="js/gmapz/gmapz.js"></script><script src="js/gmapz/gmapz.pins.js"></script><script src="js/gmapz/gmapz.map.js"></script><script src="js/gmapz/gmapz.autocomplete.js"></script><script src="js/gmapz/gmapz.locations.js"></script><script src="js/ready.js"></script></head><body><div class="navbar navbar-inverse mb0"><div class="container-fluid"><div class="container"><ul class="nav navbar-nav left"><li><a href="index.html">Introducción</a></li><li><a href="marcadores.html">Marcadores</a></li><li><a href="data_attributes.html">Data-attributes</a></li><li><a href="geolocalizacion.html">Geolocalización</a></li><li><a href="responsive.html">Responsive</a></li><li><a href="infowindows.html">Infowindows</a></li><li class="active"><a href="lightbox.html">Lightbox</a></li><li><a href="metodos.html">Métodos JS</a></li></ul></div></div></div><div class="bs-docs-header"><div class="container"><div class="row"><h1>GMapz<small>&nbsp;&nbsp;&nbsp;Yet another Google Maps library. <a href="https://github.com/carloscabo/gmapz" target="_blank">https://github.com/carloscabo/gmapz</a></small></h1></div></div></div><div class="main-content"><div class="row"><div class="container"><h2 class="page-header">GMpaz dentro de un <i>lightbox</i></h2><p>Se pueden crear mapas dinámicamente dentro de un lightbox, por ejemplo <code>fancybox</code> (el que se ha empleado para esta demo). Google Maps tiene problemas con la creación de mapas dinñamicos dentro de contenedores ocultos, por lo que para asegurar el correcto funcionamiento se recomienda efectuar la llamada dentro de un <code>setTimeout( function(){}, 0);</code></p></div></div></div><div id="sample-7A" class="mb32"><div class="row"><div class="container"><h2>Sample 7A<small>&nbsp;&nbsp;&nbsp;Mapz dentro de un fancybox. A la drecha está el código de esta demo.</small></h2><div class="row"><div class="col-lg-6"><p>El siguiente botón abre un lightbox de fancybox con un mapa en su interior.<br><br><a href="#" class="btn btn-primary js-open-lightbox-7A fancybox">Abrir GMapz en un lightbox</a></p></div><div class="col-lg-6"><pre class="prettyprint">$('.js-open-lightbox-7A.fancybox').on('click', function(e) {
+  e.preventDefault();
+  $.fancybox.open('&lt;div id=&quot;fancy-map&quot; style=&quot;width:100%;height:100%;&quot;&gt;&lt;/div&gt;', {
+    autoSize: false,
+    width: 800,
+    height: 600,
+    afterShow: function() {
+      // WARNING!
+      // For some reason the afterShow event of fancybox seems
+      // to be executed BEFORE the container is drawn.
+      // This causes issues with Google Maps, to be sure that the
+      // fancybox is drawn we call GMpaz inside a setTimeout, 0ms
+      // http://stackoverflow.com/a/779785/748321
+      setTimeout(function(){
+        map_sample_7A = new GMapz.map(
+          $('#fancy-map'),
+          {
+            center: [48.860, 2.340],
+            zoom: 12
+          },
+          {
+            map_point: {
+              lat: 48.860,
+              lng: 2.340
+            }
+          }
+        );
+      } ,0);
+    }
+  });
+});</pre></div></div></div></div></div></body></html>
