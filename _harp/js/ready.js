@@ -4,7 +4,7 @@ var
   map_sample_1C,
   map_sample_1D,
   map_sample_1E,
-  map_sample_2,
+  map_sample_2A,
   map_sample_3,
   map_sample_4,
   map_sample_5,
@@ -130,27 +130,27 @@ $(document).ready(function() {
     );
   };
 
-  // Map sample 5 *************************************************************
+  // Map sample 2A *************************************************************
 
-  var map_sample_5 = new GMapz.map(
-    $('[data-gmapz="gz-sample-5"]')
+  var map_sample_2A = new GMapz.map(
+    $('[data-gmapz="gz-sample-2A"]')
   );
 
-  map_sample_5.onReady = function() {
+  map_sample_2A.onReady = function() {
     this.addLocations(spain_locs).fitBounds();
   };
 
-  $('#js-add-markers-5').on('click', function(e) {
+  $('#js-add-markers-2A').on('click', function(e) {
     e.preventDefault();
-    map_sample_5.addLocations(morocco);
+    map_sample_2A.addLocations(morocco);
   });
-  $('#js-delete-markers-5').on('click', function(e) {
+  $('#js-delete-markers-2A').on('click', function(e) {
     e.preventDefault();
-    map_sample_5.deleteMarkers(['FEZ','ORAN',12]);
+    map_sample_2A.deleteMarkers(['FEZ','ORAN',12]);
   });
-  $('#js-update-marker-5').on('click', function(e) {
+  $('#js-update-marker-2A').on('click', function(e) {
     e.preventDefault();
-    map_sample_5.addLocations(update);
+    map_sample_2A.addLocations(update);
   });
 
   // Map sample 6 *************************************************************
@@ -321,4 +321,3 @@ $(document).ready(function() {
   GMapz.attachActionButtons();
 
 });
-

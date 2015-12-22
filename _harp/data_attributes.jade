@@ -13,24 +13,24 @@ include ./includes/bs_header.jade
 #sample-5.mb32
   .row
     .container
-      h2 Sample 5
+      h2 Sample 2A
         small &nbsp;&nbsp;&nbsp;Funciones automáticas para botones
       .row
         .col-lg-6
-          #map-sample-5.map(data-gmapz='gz-sample-5')
+          #map-sample-2A.map(data-gmapz='gz-sample-2A')
             p.
               map goes here
         .col-lg-6
           p.
             <b>Mostrar y ocultar grupos de marcadores</b><br>
-            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest="true">Mostrar grupo A</a>
-            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[2,"garajonay","teide",12]'>Mostrar grupo B</a>
-            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo C</a>
-            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >Centrar vista en marcador</a>
-            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-all >Mostrar todos</a><br>
+            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest="true">Mostrar grupo A</a>
+            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group='[2,"garajonay","teide",12]'>Mostrar grupo B</a>
+            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo C</a>
+            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >Centrar vista en marcador</a>
+            <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-all >Mostrar todos</a><br>
           p.
             <b>Mostrar y ocultar desde un select</b><br>
-            <select name="" id="select-sample-5" data-gmapz-target="gz-sample-5">
+            <select name="" id="select-sample-2A" data-gmapz-target="gz-sample-2A">
               <option value="0">Seleccionar grupo de marcadores</option>
               <option data-gmapz-show-group='[1,289,38,3,6,7,9,10]'>Mostrar grupo A</option>
               <option data-gmapz-show-group='[2,"garajonay","teide",12]' data-gmapz-hide-rest="true">Mostrar grupo B</option>
@@ -40,9 +40,9 @@ include ./includes/bs_header.jade
             </select><br><br>
           p.
             <b>Añadir, eliminar y actualizar</b><br>
-            <a href="#" class="btn btn-danger" id="js-add-markers-5">Anadir nuevos marcadores</a>
-            <a href="#" class="btn btn-danger" id="js-delete-markers-5">Borrar marcadores</a>
-            <a href="#" class="btn btn-danger" id="js-update-marker-5">Actualizar un narcador</a>
+            <a href="#" class="btn btn-danger" id="js-add-markers-2A">Anadir nuevos marcadores</a>
+            <a href="#" class="btn btn-danger" id="js-delete-markers-2A">Borrar marcadores</a>
+            <a href="#" class="btn btn-danger" id="js-update-marker-2A">Actualizar un narcador</a>
 #sample-5-code
   .row
     .container
@@ -51,17 +51,17 @@ include ./includes/bs_header.jade
         pre.prettyprint.lang-html
           +escape()
             | // Ejemplo de contenedor del mapa con data-attribute
-            | <div id="map-sample-5" data-gmapz="gz-sample-5" class="map"><p>map goes here</p></div>
+            | <div id="map-sample-2A" data-gmapz="gz-sample-2A" class="map"><p>map goes here</p></div>
             | 
             | // Botones vinculados
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest="true">Mostrar grupo A</a>
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[2,"garajonay","teide",12]'>Mostrar grupo B</a>
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo C</a>
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >Centrar vista en marcador</a>
-            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-5" data-gmapz-show-all >Mostrar todos</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group='[1,289,38,3,6,7,9,10]' data-gmapz-hide-rest="true">Mostrar grupo A</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group='[2,"garajonay","teide",12]'>Mostrar grupo B</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-group='[5,"picos_de_europa"]'>Mostrar grupo C</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-center-idx="teide" data-gmapz-zoom="12" >Centrar vista en marcador</a>
+            | <a href="#" class="btn btn-primary" data-gmapz-target="gz-sample-2A" data-gmapz-show-all >Mostrar todos</a>
             | 
             | // Select con data-attributes
-            | <select name="" id="select-sample-5" data-gmapz-target="gz-sample-5">
+            | <select name="" id="select-sample-2A" data-gmapz-target="gz-sample-2A">
             |   <option value="0">Seleccionar grupo de marcadores</option>
             |   <option data-gmapz-show-group='[1,289,38,3,6,7,9,10]'>Mostrar grupo A</option>
             |   <option data-gmapz-show-group='[2,"garajonay","teide",12]' data-gmapz-hide-rest="true">Mostrar grupo B</option>
@@ -82,27 +82,27 @@ include ./includes/bs_header.jade
         pre.prettyprint
           +escape()
             | // Start gmapz with default options
-            | var map_sample_5 = new GMapz.map(
-            |   $('[data-gmapz="gz-sample-5"]')
+            | var map_sample_2A = new GMapz.map(
+            |   $('[data-gmapz="gz-sample-2A"]')
             | );
             | 
             | // onReady add locations and fit bounds
-            | map_sample_5.onReady = function() {
+            | map_sample_2A.onReady = function() {
             |   this.addLocations(spain_locs).fitBounds();
             | };
             | 
             | // Events attached to buttons
-            | $('#js-add-markers-5').on('click', function(e) {
+            | $('#js-add-markers-2A').on('click', function(e) {
             |   e.preventDefault();
-            |   map_sample_5.addLocations(morocco);
+            |   map_sample_2A.addLocations(morocco);
             | });
-            | $('#js-delete-markers-5').on('click', function(e) {
+            | $('#js-delete-markers-2A').on('click', function(e) {
             |   e.preventDefault();
-            |   map_sample_5.deleteMarkers(['FEZ','ORAN',12]);
+            |   map_sample_2A.deleteMarkers(['FEZ','ORAN',12]);
             | });
-            | $('#js-update-marker-5').on('click', function(e) {
+            | $('#js-update-marker-2A').on('click', function(e) {
             |   e.preventDefault();
-            |   map_sample_5.addLocations(update);
+            |   map_sample_2A.addLocations(update);
             | });
             | 
             | // Automatically attach button with data-gmapz attribute
