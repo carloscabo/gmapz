@@ -1,0 +1,53 @@
+- var is_active = 7
+include ./includes/mixins.jade
+include ./includes/nav_bar.jade
+include ./includes/bs_header.jade
+.main-content
+  .row
+    .container
+      h2.page-header GMpaz dentro de un <i>lightbox</i>
+      p.
+        Se pueden crear mapas dinámicamente dentro de un lightbox, por ejemplo <code>fancybox</code> (el que se ha empleado para esta demo). Google Maps tiene problemas con la creación de mapas dinñamicos dentro de contenedores ocultos, por lo que para asegurar el correcto funcionamiento se recomienda efectuar la llamada dentro de un <code>setTimeout( function(){}, 0);</code>
+#sample-7A.mb32
+  .row
+    .container
+      h2 Sample 7A
+        small &nbsp;&nbsp;&nbsp;Mapz dentro de un fancybox. A la drecha está el código de esta demo.
+      .row
+        .col-lg-6
+          p.
+            El siguiente botón abre un lightbox de fancybox con un mapa en su interior.<br><br><a href="#" class="btn btn-primary js-open-lightbox-7A fancybox">Abrir GMapz en un lightbox</a>
+        .col-lg-6
+          pre.prettyprint
+            +escape()
+              | $('.js-open-lightbox-7A.fancybox').on('click', function(e) {
+              |   e.preventDefault();
+              |   $.fancybox.open('<div id="fancy-map" style="width:100%;height:100%;"></div>', {
+              |     autoSize: false,
+              |     width: 800,
+              |     height: 600,
+              |     afterShow: function() {
+              |       // WARNING!
+              |       // For some reason the afterShow event of fancybox seems
+              |       // to be executed BEFORE the container is drawn.
+              |       // This causes issues with Google Maps, to be sure that the
+              |       // fancybox is drawn we call GMpaz inside a setTimeout, 0ms
+              |       // http://stackoverflow.com/a/779785/748321
+              |       setTimeout(function(){
+              |         map_sample_7A = new GMapz.map(
+              |           $('#fancy-map'),
+              |           {
+              |             center: [48.860, 2.340],
+              |             zoom: 12
+              |           },
+              |           {
+              |             map_point: {
+              |               lat: 48.860,
+              |               lng: 2.340
+              |             }
+              |           }
+              |         );
+              |       } ,0);
+              |     }
+              |   });
+              | });

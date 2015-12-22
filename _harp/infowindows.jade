@@ -5,7 +5,42 @@ include ./includes/bs_header.jade
 .main-content
   .row
     .container
-      h2.page-header Personalización de InfoWindows empleando <i>infobox.js</i>
+      h2.page-header Infowindows desplazados
+      p.
+        Se puede desplazar el infowindow standard de Google Maps añadiendo el parámetro <code>pixelOffset</code> durante la inicialización del mapa.
+#sample-6A.mb32
+  .row
+    .container
+      h2 Sample 6A
+        small &nbsp;&nbsp;&nbsp;Infowindows de sistema desplazados
+      .row
+        .col-lg-6
+          #map-sample-6A.map
+            p.
+              map goes here
+        .col-lg-6
+          pre.prettyprint
+            +escape()
+              | map_sample_6A = new GMapz.map(
+              |   $('#map-sample-6A'), {
+              |     center: [36.08, -6.82],
+              |     zoom: 5,
+              |     pixelOffset: [158, 100] // Offset of infowindow
+              |   }
+              | );
+              | 
+              | map_sample_6A.onReady = function() {
+              |   this.addLocations(spain_locs).fitBounds();
+              | };
+          p.
+            GMapz añade la clase adicional <code>.gm-style-iw-container</code> dentro del mapa, lo que permite personalizaciones del <code>infowindow</code> estandar de Google Maps (por ejemplo en esta demo <b>cambiar la posición de la flecha</b>).
+          p.
+            Puedes echar un vistazo a los estilos del infobox de esta demo en: <a href="https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.scss" target="_blank">https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.scss</a>
+
+.main-content
+  .row
+    .container
+      h2.page-header Personalización avanzada de InfoWindows empleando <i>infobox.js</i>
       p.
         Algunos proyectos pueden requerir de <code>infowindows</code> personalizadas <b><em>(las ventanitas que se abren en el mapa cuando pulsamos sobre un marker)</em></b>. Para esta funcionalidad hace falta incluir la librería <code>infobox.modified.js</code>, y una hoja de estilo que defina el estilo de nuestros <em>infoboxes</em>, para ver el estilo empleado en esta demo puedes echar un ojo a <code>gmapz.infobox.css</code> ( <a href="https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.css" target="_blank">ver</a> ).
       div.alert.alert-danger
@@ -22,7 +57,7 @@ include ./includes/bs_header.jade
         <code>closeBoxURL: '', enableEventPropagation: true</code> estas dos líneas nos permiten desactivar el <b>botón de cerrar</b> que añade <code>infobox</code> automáticamente para crear uno propio nuestro. Nuestro botón de cerrar deberá tener la clase <code>.gmapz-ibx-close</code>, el evento de cerrado se attacheará automáticamente.
       div.alert.alert-info
         <code>infobox.js</code> dispone de algunos ejemplos de las opciones de inicialización en <a href="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/docs/examples.html" target="_blank">http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/docs/examples.html</a>.
-#sample-10.mb32
+#sample-6B.mb32
   .row
     .container
       h2 Sample 6B
@@ -65,4 +100,4 @@ include ./includes/bs_header.jade
               |   this.markers['roma'].click();
               | };
           p.
-            Puedes echar un vistazo a los estilos del infobox de esta demo en: <a href="https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.css" target="_blank">https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.css</a>
+            Puedes echar un vistazo a los estilos del infobox de esta demo en: <a href="https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.scss" target="_blank">https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.scss</a>

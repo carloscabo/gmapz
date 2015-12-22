@@ -1,62 +1,69 @@
 //
 // Side infowindow sample
+// #map-sample-6A
 //
-.gm-style-iw-container {
-  // Custom arrow
-  &:after {
-  	right: 100%;
-  	bottom: 88px;
-  	border: solid transparent;
-  	content: " ";
-  	height: 0;
-  	width: 0;
-  	position: absolute;
-  	pointer-events: none;
-  	border-color: transparent;
-  	border-right-color: #777;
-  	border-width: 10px;
-  }
-  &:before {
-    left: -19px;
-  	bottom: 88px;
-  	border: solid transparent;
-  	content: " ";
-  	height: 0;
-  	width: 0;
-  	position: absolute;
-  	pointer-events: none;
-  	border-color: transparent;
-  	border-right-color: #fff;
-  	border-width: 10px;
-    z-index: 1;
+#map-sample-6A {
+
+  .gmapz-infowindow {
+    width: 200px;
+    // background-color: pink; // Debug
   }
 
-  > div {
-    // Arrow shadow
-    > div:first-child {
-      border-top-color: transparent !important; // Disable / hidden
+  .gm-style-iw-container {
+    // Custom arrow
+    &:after {
+      right: 100%;
+      bottom: 46px;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: transparent;
+      border-right-color: #777;
+      border-width: 10px;
     }
-    // Box shadow
-    > div:nth-child(2) {
-      // background-color: cyan !important;
-      // box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px !important;
+    &:before {
+      left: -19px;
+      bottom: 46px;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: transparent;
+      border-right-color: #fff;
+      border-width: 10px;
+      z-index: 1;
     }
-    // Arrow image
-    > div:nth-child(3) {
-      display: none !important;
-      transform: rotate(90deg);
-      left: 0 !important;
-      top: auto !important;
+
+    > div {
+      // Arrow shadow
+      > div:first-child {
+        border-top-color: transparent !important; // Disable / hidden
+      }
+      // Box shadow
+      > div:nth-child(2) {
+        // background-color: cyan !important;
+        // box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px !important;
+      }
+      // Arrow image
+      > div:nth-child(3) {
+        display: none !important;
+        // transform: rotate(90deg);
+        // left: 0 !important;
+        // top: auto !important;
+      }
     }
-  }
-  .gm-style-iw {
-    // background-color: pink;
   }
 }
 
 
 //
 // Advanced infoBox
+// #map-sample-6B
 //
 .gmapz-ibx {
   width: 120px;

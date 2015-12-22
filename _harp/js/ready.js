@@ -10,15 +10,9 @@ var
   map_sample_4C,
   map_sample_4D,
   map_sample_4E,
-  map_sample_5,
-  map_sample_6,
-  map_sample_7,
-  map_sample_8,
-  map_sample_9,
-  autocomplete_1,
-  autocomplete_2,
-  map_sample_10,
-  map_sample_11;
+  map_sample_6A,
+  map_sample_6B,
+  map_sample_7A;
 
 $(document).ready(function() {
   // La magia aquí
@@ -276,6 +270,20 @@ $(document).ready(function() {
     map_sample_5A.resumeScroll();
   });
 
+  // Map sample 6A *************************************************************
+
+  map_sample_6A = new GMapz.map(
+    $('#map-sample-6A'), {
+      center: [36.08, -6.82],
+      zoom: 5,
+      pixelOffset: [158, 100] // Offset of infowindow
+    }
+  );
+
+  map_sample_6A.onReady = function() {
+    this.addLocations(spain_locs).fitBounds();
+  };
+
   // Map sample 6B *************************************************************
 
   GMapz.onGoogleMapsReady = function () {
@@ -323,8 +331,43 @@ $(document).ready(function() {
     this.markers['roma'].click();
   };
 
+  // Map sample 7A *************************************************************
+
+  $('.js-open-lightbox-7A.fancybox').on('click', function(e) {
+    e.preventDefault();
+    $.fancybox.open('<div id="fancy-map" style="width:100%;height:100%;"></div>', {
+      autoSize: false,
+      width: 800,
+      height: 600,
+      afterShow: function() {
+        // WARNING!
+        // For some reason the afterShow event of fancybox seems
+        // to be executed BEFORE the container is drawn.
+        // This causes issues with Google Maps, to be sure that the
+        // fancybox is drawn we call GMpaz inside a setTimeout, 0ms
+        // http://stackoverflow.com/a/779785/748321
+        setTimeout(function(){
+          map_sample_7A = new GMapz.map(
+            $('#fancy-map'),
+            {
+              center: [48.860, 2.340],
+              zoom: 12
+            },
+            {
+              map_point: {
+                lat: 48.860,
+                lng: 2.340
+              }
+            }
+          );
+        } ,0);
+      }
+    });
+  });
+
+
   // Attach button with data-gmapz attribute ********************************************************
-  
+
   GMapz.attachActionButtons();
 
-});
+}); // Domready
