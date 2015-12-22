@@ -41,6 +41,7 @@ GMapz.map = (function() {
     this.map_settings = {
       scrollwheel: true,
       scaleControl: true,
+      pixelOffset: false,
       zoom: 9,
       center: [0,0],
       bounds: null,
@@ -82,8 +83,13 @@ GMapz.map = (function() {
     // Attach objecto DOM element
     $map[0].gmapz = this;
 
-    // Request GM Api, instanceReady() will be called when done
-    GMapz.requestAPI();
+    if (GMapz.data.map_api_ready) {
+      // GM Api is already available
+      this.instanceReady();
+    } else {
+      // Request GM Api, instanceReady() will be called when done
+      GMapz.requestAPI();
+    }
   }
 
   Constructor.prototype = {
@@ -133,9 +139,9 @@ GMapz.map = (function() {
       this.onReady();
 
       // Will draw event when map is painted
-      this.listeners['on_draw'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+      this.listeners.on_draw = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
         that.gz_settings.is_drawn = true;
-        google.maps.event.removeListener(that.listeners['on_draw']);
+        google.maps.event.removeListener(that.listeners.on_draw);
         that.onDraw();
       });
     },
@@ -235,6 +241,7 @@ GMapz.map = (function() {
           position: new google.maps.LatLng(locs[idx].lat,locs[idx].lng),
           map: this.map,
           icon: current_pin
+          // ,optimized: false
         };
         // Draggable marker?
         if (locs[idx].draggable) { marker_options.draggable = true; }
@@ -264,14 +271,20 @@ GMapz.map = (function() {
           if (!this.ibx) {
             // There is NOT an infoBox defined
             // We create standard infowindow
-            this.iws[idx] = new google.maps.InfoWindow({
-              content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw)
-            });
+            var iw_options = {
+              content: this.iw_template.replace('{{__REPLACE__}}',locs[idx].iw),
+            };
+            // Is there any pixelOffset?
+            if (this.map_settings.pixelOffset !== false) {
+              iw_options.pixelOffset = new google.maps.Size(
+                this.map_settings.pixelOffset[0],
+                this.map_settings.pixelOffset[1]
+              );
+            }
+            this.iws[idx] = new google.maps.InfoWindow(iw_options);
             // Click on marker event open Infowindow
             google.maps.event.addListener(this.markers[idx], 'click', function() {
-              that.closeAllInfoWindows();
-              that.iw_current_idx = this.idx;
-              that.iws[this.idx].open(that.map, that.markers[this.idx]);
+              that.onMarkerClick(this); // this -> markerObj
             });
           } else {
             // We create infobox!
@@ -289,6 +302,17 @@ GMapz.map = (function() {
 
       return this; // Chaining
     }, // addLocations
+
+    onMarkerClick: function(marker_obj) {
+      // console.log(marker_obj);
+      this.closeAllInfoWindows();
+      this.iw_current_idx = marker_obj.idx;
+      this.iws[marker_obj.idx].open(this.map, this.markers[marker_obj.idx]);
+      // Add class to infowindow container
+      if (this.$map.find('.gm-style-iw-container').length === 0) {
+        this.$map.find('.gm-style-iw').parent().addClass('gm-style-iw-container');
+      }
+    },
 
     // Info windows
 
@@ -495,6 +519,9 @@ GMapz.map = (function() {
         near_lat = null,
         near_lng = null;
 
+      // Delete userl_location marker if exists
+      this.deleteUserLocationMarker();
+
       // Coords from autocomplete (place)
       if (pos_or_place.geometry) {
         lat = pos_or_place.geometry.location.lat();
@@ -511,6 +538,7 @@ GMapz.map = (function() {
 
       // Find nearest marker
       idx = this.findNearestMarkerToPos(lat, lng);
+
       near_lat = this.markers[idx].position.lat();
       near_lng = this.markers[idx].position.lng();
 
@@ -539,6 +567,13 @@ GMapz.map = (function() {
         });
       } else {
         this.markers.user_location.setPosition(pos);
+      }
+    },
+
+    deleteUserLocationMarker: function () {
+      if (this.markers.user_location) {
+        this.markers.user_location.setMap(null);
+        delete this.markers.user_location;
       }
     },
 
@@ -587,9 +622,9 @@ GMapz.map = (function() {
       // Its first time map is drawn, we need to wait until tiles are drawn or
       // the map.setOption(...) will not work
       if (!this.gz_settings.is_drawn) {
-        this.listeners['tilesloaded_responsive'] = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
+        this.listeners.tilesloaded_responsive = google.maps.event.addListenerOnce(this.map, 'tilesloaded', function(){
           that.gz_settings.is_drawn = true;
-          google.maps.event.removeListener(that.listeners['tilesloaded_responsive']);
+          google.maps.event.removeListener(that.listeners.tilesloaded_responsive);
           that.lockScrollAction();
         });
       } else {
@@ -605,7 +640,7 @@ GMapz.map = (function() {
         draggable: false,
         scrollwheel: false
       });
-      this.listeners['zoom_on_scroll_lock'] = google.maps.event.addListener(this.map, 'zoom_changed', function() {
+      this.listeners.zoom_on_scroll_lock = google.maps.event.addListener(this.map, 'zoom_changed', function() {
         if (GMapz.debug) console.info('Zoom changed');
         that.resumeScroll();
       });
@@ -617,7 +652,7 @@ GMapz.map = (function() {
         scrollwheel: true
       });
       $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').removeClass('disabled');
-      google.maps.event.removeListener(this.listeners['zoom_on_scroll_lock']);
+      google.maps.event.removeListener(this.listeners.zoom_on_scroll_lock);
     },
 
     //
@@ -740,4 +775,3 @@ GMapz.map = (function() {
   return Constructor;
 
 })();
-
