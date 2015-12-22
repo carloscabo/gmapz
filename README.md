@@ -1,4 +1,4 @@
-GMapz v2.15
+GMapz v2.05
 ===========
 
 GMapz is yet another Google Maps JS library. It eases the creation of Google Maps, it's **responsive**, supports the creation of **multiple instances in the same page** (each one with it's own settings), the creation of **custom styled infowindows**, and other useful helpers.
@@ -16,12 +16,13 @@ TO-DO
 
 Changelog
 =========
-- 2.15
-  * Now maps are initialized inmediatly if Google Maps API is ready
-  * Changed inforwindows parameters object
-  * Added offsetPosition to the infowindow
-  * Added custom class inside map to style side infowindows
-  * New sample of infowindows on the side of the MarkerImage
+- 2.05
+  * Now maps are initialized immediately if Google Maps API is ready
+  * Changed infowindows parameters object
+  * Added offsetPosition to the standard infowindow
+  * Added custom class inside map to style infowindows
+  * New sample of standard infowindows on the side of the markers
+  * GMapz inside lightbox sample
 
 - 2.02
   * Removed deprecated sensor param in Google Maps API initialization
