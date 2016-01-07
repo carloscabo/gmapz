@@ -16,6 +16,8 @@ TO-DO
 
 Changelog
 =========
+- 2.06
+  * Small fix on deleteAllMarkers(); method
 - 2.05
   * Now maps are initialized immediately if Google Maps API is ready
   * Changed infowindows parameters object

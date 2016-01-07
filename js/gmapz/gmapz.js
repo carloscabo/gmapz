@@ -1,7 +1,7 @@
 /*
  ====================================
  GMapz. Yet another gmaps manager
- by carlos Cabo 2015. V.2.05
+ by carlos Cabo 2015. V.2.06
  https://github.com/carloscabo/gmapz
  ====================================
 */
