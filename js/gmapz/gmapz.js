@@ -21,7 +21,7 @@
   // Module general vars
   //
   var
-    v = '2.05 beta',
+    v = '2.06',
     debug = false,
     data = {
       map_api_requested: false,

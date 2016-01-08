@@ -112,6 +112,14 @@ GMapz.map = (function() {
         this.map_settings.center[1]
       );
 
+      // Calling the constructor, initializing the map
+      this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
+
+      // If locations passed in start add them
+      if(!jQuery.isEmptyObject(this.initial_locs)) {
+        this.addLocations(this.initial_locs);
+      }
+
       // Bounds
       if (this.map_settings.bounds) {
         var bounds = new google.maps.LatLngBounds();
@@ -123,14 +131,6 @@ GMapz.map = (function() {
         );
         this.map_settings.bounds = bounds;
         this.map.fitBounds(bounds);
-      }
-
-      // Calling the constructor, initializing the map
-      this.map = new google.maps.Map($("[data-gmapz='"+this.map_id+"']")[0], this.map_settings);
-
-      // If locations passed in start add them
-      if(!jQuery.isEmptyObject(this.initial_locs)) {
-        this.addLocations(this.initial_locs);
       }
 
       // Call ready handler
