@@ -18,7 +18,7 @@ Changelog
 =========
 - 2.06
   * Small fix on deleteAllMarkers(); method
-  * Fix maps initializtion with 'bounds' parameter
+  * Fix maps initialization with 'bounds' parameter
 - 2.05
   * Now maps are initialized immediately if Google Maps API is ready
   * Changed infowindows parameters object
