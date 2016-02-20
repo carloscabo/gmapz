@@ -14,6 +14,11 @@ TO-DO
 1. Add sample with default Google Maps pins
 2. Add static maps support
 
+Projects using GMapz
+====================
+
+- http://latitude.to
+
 Changelog
 =========
 - 2.06
