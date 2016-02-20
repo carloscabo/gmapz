@@ -241,10 +241,16 @@ GMapz.map = (function() {
           icon: current_pin
           // ,optimized: false
         };
+
+        // Custom marker data
+        if (locs[idx].custom_data) { marker_options.custom_data = locs[idx].custom_data; }
+
         // Draggable marker?
         if (locs[idx].draggable) { marker_options.draggable = true; }
+
         // Create marker
         this.markers[idx] = new google.maps.Marker(marker_options);
+
         // Draggable marker event
         if (locs[idx].draggable) {
           google.maps.event.addListener(
