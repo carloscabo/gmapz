@@ -10,6 +10,7 @@ include ./includes/bs_header.jade
         Una de las funcionalidades más interesantes de <code>GMapz</code> es que está preparado para móbiles y tabletas. Cuando se encuentra en un dispositivo <em>mobile</em> <b>el scroll y el zoom se bloquen automáticamente</b> y el usuario decide cuando desbloquearlo con un control personalizado.
       p.
         Para esta funcionalidad hace falta incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">Media Query Breakpoint Events</a>), y una hoja de estilo que defina los diferentes <em>breakpoints</em> y el estilo del control de bloqueo que se añade en el mapa, los estilos empleados en este ejemplos pueden encontrarse en <code>gmapz.responsive.css</code> ( <a href="https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.responsive.css" target="_blank">ver</a> ).
+
 #sample-5A.mb32
   .row
     .container
@@ -51,3 +52,40 @@ include ./includes/bs_header.jade
           p.
             También podemos activar y desactivar el <code>scroll-lock</code> desde JS.<br>
             <a href="#" id="js-btn-scroll-lock-5A" class="btn btn-danger">Bloquear el mapa</a> <a href="#" id="js-btn-scroll-resume-5A" class="btn btn-success">Desbloquear el mapa</a>
+
+#sample-5B.mb32
+  .row
+    .container
+      h2 Sample 5B
+        small &nbsp;&nbsp;&nbsp;Mapa inicialmente bloqueado
+      .row
+        .col-lg-6
+          #map-sample-5B.map
+            p.
+              map goes here
+        .col-lg-6
+          p.
+            También <b>podemos iniciar el mapa con el scroll bloqueado por defecto</b>, y hacer que se desbloquee únicamente por la interacción del usuario, ya sea pulsando en el botón <b>Activar scroll</b> o al <b>hacer zoom con los controles estandard del mapa</b>.
+          pre.prettyprint
+            +escape()
+              | // Start map with default options
+              | map_sample_5A = new GMapz.map($('#map-sample-5A'));
+              | 
+              | map_sample_5A.onReady = function() {
+              | 
+              |   // Enables responsive control and events
+              |   this.addScrollControl();
+              | 
+              |   // Load Italy cities
+              |   this.addLocations(italy_cities).fitBounds();
+              | 
+              |   // Responsive events
+              |   MQBE.on('enter', 'mobile', function() {
+              |     // Lock map on mobile
+              |     map_sample_5A.lockScroll();
+              |   }).on('leave', 'mobile', function() {
+              |     // Restore scroll on desktop
+              |     map_sample_5A.resumeScroll();
+              |   });
+              | 
+              | };

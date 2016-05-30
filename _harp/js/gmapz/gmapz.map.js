@@ -18,6 +18,7 @@ GMapz.map = (function() {
     // Settings of object
     this.gz_settings = {
       is_initialized: false,
+      is_locked: null,
       is_drawn: false,
       test_str: 'unitialized',
       zoom: {
@@ -188,11 +189,19 @@ GMapz.map = (function() {
       }
       if (this.markers[idx]) {
         this.setMarkerVisibility(idx, true);
+        // If map is locked we remove the listener...
+        if ( this.gz_settings.is_locked ) {
+          google.maps.event.removeListener(this.listeners.zoom_on_scroll_lock);
+        }
         this.centerTo(
           this.markers[idx].position.lat(),
           this.markers[idx].position.lng(),
           zoom
         );
+        // ...to attach it again
+        if ( this.gz_settings.is_locked ) {
+          this.lockScrollAction();
+        }
       }
       return this;
     },

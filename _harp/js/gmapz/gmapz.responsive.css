@@ -1,43 +1,10 @@
-/* MQBE.js CSS rules */
-
-/* DESKTOP */
-@media all and (min-width:1px) {
-  body {
-    background-color: white;
-  }
-  body:after {
-    content: 'desktop'; /* <- string that defines this state */
-    display:none;
-  }
-}
-
-/* TABLET */
-@media only screen and (max-width: 1024px) {
-  body {
-    /*background-color: lightgray;*/ /* DEBUG */
-  }
-  /* To check from MQBE */
-  body:after {
-    content: 'tablet'; /* <- string that defines this state */
-    display:none;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  body {
-    /*background-color: pink;*/ /* DEBUG */
-  }
+@media only screen and (max-width: 767px) {
   .gmapz-scroll-control {
     display: block !important;
   }
   /* Hide map / satellite control */
   .gm-style-mtc {
     display: none !important;
-  }
-  /* To check from MQBE */
-  body:after {
-    content: 'mobile'; /* <- string that defines this state */
-    display:none;
   }
 }
 

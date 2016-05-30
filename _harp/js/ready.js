@@ -10,6 +10,8 @@ var
   map_sample_4C,
   map_sample_4D,
   map_sample_4E,
+  map_sample_5A,
+  map_sample_5B,
   map_sample_6A,
   map_sample_6B,
   map_sample_7A;
@@ -237,7 +239,7 @@ $(document).ready(function() {
     console.log('Was unable to find: '+addr);
   };
 
-  // Map sample 5A, responsive *************************************************************
+  // Map sample 5A, responsive *************************************************
 
   map_sample_5A = new GMapz.map($('#map-sample-5A'));
 
@@ -271,6 +273,17 @@ $(document).ready(function() {
     $('body').removeClass('force-show-scroll-control');
     map_sample_5A.resumeScroll();
   });
+
+  // Map sample 5B, responsive *************************************************
+
+  map_sample_5B = new GMapz.map($('#map-sample-5B'));
+
+  map_sample_5B.onReady = function() {
+    // Load Italy cities
+    this.addLocations(italy_cities).fitBounds();
+    // Enables responsive control
+    this.addScrollControl().lockScroll();
+  };
 
   // Map sample 6A *************************************************************
 
