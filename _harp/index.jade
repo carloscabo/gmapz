@@ -89,7 +89,7 @@ include ./includes/bs_header.jade
   .row
     .container
       .row
-        .col-lg-6
+        .col-lg-6#pins
           h2 Fichero de "pins"
           p.
             Cuando hablamos de "pins" nos referimos a las <b>imagenes</b> que emplea Google Maps para señalar las localicaciones en los mapas. Para personalizar estos gráficos en tu aplicación basta con definir un fichero <code>JSON</code> con sus nombres y propiedades que después podrás emplear en el correspondiente fichero de ubicaciones / posiciones / coordenadas (ver a la derecha).
@@ -145,7 +145,7 @@ include ./includes/bs_header.jade
               |     }
               |   }
               | };
-        .col-lg-6
+        .col-lg-6#marcadores
           h2 Fichero localizaciones / marcadores
           p.
             Este fichero define las <code>coordenadas</code> de cada marcador en el mapa (en formato <code>latitud</code>, <code>longitud</code>), así como el <code>pin</code> que se dibujará, y el contenido del <code>infowindow</code> <em>(la ventanita que se muestra cuando pulsamos sobre un marcador).</em>
