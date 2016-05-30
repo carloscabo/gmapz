@@ -612,14 +612,14 @@ GMapz.map = (function() {
     addScrollControl: function() {
       var
         that = this,
-        $control = $('<div class="gmapz-scroll-control disabled" title="Click to toggle map scroll"><div class="content"><span></span></div></div>');
+        $control = $('<div class="gmapz-scroll-control" title="Click to toggle map scroll"><div class="content"><span></span></div></div>');
 
       // Attach custom control
       this.map.controls[google.maps.ControlPosition.TOP_LEFT].push($control[0]);
 
       $(document).on('click touchstart', '[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control', function(e) {
         e.preventDefault();
-        if ($(this).hasClass('disabled')) {
+        if ($(this).hasClass('locked')) {
           that.resumeScroll();
         } else {
           that.lockScroll();
@@ -643,7 +643,7 @@ GMapz.map = (function() {
         // Not first time, nothing to wait for
         this.lockScrollAction();
       }
-      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('disabled');
+      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('locked');
     },
 
     lockScrollAction: function() {
@@ -663,7 +663,7 @@ GMapz.map = (function() {
         draggable: true,
         scrollwheel: true
       });
-      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').removeClass('disabled');
+      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').removeClass('locked');
       google.maps.event.removeListener(this.listeners.zoom_on_scroll_lock);
     },
 
