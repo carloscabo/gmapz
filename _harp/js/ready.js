@@ -248,12 +248,14 @@ $(document).ready(function() {
     this.addScrollControl();
     // Load Italy cities
     this.addLocations(italy_cities).fitBounds();
-    // Responsive events
-    MQBE.on('enter', 'mobile', function() {
-      map_sample_5A.lockScroll();
-    }).on('leave', 'mobile', function() {
-      map_sample_5A.resumeScroll();
-    });
+    // Responsive events take a look at:
+    // https://github.com/carloscabo/MQBE
+    $(document)
+      .on('enter.mobile.mqbe', function() {
+        map_sample_5A.lockScroll();
+      }).on('leave.mobile.mqbe', function() {
+        map_sample_5A.resumeScroll();
+      });
   };
 
   map_sample_5A.onDraw = function() {
