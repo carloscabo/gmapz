@@ -1,7 +1,7 @@
 /*
  ====================================
  GMapz. Yet another gmaps manager
- by carlos Cabo 2015. V.2.06
+ by carlos Cabo 2015. V.2.07
  https://github.com/carloscabo/gmapz
  ====================================
 */
@@ -27,7 +27,9 @@
       map_api_requested: false,
       map_api_ready: false
     },
-    pins = null;
+    pins = null,
+    lang = '',
+    APIKEY = '';
 
   //
   // Methods
@@ -62,9 +64,17 @@
 
   // Inject GM Api
   function loadScript (callback_fn) {
-    var script = document.createElement('script');
+    if (lang === '') {
+      lang = $('html').attr('lang') || $('html').attr('xml:lang') || 'en';
+    }
+    var
+      script = document.createElement('script'),
+      url = 'https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language='+lang+'&callback='+callback_fn;
+    if (APIKEY !== '') {
+      url += '&key='+APIKEY;
+    }
     script.type = 'text/javascript';
-    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language=en&callback='+callback_fn;
+    script.src = url;
     document.body.appendChild(script);
   }
 

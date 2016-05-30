@@ -19,6 +19,8 @@ $(document).ready(function() {
 
   // Activate console log messages
   GMapz.debug = true;
+  // This key is valid only for the samples in this page!
+  GMapz.APIKEY ='AIzaSyCyL4U5ihhLdpTxsfR6A7FMtj1j5bOui9o';
 
   // Map sample 1A *************************************************************
 

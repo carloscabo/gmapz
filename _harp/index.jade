@@ -8,6 +8,24 @@ include ./includes/bs_header.jade
       h2.page-header Introducción
       p.
         <b>GMapz</b> simplifica creación de mapas con Google Maps API V3, es <b>responsive</b>, soporta <b>múltiples instancias en la misma página</b>, <b>infowindows personalizados</b> y opciones diferentes para cada instancia del mapa. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.
+#intro-0.mb32
+  .row
+    .container
+      .row
+        h2 Google Maps API Key
+          small &nbsp;&nbsp;&nbsp;necesaria si tu mapa va a tener muchas visualizaciones
+        p.
+          Si tu mapa va a tener muchas visualizaciones (+ de 25.000 al día) es obligatorio que <b>crees una API Key para Google Maps</b> (es una buena práctica aunque no creas que vas a llegar al límite de visitas). Para crearla <a href="https://developers.google.com/maps/faq?hl=es#using-google-maps-apis"> dirígete a Google Maps API</a>, el servicio que debes seleccionar es <b>Google Maps JavaScript API, clave de navegador</b>.
+        p.
+          <mark><b>IMPORTANTE:</b> Asegúrate de configurar en que dominios / IPs se puede emplear la clave que generes, para evitar que otras personas puedan usarla en sus desarrollos.</mark>
+        p.
+          Configurar tu <b>Clave de API</b> en GMpaz es muy sencillo, basta con que la asignes como se vé a continuación <b>antes de crear ningún mapa</b>
+        pre.prettyprint.lang-javascript
+          +escape()
+            | // APIKEY
+            | GMapz.APIKEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+            | 
+            | map_sample_1A = new GMapz.map( ...
 #intro-1.mb32
   .row
     .container

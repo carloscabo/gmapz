@@ -12,7 +12,7 @@ include ./includes/bs_header.jade
   .row
     .container
       h2 Sample 1A
-        small &nbsp;&nbsp;&nbsp;Basic setup, starting map and setting its center and bounds
+        small &nbsp;&nbsp;&nbsp;Configuración básica, iniciar mapa con un centro y unos _bounds_
       .row
         .col-lg-6
           #map-sample-1A.map
@@ -137,7 +137,7 @@ include ./includes/bs_header.jade
               map goes here
         .col-lg-6
           p.
-            Para añadir los marcadores debemos pasar un objeto JSON a la instancia de GMapz en su momento de creación o bien asignárselos depués de que esté listo empleando el método <code>addLocations</code>.
+            Para añadir los marcadores debemos pasar un objeto JSON a la instancia de GMapz en su momento de creación o <b>también podemos asignárselos depués de que esté listo empleando el método <code>addLocations</code></b>.
           p.
             Cuando el mapa esté listo (<code>onReady</code>) podemos llamar al método <code>.fitBounds()</code>, si no le pasamos ningún parámetro ajustará la vista a todos los marcadores visibles en el mapa.
           pre.prettyprint
@@ -150,8 +150,8 @@ include ./includes/bs_header.jade
               | );
               | 
               | map_sample_1E.onReady = function(){
-              |   // this is google.maps instance
-              |   // También podríamos hacer:
+              |   // También podríamos añadir los marcadores después de crear
+              |   // el mapa haciendo:
               |   // this.addLocations(france_cities);
               |   this.fitBounds();
               | }
