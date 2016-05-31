@@ -100,21 +100,21 @@ html[lang='de'] .gmapz-scroll-control .content:after {
 }
 
 /* Default */
-.gmapz-scroll-control.disabled .content:after {
+.gmapz-scroll-control.locked .content:after {
   content: 'Enable scroll';
 }
-html[lang='es'] .gmapz-scroll-control.disabled .content:after {
+html[lang='es'] .gmapz-scroll-control.locked .content:after {
   content: 'Activar scroll';
 }
-html[lang='fr'] .gmapz-scroll-control .content:after {
+html[lang='fr'] .gmapz-scroll-control.locked .content:after {
   content: 'Activer scroll';
 }
-html[lang='pt'] .gmapz-scroll-control .content:after {
+html[lang='pt'] .gmapz-scroll-control.locked .content:after {
   content: 'Ativar scroll';
 }
-html[lang='it'] .gmapz-scroll-control .content:after {
+html[lang='it'] .gmapz-scroll-control.locked .content:after {
   content: 'Abilita scroll';
 }
-html[lang='de'] .gmapz-scroll-control .content:after {
+html[lang='de'] .gmapz-scroll-control.locked .content:after {
   content: 'Aktivieren scroll';
 }
