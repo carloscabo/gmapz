@@ -10,6 +10,8 @@ var
   map_sample_4C,
   map_sample_4D,
   map_sample_4E,
+  map_sample_5A,
+  map_sample_5B,
   map_sample_6A,
   map_sample_6B,
   map_sample_7A;
@@ -19,6 +21,8 @@ $(document).ready(function() {
 
   // Activate console log messages
   GMapz.debug = true;
+  // This key is valid only for the samples in this page!
+  GMapz.APIKEY ='AIzaSyCyL4U5ihhLdpTxsfR6A7FMtj1j5bOui9o';
 
   // Map sample 1A *************************************************************
 
@@ -28,7 +32,7 @@ $(document).ready(function() {
       scrollwheel: true, // Default
       scaleControl: true, // Default
       center: [48.860, 2.340],
-      bound: [4.1335, 49.7198, 0.5464, 47.9851],
+      bounds: [49.7198, 4.1335, 47.9851, 0.5464],
       // zoom: 9 You can set `zoom` instead of bounds
       // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'
       mapTypeId: 'ROADMAP' // Default
@@ -232,10 +236,11 @@ $(document).ready(function() {
   };
 
   map_sample_4D.errorAddressNotFound = function(addr) {
+    alert('Was unable to find: '+addr);
     console.log('Was unable to find: '+addr);
   };
 
-  // Map sample 5A, responsive *************************************************************
+  // Map sample 5A, responsive *************************************************
 
   map_sample_5A = new GMapz.map($('#map-sample-5A'));
 
@@ -244,12 +249,14 @@ $(document).ready(function() {
     this.addScrollControl();
     // Load Italy cities
     this.addLocations(italy_cities).fitBounds();
-    // Responsive events
-    MQBE.on('enter', 'mobile', function() {
-      map_sample_5A.lockScroll();
-    }).on('leave', 'mobile', function() {
-      map_sample_5A.resumeScroll();
-    });
+    // Responsive events take a look at:
+    // https://github.com/carloscabo/MQBE
+    $(document)
+      .on('enter.mobile.mqbe', function() {
+        map_sample_5A.lockScroll();
+      }).on('leave.mobile.mqbe', function() {
+        map_sample_5A.resumeScroll();
+      });
   };
 
   map_sample_5A.onDraw = function() {
@@ -258,17 +265,26 @@ $(document).ready(function() {
     ));
   };
 
-  $(document).on('click touchstart', '#js-btn-scroll-lock-5A', function(e) {
-    e.preventDefault();
-    $('body').addClass('force-show-scroll-control');
-    map_sample_5A.lockScroll();
-  });
+  $(document)
+    .on('click touchstart', '#js-btn-scroll-lock-5A', function(e) {
+      e.preventDefault();
+      map_sample_5A.lockScroll();
+    })
+    .on('click touchstart', '#js-btn-scroll-resume-5A', function(e) {
+      e.preventDefault();
+      map_sample_5A.resumeScroll();
+    });
 
-  $(document).on('click touchstart', '#js-btn-scroll-resume-5A', function(e) {
-    e.preventDefault();
-    $('body').removeClass('force-show-scroll-control');
-    map_sample_5A.resumeScroll();
-  });
+  // Map sample 5B, responsive *************************************************
+
+  map_sample_5B = new GMapz.map($('#map-sample-5B'));
+
+  map_sample_5B.onReady = function() {
+    // Load Italy cities
+    this.addLocations(italy_cities).fitBounds();
+    // Enables responsive control, then locks map
+    this.addScrollControl().lockScroll();
+  };
 
   // Map sample 6A *************************************************************
 

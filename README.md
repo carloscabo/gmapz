@@ -1,4 +1,4 @@
-GMapz v2.06
+GMapz v2.07
 ===========
 
 GMapz is yet another Google Maps JS library. It eases the creation of Google Maps, it's **responsive**, supports the creation of **multiple instances in the same page** (each one with it's own settings), the creation of **custom styled infowindows**, and other useful helpers.
@@ -21,6 +21,14 @@ Projects using GMapz
 
 Changelog
 =========
+- 2.07 (2016/05/31)
+  * Added Google Maps JS APIKEY support
+  * Set map language based on <html lang="XX">
+  * Improved scroll lock / unlock behavior
+  * Updated Lock / unlock control styles
+  * Added sample with map initially blocked
+  * Fixed prettify.js CDN url in demos
+  * Several documentation improvements
 - 2.06
   * Small fix on deleteAllMarkers(); method
   * Fix maps initialization with 'bounds' parameter
