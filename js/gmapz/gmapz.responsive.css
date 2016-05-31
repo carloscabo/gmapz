@@ -1,57 +1,29 @@
-/* MQBE.js CSS rules */
-
-/* DESKTOP */
-@media all and (min-width:1px) {
-  body {
-    background-color: white;
-  }
-  body:after {
-    content: 'desktop'; /* <- string that defines this state */
-    display:none;
-  }
-}
-
-/* TABLET */
-@media only screen and (max-width: 1024px) {
-  body {
-    /*background-color: lightgray;*/ /* DEBUG */
-  }
-  /* To check from MQBE */
-  body:after {
-    content: 'tablet'; /* <- string that defines this state */
-    display:none;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  body {
-    /*background-color: pink;*/ /* DEBUG */
-  }
+@media only screen and (max-width: 767px) {
   .gmapz-scroll-control {
     display: block !important;
   }
-  /* Hide map / satellite control */
-  .gm-style-mtc {
+  /* Hide satellite control */
+  /*.gm-style-mtc {
     display: none !important;
-  }
-  /* To check from MQBE */
-  body:after {
-    content: 'mobile'; /* <- string that defines this state */
-    display:none;
-  }
+  }*/
 }
 
-/* Custom control */
+/* Sample of hiding scroll controls on desktop */
 
-body.force-show-scroll-control .gmapz-scroll-control {
-  display: block !important;
-}
-body.force-show-scroll-control .gm-style-mtc {
+/* Hide custom control on desktop, show in mobile */
+/*
+.gmapz-scroll-control {
   display: none !important;
 }
+@media only screen and (max-width: 767px) {
+  .gmapz-scroll-control {
+    display: block !important;
+  }
+}
+*/
 
 .gmapz-scroll-control {
-  display: none;
+  display: block;
   margin: 10px;
   left: 0 !important;
   background: #fff;
@@ -81,7 +53,7 @@ body.force-show-scroll-control .gm-style-mtc {
   height: 16px;
   margin: -2px 3px 0 0;
   vertical-align: middle;
-  background: url('data:image/svg+xml;utf8,<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>') center center no-repeat;
+  background: url('data:image/svg+xml;utf8,<svg fill="%23000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z"/></svg>') center center no-repeat;
   /*background: #fff url(../img/gmapz/scroll_enabled.svg) center center no-repeat;*/
   -webkit-background-size: cover;
        -o-background-size: cover;
@@ -90,18 +62,18 @@ body.force-show-scroll-control .gm-style-mtc {
 
 /* Disabled */
 
-.gmapz-scroll-control.disabled {
-  background: #e00;
-  border: 2px solid #e00;
+.gmapz-scroll-control.locked {
+  background: #FF9B00;       /* Orange */
+  border: 2px solid #FF9B00; /* Orange */
 }
 
-.gmapz-scroll-control.disabled .content {
-  color: #fff;
+.gmapz-scroll-control.locked .content {
+  color: #000;
 }
 
-.gmapz-scroll-control.disabled .content:before {
+.gmapz-scroll-control.locked .content:before {
   content: '';
-  background-image: url('data:image/svg+xml;utf8,<svg fill="#FFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>');
   /*background-image: url(../img/gmapz/scroll_disabled.svg);*/
 }
 
@@ -109,40 +81,40 @@ body.force-show-scroll-control .gm-style-mtc {
 
 /* Default */
 .gmapz-scroll-control .content:after {
-  content: 'Scroll enabled';
+  content: 'Disable scroll';
 }
 html[lang='es'] .gmapz-scroll-control .content:after {
-  content: 'Scroll activado';
+  content: 'Desactivar scroll';
 }
 html[lang='fr'] .gmapz-scroll-control .content:after {
-  content: 'Scroll activée';
+  content: 'Désactiver scroll';
 }
 html[lang='pt'] .gmapz-scroll-control .content:after {
-  content: 'Scroll ativado';
+  content: 'Desativar scroll';
 }
 html[lang='it'] .gmapz-scroll-control .content:after {
-  content: 'Scroll attivato';
+  content: 'Disabilita scroll';
 }
 html[lang='de'] .gmapz-scroll-control .content:after {
-  content: 'Scroll aktiviert';
+  content: 'Deaktivieren scroll';
 }
 
 /* Default */
-.gmapz-scroll-control.disabled .content:after {
-  content: 'Scroll disabled';
+.gmapz-scroll-control.locked .content:after {
+  content: 'Enable scroll';
 }
-html[lang='es'] .gmapz-scroll-control.disabled .content:after {
-  content: 'Scroll desactivado';
+html[lang='es'] .gmapz-scroll-control.locked .content:after {
+  content: 'Activar scroll';
 }
-html[lang='fr'] .gmapz-scroll-control .content:after {
-  content: 'Scroll désactivée';
+html[lang='fr'] .gmapz-scroll-control.locked .content:after {
+  content: 'Activer scroll';
 }
-html[lang='pt'] .gmapz-scroll-control .content:after {
-  content: 'Scroll desativado';
+html[lang='pt'] .gmapz-scroll-control.locked .content:after {
+  content: 'Ativar scroll';
 }
-html[lang='it'] .gmapz-scroll-control .content:after {
-  content: 'Scroll disattivato';
+html[lang='it'] .gmapz-scroll-control.locked .content:after {
+  content: 'Abilita scroll';
 }
-html[lang='de'] .gmapz-scroll-control .content:after {
-  content: 'Scroll deaktiviert';
+html[lang='de'] .gmapz-scroll-control.locked .content:after {
+  content: 'Aktivieren scroll';
 }

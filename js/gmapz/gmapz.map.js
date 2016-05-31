@@ -18,6 +18,7 @@ GMapz.map = (function() {
     // Settings of object
     this.gz_settings = {
       is_initialized: false,
+      is_locked: null,
       is_drawn: false,
       test_str: 'unitialized',
       zoom: {
@@ -46,7 +47,11 @@ GMapz.map = (function() {
       center: [0,0],
       bounds: null,
       mapTypeId: 'ROADMAP', // 'ROADMAP' / 'SATELLITE' / 'HYBRID' / 'TERRAIN'
-      styles: [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":60}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","stylers":[{"visibility":"on"},{"lightness":30}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ef8c25"},{"lightness":40}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#b6c54c"},{"lightness":40},{"saturation":-40}]},{}]
+      mapTypeControlOptions: {
+        style: 1, // google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: 6, // google.maps.ControlPosition.LEFT_BOTTOM
+      },
+      // styles: [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":60}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","stylers":[{"visibility":"on"},{"lightness":30}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ef8c25"},{"lightness":40}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#b6c54c"},{"lightness":40},{"saturation":-40}]},{}]
     };
 
     // ID único del mapa
@@ -188,11 +193,19 @@ GMapz.map = (function() {
       }
       if (this.markers[idx]) {
         this.setMarkerVisibility(idx, true);
+        // If map is locked we remove the listener...
+        if ( this.gz_settings.is_locked ) {
+          google.maps.event.removeListener(this.listeners.zoom_on_scroll_lock);
+        }
         this.centerTo(
           this.markers[idx].position.lat(),
           this.markers[idx].position.lng(),
           zoom
         );
+        // ...to attach it again
+        if ( this.gz_settings.is_locked ) {
+          this.lockScrollAction();
+        }
       }
       return this;
     },
@@ -241,16 +254,10 @@ GMapz.map = (function() {
           icon: current_pin
           // ,optimized: false
         };
-
-        // Custom marker data
-        if (locs[idx].custom_data) { marker_options.custom_data = locs[idx].custom_data; }
-
         // Draggable marker?
         if (locs[idx].draggable) { marker_options.draggable = true; }
-
         // Create marker
         this.markers[idx] = new google.maps.Marker(marker_options);
-
         // Draggable marker event
         if (locs[idx].draggable) {
           google.maps.event.addListener(
@@ -605,14 +612,14 @@ GMapz.map = (function() {
     addScrollControl: function() {
       var
         that = this,
-        $control = $('<div class="gmapz-scroll-control disabled" title="Click to toggle map scroll"><div class="content"><span></span></div></div>');
+        $control = $('<div class="gmapz-scroll-control" title="Click to toggle map scroll"><div class="content"><span></span></div></div>');
 
       // Attach custom control
       this.map.controls[google.maps.ControlPosition.TOP_LEFT].push($control[0]);
 
       $(document).on('click touchstart', '[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control', function(e) {
         e.preventDefault();
-        if ($(this).hasClass('disabled')) {
+        if ($(this).hasClass('locked')) {
           that.resumeScroll();
         } else {
           that.lockScroll();
@@ -636,11 +643,11 @@ GMapz.map = (function() {
         // Not first time, nothing to wait for
         this.lockScrollAction();
       }
-      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('disabled');
     },
 
     lockScrollAction: function() {
       var that = this;
+      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('locked');
       this.map.setOptions({
         draggable: false,
         scrollwheel: false
@@ -656,7 +663,7 @@ GMapz.map = (function() {
         draggable: true,
         scrollwheel: true
       });
-      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').removeClass('disabled');
+      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').removeClass('locked');
       google.maps.event.removeListener(this.listeners.zoom_on_scroll_lock);
     },
 
