@@ -264,17 +264,15 @@ $(document).ready(function() {
     ));
   };
 
-  $(document).on('click touchstart', '#js-btn-scroll-lock-5A', function(e) {
-    e.preventDefault();
-    $('body').addClass('force-show-scroll-control');
-    map_sample_5A.lockScroll();
-  });
-
-  $(document).on('click touchstart', '#js-btn-scroll-resume-5A', function(e) {
-    e.preventDefault();
-    $('body').removeClass('force-show-scroll-control');
-    map_sample_5A.resumeScroll();
-  });
+  $(document)
+    .on('click touchstart', '#js-btn-scroll-lock-5A', function(e) {
+      e.preventDefault();
+      map_sample_5A.lockScroll();
+    })
+    .on('click touchstart', '#js-btn-scroll-resume-5A', function(e) {
+      e.preventDefault();
+      map_sample_5A.resumeScroll();
+    });
 
   // Map sample 5B, responsive *************************************************
 
@@ -283,7 +281,7 @@ $(document).ready(function() {
   map_sample_5B.onReady = function() {
     // Load Italy cities
     this.addLocations(italy_cities).fitBounds();
-    // Enables responsive control
+    // Enables responsive control, then locks map
     this.addScrollControl().lockScroll();
   };
 

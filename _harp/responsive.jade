@@ -23,7 +23,7 @@ include ./includes/bs_header.jade
               map goes here
         .col-lg-6
           div.alert.alert-info.
-            <b>Encoge el navegador por debajo de 768 para ver esta funcionalidad.</b>
+            <b>Encoge el navegador por debajo de 768 para que el mapa se bloquee automáticamente.</b>
           p.
             El estilo del control <b>"Scroll enabled / disabled"</b> puede editarse en <code>gmapz.responsive.css</code>. A continuación el <code>js</code> necesario para esta demo...
           pre.prettyprint
@@ -39,18 +39,18 @@ include ./includes/bs_header.jade
               |   // Load Italy cities
               |   this.addLocations(italy_cities).fitBounds();
               | 
-              |   // Responsive events
-              |   MQBE.on('enter', 'mobile', function() {
-              |     // Lock map on mobile
-              |     map_sample_5A.lockScroll();
-              |   }).on('leave', 'mobile', function() {
-              |     // Restore scroll on desktop
-              |     map_sample_5A.resumeScroll();
-              |   });
+              |   // Responsive events take a look at:
+              |   // https://github.com/carloscabo/MQBE
+              |   $(document)
+              |     .on('enter.mobile.mqbe', function() {
+              |       map_sample_5A.lockScroll();
+              |     }).on('leave.mobile.mqbe', function() {
+              |       map_sample_5A.resumeScroll();
+              |     });
               | 
               | };
           p.
-            También podemos activar y desactivar el <code>scroll-lock</code> desde JS.<br>
+            Podemos activar y desactivar el <code>scroll-lock</code> desde JS.<br>
             <a href="#" id="js-btn-scroll-lock-5A" class="btn btn-danger">Bloquear el mapa</a> <a href="#" id="js-btn-scroll-resume-5A" class="btn btn-success">Desbloquear el mapa</a>
 
 #sample-5B.mb32
@@ -65,27 +65,14 @@ include ./includes/bs_header.jade
               map goes here
         .col-lg-6
           p.
-            También <b>podemos iniciar el mapa con el scroll bloqueado por defecto</b>, y hacer que se desbloquee únicamente por la interacción del usuario, ya sea pulsando en el botón <b>Activar scroll</b> o al <b>hacer zoom con los controles estandard del mapa</b>.
+            <b>Podemos iniciar el mapa con el scroll bloqueado por defecto</b>, y hacer que se desbloquee únicamente por la interacción del usuario, ya sea pulsando en el botón <b>Activar scroll</b> o al <b>hacer zoom con los controles estandard del mapa</b>.
           pre.prettyprint
             +escape()
-              | // Start map with default options
-              | map_sample_5A = new GMapz.map($('#map-sample-5A'));
+              | map_sample_5B = new GMapz.map($('#map-sample-5B'));
               | 
-              | map_sample_5A.onReady = function() {
-              | 
-              |   // Enables responsive control and events
-              |   this.addScrollControl();
-              | 
+              | map_sample_5B.onReady = function() {
               |   // Load Italy cities
               |   this.addLocations(italy_cities).fitBounds();
-              | 
-              |   // Responsive events
-              |   MQBE.on('enter', 'mobile', function() {
-              |     // Lock map on mobile
-              |     map_sample_5A.lockScroll();
-              |   }).on('leave', 'mobile', function() {
-              |     // Restore scroll on desktop
-              |     map_sample_5A.resumeScroll();
-              |   });
-              | 
+              |   // Enables responsive control
+              |   this.addScrollControl().lockScroll();
               | };

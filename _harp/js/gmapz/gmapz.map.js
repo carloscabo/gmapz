@@ -643,11 +643,11 @@ GMapz.map = (function() {
         // Not first time, nothing to wait for
         this.lockScrollAction();
       }
-      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('locked');
     },
 
     lockScrollAction: function() {
       var that = this;
+      $('[data-gmapz="'+this.map_id+'"] .gmapz-scroll-control').addClass('locked');
       this.map.setOptions({
         draggable: false,
         scrollwheel: false
