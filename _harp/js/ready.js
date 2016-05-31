@@ -236,6 +236,7 @@ $(document).ready(function() {
   };
 
   map_sample_4D.errorAddressNotFound = function(addr) {
+    alert('Was unable to find: '+addr);
     console.log('Was unable to find: '+addr);
   };
 

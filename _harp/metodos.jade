@@ -16,6 +16,8 @@ include ./includes/bs_header.jade
       .row.container
         p <code><b>GMapz.debug = true;</b></code><br>Activa / desactiva los mensajes de info / error / warning en la consola.
       .row.container
+        p <code><b>GMapz.APIKEY = 'XXXXXXXXXXXXX';</b></code><br>Propiedad que debe almacenar la API Key de Google Maps for JS.
+      .row.container
         p <code><b>GMapz.requestAPI( callback_function );</b></code><br>Incrusta en la página la API de google.maps y cuando está lista llama a <code>callback_function</code>, por defecto <code>GMapz.onApiReady</code>.
       .row
         .col-lg-6
