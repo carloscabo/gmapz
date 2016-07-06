@@ -21,6 +21,8 @@ Projects using GMapz
 
 Changelog
 =========
+- 2.08 (2016/07/06)
+  * Fixed small bug when adding APIKey
 - 2.07 (2016/05/31)
   * Added Google Maps JS APIKEY support
   * Set map language based on <html lang="XX">

@@ -1,7 +1,7 @@
 /*
  ====================================
  GMapz. Yet another gmaps manager
- by carlos Cabo 2015. V.2.07
+ by carlos Cabo 2015. V.2.08
  https://github.com/carloscabo/gmapz
  ====================================
 */
@@ -21,7 +21,7 @@
   // Module general vars
   //
   var
-    v = '2.06',
+    v = '2.08',
     debug = false,
     data = {
       map_api_requested: false,
@@ -70,8 +70,8 @@
     var
       script = document.createElement('script'),
       url = 'https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places&language='+lang+'&callback='+callback_fn;
-    if (APIKEY !== '') {
-      url += '&key='+APIKEY;
+    if (GMapz.APIKEY !== '') {
+      url += '&key='+GMapz.APIKEY;
     }
     script.type = 'text/javascript';
     script.src = url;
