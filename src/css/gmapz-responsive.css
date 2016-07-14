@@ -8,20 +8,6 @@
   }*/
 }
 
-/* Sample of hiding scroll controls on desktop */
-
-/* Hide custom control on desktop, show in mobile */
-/*
-.gmapz-scroll-control {
-  display: none !important;
-}
-@media only screen and (max-width: 767px) {
-  .gmapz-scroll-control {
-    display: block !important;
-  }
-}
-*/
-
 .gmapz-scroll-control {
   display: block;
   margin: 10px;

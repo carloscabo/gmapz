@@ -1,3 +1,3 @@
-module Gmapz
-  VERSION = "0.0.1"
+module GMapz
+  VERSION = "2.0.8"
 end

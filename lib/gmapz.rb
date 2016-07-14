@@ -1,5 +1,6 @@
 require "gmapz/version"
+require "gmapz/engine"
 
-module Gmapz
+module GMapz
   # Your code goes here...
 end

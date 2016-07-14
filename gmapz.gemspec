@@ -5,12 +5,12 @@ require 'gmapz/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "gmapz"
-  spec.version       = Gmapz::VERSION
+  spec.version       = GMapz::VERSION
   spec.authors       = ["carloscabo"]
-  spec.email         = ["carlos.cabo@the-cocktail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.email         = ["carlos.cabo@gmail.com"]
+  spec.summary       = "GMapz is yet another Google Maps JS library."
+  spec.description   = "It eases the creation of Google Maps, it's responsive, supports the creation of multiple instances in the same page (each one with its own settings), the creation of custom styled infowindows, and other useful helpers."
+  spec.homepage      = "https://github.com/carloscabo/gmapz"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
