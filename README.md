@@ -1,4 +1,4 @@
-GMapz v2.07
+GMapz v2.08
 ===========
 
 GMapz is yet another Google Maps JS library. It eases the creation of Google Maps, it's **responsive**, supports the creation of **multiple instances in the same page** (each one with it's own settings), the creation of **custom styled infowindows**, and other useful helpers.
