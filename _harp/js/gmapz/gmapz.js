@@ -1,7 +1,7 @@
 /*
  ====================================
  GMapz. Yet another gmaps manager
- by carlos Cabo 2015. V.2.08
+ by carlos Cabo 2015. V.2.09
  https://github.com/carloscabo/gmapz
  ====================================
 */
@@ -21,7 +21,7 @@
   // Module general vars
   //
   var
-    v = '2.08',
+    v = '2.09',
     debug = false,
     data = {
       map_api_requested: false,
