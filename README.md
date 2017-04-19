@@ -1,4 +1,4 @@
-# GMapz v2.09
+# GMapz v2.10
 
 GMapz is yet another Google Maps JS library. It eases the creation of Google Maps, it's **responsive**, supports the creation of **multiple instances in the same page** (each one with its own settings), the creation of **custom styled infowindows**, and other useful helpers.
 <br><br>
@@ -46,6 +46,8 @@ If you want to customize the map **infobox windows** you can use `src/css/gmapz-
 
 # Changelog
 
+- 2.10 (2017/04/19)
+  * Rails Gem
 - 2.09 (2016/07/15)
   * Rails Gem
 - 2.08 (2016/07/06)
