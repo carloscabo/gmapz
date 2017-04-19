@@ -28,7 +28,7 @@ include ./includes/bs_header.jade
               |     pixelOffset: [158, 100] // Offset of infowindow
               |   }
               | );
-              |
+              | 
               | map_sample_6A.onReady = function() {
               |   this.addLocations(spain_locs).fitBounds();
               | };
@@ -75,10 +75,10 @@ include ./includes/bs_header.jade
               |   // Enable infobox library
               |   infoBoxLoader(true);
               | };
-              |
+              | 
               | // Start map with default options
               | map_sample_6B = new GMapz.map($('#map-sample-11'));
-              |
+              | 
               | map_sample_6B.onReady = function() {
               |   // Define custom infobox style
               |   var ib_options = {
@@ -87,14 +87,14 @@ include ./includes/bs_header.jade
               |     closeBoxURL: '',
               |     enableEventPropagation: true
               |   };
-              |
+              | 
               |   // Add custom infobox to the map
               |   this.defineInfoBox( ib_options );
-              |
+              | 
               |   // Load Italy cities AFTER define infobox
               |   this.addLocations(italy_cities).fitBounds();
               | };
-              |
+              | 
               | map_sample_6B.onDraw = function() {
               |   // Open Rome marker / infobox
               |   this.markers['roma'].click();

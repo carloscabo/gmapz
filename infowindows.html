@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="es"><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><link rel="stylesheet" href="js/lib/mqbe.css"><link rel="stylesheet" href="js/gmapz/gmapz.responsive.css"><link rel="stylesheet" href="js/gmapz/gmapz.infobox.css"><link rel="stylesheet" href="css/application.css"><script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script><script src="js/lib/mqbe.min.js"></script><script src="js/lib/markerclusterer.js"></script><script src="js/lib/infobox.modified.js"></script><!-- - fancybox--><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"><script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script><script src="js/gmapz/gmapz.js"></script><script src="js/gmapz/gmapz.pins.js"></script><script src="js/gmapz/gmapz.map.js"></script><script src="js/gmapz/gmapz.autocomplete.js"></script><script src="js/gmapz/gmapz.locations.js"></script><script src="js/ready.js"></script></head><body><div class="navbar navbar-inverse mb0"><div class="container-fluid"><div class="container"><ul class="nav navbar-nav left"><li><a href="index.html">Introducción</a></li><li><a href="marcadores.html">Marcadores</a></li><li><a href="data_attributes.html">Data-attributes</a></li><li><a href="geolocalizacion.html">Geolocalización</a></li><li><a href="responsive.html">Responsive&nbsp;y&nbsp;bloqueo</a></li><li class="active"><a href="infowindows.html">Infowindows</a></li><li><a href="lightbox.html">Lightbox</a></li><li><a href="metodos.html">Métodos JS</a></li></ul></div></div></div><div class="bs-docs-header"><div class="container"><div class="row"><h1>GMapz<small>&nbsp;&nbsp;&nbsp;Yet another Google Maps library. <a href="https://github.com/carloscabo/gmapz" target="_blank">https://github.com/carloscabo/gmapz</a></small></h1></div></div></div><div class="main-content"><div class="row"><div class="container"><h2 class="page-header">Infowindows desplazados (no necesita <i>infobox.js</i>)</h2><p>Se puede desplazar el infowindow standard de Google Maps añadiendo el parámetro <code>pixelOffset</code> durante la inicialización del mapa.</p></div></div></div><div id="sample-6A" class="mb32"><div class="row"><div class="container"><h2>Sample 6A<small>&nbsp;&nbsp;&nbsp;Infowindows de sistema desplazados</small></h2><div class="row"><div class="col-lg-6"><div id="map-sample-6A" class="map"><p>map goes here</p></div></div><div class="col-lg-6"><pre class="prettyprint">map_sample_6A = new GMapz.map(
+  $('#map-sample-6A'), {
+    center: [36.08, -6.82],
+    zoom: 5,
+    pixelOffset: [158, 100] // Offset of infowindow
+  }
+);
+ 
+map_sample_6A.onReady = function() {
+  this.addLocations(spain_locs).fitBounds();
+};</pre><p>GMapz añade la clase adicional <code>.gm-style-iw-container</code> dentro del mapa, lo que permite personalizaciones del <code>infowindow</code> estandar de Google Maps (por ejemplo en esta demo <b>cambiar la posición de la flecha</b>).</p><p>Puedes echar un vistazo a los estilos del infobox de esta demo en: <a href="https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.scss" target="_blank">https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.scss</a>
+</p></div></div></div></div></div><div class="main-content"><div class="row"><div class="container"><h2 class="page-header">Personalización avanzada de InfoWindows empleando <i>infobox.js</i></h2><p>Algunos proyectos pueden requerir de <code>infowindows</code> personalizadas <b><em>(las ventanitas que se abren en el mapa cuando pulsamos sobre un marker)</em></b>. Para esta funcionalidad hace falta incluir la librería <code>infobox.modified.js</code>, y una hoja de estilo que defina el estilo de nuestros <em>infoboxes</em>, para ver el estilo empleado en esta demo puedes echar un ojo a <code>gmapz-sample-infobox.scss</code> ( <a href="https://github.com/carloscabo/gmapz/blob/master/src/css/gmapz-sample-infobox.scss" target="_blank">ver</a> ).</p><div class="alert alert-danger"><b>ATENCIÓN!:</b> Para poder integrar <code>infobox.js</code> de forma sencilla en el assets pipeline (y en la filosofía de funcionamiento de GMapz) ha habido que modificarla (no ha habido otra solución <em>elegante</em>). <b>Si actualizas la librería, deberás aplicar las mismas modificaciones :(</b></div></div></div></div><div class="main-content"><div class="row"><div class="container"><h2 class="page-header">Inicialización de infobox</h2><p><code>content: '...'</code> Este el el código que se insertará en el infobox cuando se crea, cuando el usuario pulse sobre un marcador automáticamente se reemplazará <code>{{__REPLACE__}}</code> por el contenido de la clave: <code>iw:</code> del marker que hayamos definido en el JSON de marcadores / localizaciones.
+<br><br>
+<code>pixelOffset:</code> Desplazamiento del infobox en pixels desde la posición del pin / marker.
+<br><br>
+<code>closeBoxURL: '', enableEventPropagation: true</code> estas dos líneas nos permiten desactivar el <b>botón de cerrar</b> que añade <code>infobox</code> automáticamente para crear uno propio nuestro. Nuestro botón de cerrar deberá tener la clase <code>.gmapz-ibx-close</code>, el evento de cerrado se attacheará automáticamente.</p><div class="alert alert-info"><code>infobox.js</code> dispone de algunos ejemplos de las opciones de inicialización en <a href="https://htmlpreview.github.io/?https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/infobox/docs/examples.html" target="_blank">https://htmlpreview.github.io/?https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/infobox/docs/examples.html</a> y la referencias completa con todas las opciones disponibles en <a href="http://htmlpreview.github.io/?https://github.com/googlemaps/v3-utility-library/blob/master/infobox/docs/reference.html" target="_blank">http://htmlpreview.github.io/?https://github.com/googlemaps/v3-utility-library/blob/master/infobox/docs/reference.html</a>.</div></div></div></div><div id="sample-6B" class="mb32"><div class="row"><div class="container"><h2>Sample 6B<small>&nbsp;&nbsp;&nbsp;Infowindows personalizados con infobox.js</small></h2><div class="row"><div class="col-lg-6"><div id="map-sample-6B" class="map"><p>map goes here</p></div></div><div class="col-lg-6"><pre class="prettyprint">// Enable infobox.js when google.maps loaded
+GMapz.onGoogleMapsReady = function () {
+  // Enable infobox library
+  infoBoxLoader(true);
+};
+ 
+// Start map with default options
+map_sample_6B = new GMapz.map($('#map-sample-11'));
+ 
+map_sample_6B.onReady = function() {
+  // Define custom infobox style
+  var ib_options = {
+    content: '&lt;div class=&quot;gmapz-ibx&quot;&gt;&lt;div class=&quot;gmapz-ibx-close&quot;&gt;&lt;/div&gt;&lt;div class=&quot;gmapz-ibx-content&quot;&gt;{{__REPLACE__}}&lt;/div&gt;&lt;div&gt;',
+    pixelOffset: new google.maps.Size(-130, -96), // x, y offset from marker
+    closeBoxURL: '',
+    enableEventPropagation: true
+  };
+ 
+  // Add custom infobox to the map
+  this.defineInfoBox( ib_options );
+ 
+  // Load Italy cities AFTER define infobox
+  this.addLocations(italy_cities).fitBounds();
+};
+ 
+map_sample_6B.onDraw = function() {
+  // Open Rome marker / infobox
+  this.markers['roma'].click();
+};</pre><p>Puedes echar un vistazo a los estilos del infobox de esta demo en: <a href="https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.scss" target="_blank">https://github.com/carloscabo/gmapz/blob/master/js/gmapz/gmapz.infobox.scss</a></p></div></div></div></div></div></body></html>

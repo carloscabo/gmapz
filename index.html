@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="es"><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><link rel="stylesheet" href="js/lib/mqbe.css"><link rel="stylesheet" href="js/gmapz/gmapz.responsive.css"><link rel="stylesheet" href="js/gmapz/gmapz.infobox.css"><link rel="stylesheet" href="css/application.css"><script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script><script src="js/lib/mqbe.min.js"></script><script src="js/lib/markerclusterer.js"></script><script src="js/lib/infobox.modified.js"></script><!-- - fancybox--><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"><script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=desert"></script><script src="js/gmapz/gmapz.js"></script><script src="js/gmapz/gmapz.pins.js"></script><script src="js/gmapz/gmapz.map.js"></script><script src="js/gmapz/gmapz.autocomplete.js"></script><script src="js/gmapz/gmapz.locations.js"></script><script src="js/ready.js"></script></head><body><div class="navbar navbar-inverse mb0"><div class="container-fluid"><div class="container"><ul class="nav navbar-nav left"><li class="active"><a href="index.html">Introducción</a></li><li><a href="marcadores.html">Marcadores</a></li><li><a href="data_attributes.html">Data-attributes</a></li><li><a href="geolocalizacion.html">Geolocalización</a></li><li><a href="responsive.html">Responsive&nbsp;y&nbsp;bloqueo</a></li><li><a href="infowindows.html">Infowindows</a></li><li><a href="lightbox.html">Lightbox</a></li><li><a href="metodos.html">Métodos JS</a></li></ul></div></div></div><div class="bs-docs-header"><div class="container"><div class="row"><h1>GMapz<small>&nbsp;&nbsp;&nbsp;Yet another Google Maps library. <a href="https://github.com/carloscabo/gmapz" target="_blank">https://github.com/carloscabo/gmapz</a></small></h1></div></div></div><div class="main-content"><div class="row"><div class="container"><h2 class="page-header">Introducción</h2><p><b>GMapz</b> simplifica creación de mapas con Google Maps API V3, es <b>responsive</b>, soporta <b>múltiples instancias en la misma página</b>, <b>infowindows personalizados</b> y opciones diferentes para cada instancia del mapa. Además es posible crear <em>botones</em> de forma rápida y sencilla que interacciones con los mapas a través de <code>data-attributes</code>.</p></div></div></div><div id="intro-0" class="mb32"><div class="row"><div class="container"><div class="row"><h2>Google Maps API Key<small>&nbsp;&nbsp;&nbsp;necesaria si tu mapa va a tener muchas visualizaciones</small></h2><p>Si tu mapa va a tener muchas visualizaciones (+ de 25.000 al día) es obligatorio que <b>crees una API Key para Google Maps</b> (es una buena práctica aunque no creas que vas a llegar al límite de visitas). Para crearla <a href="https://developers.google.com/maps/faq?hl=es#using-google-maps-apis"> dirígete a Google Maps API</a>, el servicio que debes seleccionar es <b>Google Maps JavaScript API, clave de navegador</b>.</p><p><mark><b>IMPORTANTE:</b> Asegúrate de configurar en que dominios / IPs se puede emplear la clave que generes, para evitar que otras personas puedan usarla en sus desarrollos.</mark></p><p>Configurar tu <b>Clave de API</b> en GMpaz es muy sencillo, basta con que la asignes como se vé a continuación <b>antes de crear ningún mapa</b></p><pre class="prettyprint lang-javascript">// APIKEY
+GMapz.APIKEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+ 
+map_sample_1A = new GMapz.map( ...</pre></div></div></div></div><div id="intro-1" class="mb32"><div class="row"><div class="container"><div class="row"><div class="col-lg-6"><h2>Ficheros básicos<small>&nbsp;&nbsp;&nbsp;y cual es su función</small></h2><p>GMapz está dividido en varias librerías lo que permite que se se incluyan únicamente las partes de la librería necesarias para la funcionalidad que se necesita.</p><p>Para un proyecto con la funcionalidad básica necesitaremos incluir:<br><br>
+<code>JQuery (1.9.1+)</code><br>
+<code>GMapz.js</code> (el <em>core</em> de la librería y funciones comunes)<br>
+<code>GMapz.pins.js</code> (definición de los pins)<br>
+<code>GMapz.maps.js</code> (funcionalidades necesarias para la creación de mapas)<br></p><p>Si necesitamos un input para emplear las funcionalidades de autocompletado y búsqueda de localizaciones de Google (ver <a href="geolocalizacion.html">ejemplos de geolocalización</a>), necesitaremos añadir además:<br>
+<code>GMapz.autocomplete.js</code></p></div><div class="col-lg-6"><h2>Librerías de terceros<small>&nbsp;&nbsp;&nbsp;para funcionalidad extendida</small></h2><p>Algunas funcionalidades extendidas de <b>GMapz</b> requireren de librerías de terceros que deberemos incluír en caso de necesitar dichas funcionalidades.</p><h3>Mapas responsive</h3><p>Para la funcionalidad del <a href="responsive.html">mapa responsive</a> es necesario incluir la librería <code>MQBE.js</code> (<a href="https://github.com/carloscabo/MQBE" target="_blank">https://github.com/carloscabo/MQBE</a>). Puedes ver un ejemplo de su funcionamiento en la sección correspondiente de esta ayuda ( <a href="responsive.html">GMapz responsive</a>).</p><h3>Agrupación de marcadores</h3><p>Para agrupar marcadores automáticamente cuando se hace <em>zoom</em> en la página se emplea la librería <code>MarkerClusterer.js</code>. Información y ejemplos en: <a href="https://github.com/googlemaps/js-marker-clusterer" target="_blank">https://github.com/googlemaps/js-marker-clusterer</a>.</p><h3>Infowindows personalizados</h3><p>Para crear infowindows personalizados se emplea la librería <code>infobox.js</code>. Información y ejemplos en: <a href="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/docs/examples.html" target="_blank">http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/docs/examples.html</a>.</p></div></div></div></div></div><div id="includes-header" class="mb16"><div class="row"><div class="container"><p>A continuación dispones de un ejemplo de el orden recomendado para incluir las liberías en tu proyecto</p><pre class="prettyprint lang-html">&lt;!-- JQuery --&gt;
+&lt;script src=&quot;http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js&quot;&gt;&lt;/script&gt;
+ 
+&lt;!-- Librerías de terceros, opcionales --&gt;
+&lt;script src=&quot;js/lib/mqbe.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/lib/markerclusterer.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/lib/infobox.modified.js&quot;&gt;&lt;/script&gt;
+ 
+&lt;!-- GMapz y sus módulos --&gt;
+&lt;script src=&quot;js/gmapz.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/gmapz.pins.js&quot;&gt;&lt;/script&gt; &lt;!-- JSON de &quot;pins&quot; para los mapas --&gt;
+&lt;script src=&quot;js/gmapz.map.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/gmapz.autocomplete.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;js/gmapz.locations.js&quot;&gt;&lt;/script&gt; &lt;!-- JSON de localizaciones --&gt;
+ 
+&lt;!-- Ready de tu aplicación --&gt;
+&lt;script src=&quot;js/ready.js&quot;&gt;&lt;/script&gt;</pre></div></div></div><div id="pins-and-locations"><div class="row"><div class="container"><div class="row"><div id="pins" class="col-lg-6"><h2>Fichero de "pins"</h2><p>Cuando hablamos de "pins" nos referimos a las <b>imagenes</b> que emplea Google Maps para señalar las localicaciones en los mapas. Para personalizar estos gráficos en tu aplicación basta con definir un fichero <code>JSON</code> con sus nombres y propiedades que después podrás emplear en el correspondiente fichero de ubicaciones / posiciones / coordenadas (ver a la derecha).</p><p><mark>Siempre debes definir los pins <b>ANTES</b> de inicializar ningún mapa, en caso contrario se emplearán los "pins" por defecto de google maps.</mark></p><p>Puedes echar un ojo al fichero <code>gmapz.pins.js</code> que se ha empleado en todas las demos de esta documentación, empléalo como base para personalizar los <em>pins</em> de tu proyecto. Los pins <mark>deben tener una clave única</mark> que permita referenciarlos más tarde en el fichero de coordenadas.</p><h3>Hay 2 <b>casos especiales</b> de pins:</h3><p><b>1.</b> El pin <code>'default'</code> que es el <b>pin que se usará <em>por defecto</em> cuando no se indique ningún otro.</b></p><p><b>2.</b> El pin <code>user_location</code> que es el indica la posición del usuario en el mapa cuando se usan las funciones de <a href="geolocalizacion.html">geolocalización</a>, o las funcionalidades de encontrar la <a href="geolocalizacion.html#sample-6">ubicación más cercana</a> a la del usuario.</p><pre class="prettyprint lang-javascript">// Pins must be defined BEFORE map initialization
+var base_path = 'img/gmapz/';
+GMapz.pins = {
+  'default': { // IE8 Reserved word, allways must be QUOTED!
+    pin: {
+      img: base_path + 'pin.png',
+      size: [48.0, 48.0],
+      anchor: [24.0, 48.0]
+    }
+  },
+  user_location: { // Used for user location
+    pin: {
+      img: base_path + 'pin-user-location.png',
+      size: [48.0, 48.0],
+      anchor: [24.0, 48.0]
+    }
+  },
+  orange: {
+    pin: {
+      img: base_path + 'pin-orange.png',
+      size: [48.0, 48.0],
+      anchor: [24.0, 48.0]
+    }
+  },
+  blue: {
+    pin: {
+      img: base_path + 'pin-blue.png',
+      size: [48.0, 48.0],
+      anchor: [24.0, 48.0]
+    }
+  },
+  green: {
+    pin: {
+      img: base_path + 'pin-green.png',
+      size: [48.0, 48.0],
+      anchor: [24.0, 48.0]
+    }
+  }
+};</pre></div><div id="marcadores" class="col-lg-6"><h2>Fichero localizaciones / marcadores</h2><p>Este fichero define las <code>coordenadas</code> de cada marcador en el mapa (en formato <code>latitud</code>, <code>longitud</code>), así como el <code>pin</code> que se dibujará, y el contenido del <code>infowindow</code> <em>(la ventanita que se muestra cuando pulsamos sobre un marcador).</em></p><p><mark>Cada marcador comienza con una <code>clave / key / index</code> que <b>debe ser única</b>, esta clave puede ser numérica o alfanumérica y solo debe emplear caracteres dentro del rango: <b>[a-zA-z0-9_]</b>.</mark></p><p>Los marcadores pueden tener dos propiedades adicionales: <code>draggable</code>, que indica que usuario podrá mover el marcador y <code>visible</code> que si es <code>false</code> hará que el marcador se añada al mapa <b>oculto inicialmente</b>.</p><p>Es útil agrupar los marcadores en diferentes objetos, así podremos tener los marcadores organizados.</p><pre class="prettyprint lang-javascript">// Grupo de en Marruecos
+var morocco = {
+  'FEZ' : { // Clave única
+    pin: 'green', // Pin que se dibujará
+    lat: 34.0338,
+    lng: -5.0002,
+    iw: 'Fez en Marruecos', // Infowindow
+    draggable: true, // Por defecto es false
+    visible: false // Por defecto es true
+  },
+  'ORAN' : {
+    lat: 35.6980,
+    lng: -0.6329
+  },
+  12: { // Clave numérica
+    pin: 'blue',
+    lat: 43.257206,
+    lng: -2.923763
+  }
+};
+ 
+// France main cities
+var france_cities = {
+  paris: {
+    lat: 48.8601,
+    lng: 2.3402,
+    iw: 'Paris, population: 2107700'
+  },
+  marseille: {
+    lat: 43.3103,
+    lng: 5.3704,
+    iw: 'Marseille, population: 826300'
+  },
+  lyon: {
+    lat: 45.7605,
+    lng: 4.8306,
+    iw: 'Lyon, population: 443600'
+  },
+  //...</pre></div></div></div></div></div></body></html>
