@@ -1,7 +1,7 @@
 /*
  ====================================
  GMapz. Yet another gmaps manager
- by carlos Cabo 2015. V.2.10
+ by carlos Cabo 2015. V.2.11
  https://github.com/carloscabo/gmapz
  ====================================
 */
@@ -111,7 +111,14 @@
       // Pins
       if (_p.hasOwnProperty(key) && _p[key].pin.img) {
         this.pins[key] = {};
-        this.pins[key].pin = new google.maps.MarkerImage(_p[key].pin.img,
+
+        // Replace .svg in IE by .png
+        var temp_pin_img = _p[key].pin.img;
+        if ((!!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g)) && temp_pin_img.split('.').pop().toLowerCase() === 'svg' ) {
+          temp_pin_img = temp_pin_img.substr(0, temp_pin_img.lastIndexOf('.')) + '.png';
+        }
+
+          this.pins[key].pin = new google.maps.MarkerImage(temp_pin_img,
           // width / height
           new google.maps.Size(_p[key].pin.size[0], _p[key].pin.size[1]),
           // origin
